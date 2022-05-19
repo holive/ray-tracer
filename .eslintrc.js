@@ -21,6 +21,7 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+	  "plugin:prettier/recommended"
   ],
   rules: {
     'arrow-body-style': ['error', 'as-needed'],
@@ -30,5 +31,13 @@ module.exports = {
       'error',
       { functions: false, classes: false },
     ],
+	  'prettier/prettier': [
+		  'error',
+		  {
+			  'singleQuote': true,
+			  'semi': false,
+			  'trailingComma': 'none'
+		  }
+	  ]
   },
 };
