@@ -1,10 +1,10 @@
-import * as utils from '../utils';
+import * as utils from '../utils'
 
 describe('utils', () => {
-  describe('utils#getMessage()', () => {
-    it('should return a message', () => {
-      const message = utils.getMessage();
-      expect(message).toEqual('Hello world!');
-    });
-  });
-});
+  it('equal', () => {
+    expect(
+      utils.compareFloat(1000000.1 + 0.2, 1000000.3, Number.EPSILON)
+    ).toBeFalsy()
+    expect(utils.compareFloat(1000000.1 + 0.2, 1000000.3)).toBeTruthy()
+  })
+})

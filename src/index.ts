@@ -1,3 +1,3 @@
-import { getMessage } from './utils';
+import { getMessage } from './utils'
 
-console.log(getMessage());
+console.log(getMessage())
