@@ -1,5 +1,14 @@
-import { equalTuples, point, tuple, vector } from '../tuples'
+import {
+  addTuples,
+  equalTuples,
+  negateTuple,
+  point,
+  subtractTuples,
+  tuple,
+  vector
+} from '../tuples'
 import { PointOrVector } from '../types'
+import { InvalidTupleAddition } from '../errors'
 
 describe('tuples', () => {
   it('should be a point when w=1', () => {
@@ -44,5 +53,46 @@ describe('tuples', () => {
     const c = tuple(4, -4, 3, 1)
     const d = tuple(4, -4, 3, 0)
     expect(equalTuples(c, d)).toBeFalsy()
+  })
+
+  it('should add tuples', () => {
+    const a = tuple(3, -2, 5, 1)
+    const b = tuple(-2, 3, 1, 0)
+    expect(addTuples(a, b)).toEqual(tuple(1, 1, 6, 1))
+
+    expect(() => {
+      addTuples(a, a)
+    }).toThrow(new InvalidTupleAddition())
+  })
+
+  describe('subtract', () => {
+    it('should subtract two points', () => {
+      const a = point(3, 2, 1)
+      const b = point(5, 6, 7)
+      expect(subtractTuples(a, b)).toEqual(vector(-2, -4, -6))
+    })
+
+    it('should subtract a vector from a point', () => {
+      const a = point(3, 2, 1)
+      const b = vector(5, 6, 7)
+      expect(subtractTuples(a, b)).toEqual(point(-2, -4, -6))
+    })
+
+    it('should subtract two vectors', () => {
+      const a = vector(3, 2, 1)
+      const b = vector(5, 6, 7)
+      expect(subtractTuples(a, b)).toEqual(vector(-2, -4, -6))
+    })
+
+    it('should subtract a vector from the zero vector', () => {
+      const a = vector(0, 0, 0)
+      const b = vector(1, -2, 3)
+      expect(subtractTuples(a, b)).toEqual(vector(-1, 2, -3))
+    })
+
+    it('should negate a tuple', () => {
+      const result = negateTuple(tuple(1, -2, 3, -4))
+      expect(result).toEqual(tuple(-1, 2, -3, 4))
+    })
   })
 })

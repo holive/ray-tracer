@@ -24,8 +24,6 @@ module.exports = {
 	  "plugin:prettier/recommended"
   ],
   rules: {
-    'arrow-body-style': ['error', 'as-needed'],
-    'prefer-arrow-callback': ['error'],
     '@typescript-eslint/array-type': ['error', { default: 'array' }],
     '@typescript-eslint/no-use-before-define': [
       'error',
