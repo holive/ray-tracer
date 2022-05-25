@@ -1,5 +1,6 @@
 import {
   addTuples,
+  dot,
   equalTuples,
   magnitude,
   multiplyTuples,
@@ -132,5 +133,13 @@ describe('Normalization', () => {
   it('should have the right magnitude of a normalized vector', () => {
     const normalizedVector = normalize(vector(4, 0, 0))
     expect(magnitude(normalizedVector)).toBe(1)
+  })
+})
+
+describe('Dot product', () => {
+  it('should return the dot product of two tuples', () => {
+    const a = vector(1, 2, 3)
+    const b = vector(2, 3, 4)
+    expect(dot(a, b)).toBe(20)
   })
 })

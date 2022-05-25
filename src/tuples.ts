@@ -70,3 +70,7 @@ export const normalize = (v: Vector): Vector => {
   const m = magnitude(v)
   return tuple(v.x / m, v.y / m, v.z / m, v.w / m) as Vector
 }
+
+export const dot = (a: Vector, b: Vector): number => {
+  return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
+}
