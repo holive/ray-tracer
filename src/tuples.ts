@@ -3,9 +3,10 @@ import {
   PointOrVector,
   Tuple,
   TupleFactory,
+  Vector,
   VectorFactory
 } from './types'
-import { compareFloat } from './utils'
+import { compareFloat, sq } from './utils'
 import { InvalidTupleAddition } from './errors'
 
 export const tuple: TupleFactory = (x, y, z, w) => ({
@@ -56,3 +57,11 @@ export const negateTuple = (t: Tuple): Tuple => ({
   z: -t.z,
   w: -t.w
 })
+
+export const multiplyTuples = (t: Tuple, scalar: number): Tuple => {
+  return tuple(t.x * scalar, t.y * scalar, t.z * scalar, t.w * scalar)
+}
+
+export const magnitude = (v: Vector): number => {
+  return Math.sqrt(sq(v.x) + sq(v.y) + sq(v.z) + sq(v.w))
+}

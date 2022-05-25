@@ -1,6 +1,8 @@
 import {
   addTuples,
   equalTuples,
+  magnitude,
+  multiplyTuples,
   negateTuple,
   point,
   subtractTuples,
@@ -9,8 +11,9 @@ import {
 } from '../tuples'
 import { PointOrVector } from '../types'
 import { InvalidTupleAddition } from '../errors'
+import { sq } from '../utils'
 
-describe('tuples', () => {
+describe('Tuples', () => {
   it('should be a point when w=1', () => {
     const a = tuple(4.3, -4.2, 3.1, 1)
 
@@ -65,7 +68,7 @@ describe('tuples', () => {
     }).toThrow(new InvalidTupleAddition())
   })
 
-  describe('subtract', () => {
+  describe('Subtract', () => {
     it('should subtract two points', () => {
       const a = point(3, 2, 1)
       const b = point(5, 6, 7)
@@ -93,6 +96,27 @@ describe('tuples', () => {
     it('should negate a tuple', () => {
       const result = negateTuple(tuple(1, -2, 3, -4))
       expect(result).toEqual(tuple(-1, 2, -3, 4))
+    })
+  })
+
+  describe('Multiply', () => {
+    it('should multiply a tuple by a scalar', () => {
+      const a = tuple(1, -2, 3, -4)
+      expect(multiplyTuples(a, 3.5)).toEqual(tuple(3.5, -7, 10.5, -14))
+    })
+
+    it('should multiply a tuple by a fraction', () => {
+      const a = tuple(1, -2, 3, -4)
+      expect(multiplyTuples(a, 0.5)).toEqual(tuple(0.5, -1, 1.5, -2))
+    })
+  })
+
+  describe('Magnitude', () => {
+    it('should compute the magnitude of vectors', () => {
+      expect(magnitude(vector(1, 0, 0))).toEqual(1)
+      expect(magnitude(vector(0, 1, 0))).toEqual(1)
+      expect(magnitude(vector(0, 0, 1))).toEqual(1)
+      expect(magnitude(vector(1, 2, 3))).toEqual(Math.sqrt(14))
     })
   })
 })
