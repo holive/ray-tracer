@@ -4,6 +4,7 @@ import {
   magnitude,
   multiplyTuples,
   negateTuple,
+  normalize,
   point,
   subtractTuples,
   tuple,
@@ -11,7 +12,6 @@ import {
 } from '../tuples'
 import { PointOrVector } from '../types'
 import { InvalidTupleAddition } from '../errors'
-import { sq } from '../utils'
 
 describe('Tuples', () => {
   it('should be a point when w=1', () => {
@@ -67,56 +67,70 @@ describe('Tuples', () => {
       addTuples(a, a)
     }).toThrow(new InvalidTupleAddition())
   })
+})
 
-  describe('Subtract', () => {
-    it('should subtract two points', () => {
-      const a = point(3, 2, 1)
-      const b = point(5, 6, 7)
-      expect(subtractTuples(a, b)).toEqual(vector(-2, -4, -6))
-    })
-
-    it('should subtract a vector from a point', () => {
-      const a = point(3, 2, 1)
-      const b = vector(5, 6, 7)
-      expect(subtractTuples(a, b)).toEqual(point(-2, -4, -6))
-    })
-
-    it('should subtract two vectors', () => {
-      const a = vector(3, 2, 1)
-      const b = vector(5, 6, 7)
-      expect(subtractTuples(a, b)).toEqual(vector(-2, -4, -6))
-    })
-
-    it('should subtract a vector from the zero vector', () => {
-      const a = vector(0, 0, 0)
-      const b = vector(1, -2, 3)
-      expect(subtractTuples(a, b)).toEqual(vector(-1, 2, -3))
-    })
-
-    it('should negate a tuple', () => {
-      const result = negateTuple(tuple(1, -2, 3, -4))
-      expect(result).toEqual(tuple(-1, 2, -3, 4))
-    })
+describe('Subtract', () => {
+  it('should subtract two points', () => {
+    const a = point(3, 2, 1)
+    const b = point(5, 6, 7)
+    expect(subtractTuples(a, b)).toEqual(vector(-2, -4, -6))
   })
 
-  describe('Multiply', () => {
-    it('should multiply a tuple by a scalar', () => {
-      const a = tuple(1, -2, 3, -4)
-      expect(multiplyTuples(a, 3.5)).toEqual(tuple(3.5, -7, 10.5, -14))
-    })
-
-    it('should multiply a tuple by a fraction', () => {
-      const a = tuple(1, -2, 3, -4)
-      expect(multiplyTuples(a, 0.5)).toEqual(tuple(0.5, -1, 1.5, -2))
-    })
+  it('should subtract a vector from a point', () => {
+    const a = point(3, 2, 1)
+    const b = vector(5, 6, 7)
+    expect(subtractTuples(a, b)).toEqual(point(-2, -4, -6))
   })
 
-  describe('Magnitude', () => {
-    it('should compute the magnitude of vectors', () => {
-      expect(magnitude(vector(1, 0, 0))).toEqual(1)
-      expect(magnitude(vector(0, 1, 0))).toEqual(1)
-      expect(magnitude(vector(0, 0, 1))).toEqual(1)
-      expect(magnitude(vector(1, 2, 3))).toEqual(Math.sqrt(14))
-    })
+  it('should subtract two vectors', () => {
+    const a = vector(3, 2, 1)
+    const b = vector(5, 6, 7)
+    expect(subtractTuples(a, b)).toEqual(vector(-2, -4, -6))
+  })
+
+  it('should subtract a vector from the zero vector', () => {
+    const a = vector(0, 0, 0)
+    const b = vector(1, -2, 3)
+    expect(subtractTuples(a, b)).toEqual(vector(-1, 2, -3))
+  })
+
+  it('should negate a tuple', () => {
+    const result = negateTuple(tuple(1, -2, 3, -4))
+    expect(result).toEqual(tuple(-1, 2, -3, 4))
+  })
+})
+
+describe('Multiply', () => {
+  it('should multiply a tuple by a scalar', () => {
+    const a = tuple(1, -2, 3, -4)
+    expect(multiplyTuples(a, 3.5)).toEqual(tuple(3.5, -7, 10.5, -14))
+  })
+
+  it('should multiply a tuple by a fraction', () => {
+    const a = tuple(1, -2, 3, -4)
+    expect(multiplyTuples(a, 0.5)).toEqual(tuple(0.5, -1, 1.5, -2))
+  })
+})
+
+describe('Magnitude', () => {
+  it('should compute the magnitude of vectors', () => {
+    expect(magnitude(vector(1, 0, 0))).toEqual(1)
+    expect(magnitude(vector(0, 1, 0))).toEqual(1)
+    expect(magnitude(vector(0, 0, 1))).toEqual(1)
+    expect(magnitude(vector(1, 2, 3))).toEqual(Math.sqrt(14))
+  })
+})
+
+describe('Normalization', () => {
+  it('should normalize vectors', () => {
+    expect(normalize(vector(4, 0, 0))).toEqual(vector(1, 0, 0))
+    expect(normalize(vector(1, 2, 3))).toEqual(
+      vector(1 / Math.sqrt(14), 2 / Math.sqrt(14), 3 / Math.sqrt(14))
+    )
+  })
+
+  it('should have the right magnitude of a normalized vector', () => {
+    const normalizedVector = normalize(vector(4, 0, 0))
+    expect(magnitude(normalizedVector)).toBe(1)
   })
 })

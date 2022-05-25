@@ -65,3 +65,8 @@ export const multiplyTuples = (t: Tuple, scalar: number): Tuple => {
 export const magnitude = (v: Vector): number => {
   return Math.sqrt(sq(v.x) + sq(v.y) + sq(v.z) + sq(v.w))
 }
+
+export const normalize = (v: Vector): Vector => {
+  const m = magnitude(v)
+  return tuple(v.x / m, v.y / m, v.z / m, v.w / m) as Vector
+}
