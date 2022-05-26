@@ -1,5 +1,6 @@
 import {
   addTuples,
+  cross,
   dot,
   equalTuples,
   magnitude,
@@ -136,10 +137,19 @@ describe('Normalization', () => {
   })
 })
 
-describe('Dot product', () => {
+describe('Dot Product', () => {
   it('should return the dot product of two tuples', () => {
     const a = vector(1, 2, 3)
     const b = vector(2, 3, 4)
     expect(dot(a, b)).toBe(20)
+  })
+})
+
+describe('Cross Product', () => {
+  it('should return the cross product of two tuples', () => {
+    const a = vector(1, 2, 3)
+    const b = vector(2, 3, 4)
+    expect(cross(a, b)).toEqual(vector(-1, 2, -1))
+    expect(cross(b, a)).toEqual(vector(1, -2, 1))
   })
 })

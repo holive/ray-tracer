@@ -74,3 +74,11 @@ export const normalize = (v: Vector): Vector => {
 export const dot = (a: Vector, b: Vector): number => {
   return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
 }
+
+export const cross = (a: Vector, b: Vector): Vector => {
+  return vector(
+    a.y * b.z - a.z * b.y,
+    a.z * b.x - a.x * b.z,
+    a.x * b.y - a.y * b.x
+  )
+}
