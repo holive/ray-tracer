@@ -1,5 +1,5 @@
-import { InvalidTupleAddition } from '../errors'
-import { PointOrVector, Tuple, Vector, Point } from '../tuples'
+import { InvalidTupleAddition } from '../../errors'
+import { PointOrVector, Tuple, Vector, Point } from '../../tuples'
 
 describe('Tuples', () => {
   it('should be a point when w=1', () => {

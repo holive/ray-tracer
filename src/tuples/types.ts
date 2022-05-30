@@ -22,3 +22,9 @@ export interface VectorModel extends Coordinates {
   magnitude(): number
   normalize(): VectorModel
 }
+
+export type ColorType = {
+  red: number
+  green: number
+  blue: number
+}
