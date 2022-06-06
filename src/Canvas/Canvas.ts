@@ -2,7 +2,8 @@ import { Color } from '../tuples'
 import {
   colorArrayToString,
   createBlackCanvas,
-  scaleColorValue
+  scaleColorValue,
+  writeFile
 } from './helpers'
 import { Matrix } from './types'
 
@@ -35,6 +36,8 @@ export class Canvas {
       }
     }
 
-    return header + colorArrayToString(data, 5)
+    const content = header + colorArrayToString(data, 5)
+    writeFile(content)
+    return content
   }
 }

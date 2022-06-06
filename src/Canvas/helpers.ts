@@ -1,5 +1,6 @@
 import { BLACK, Color } from '../tuples'
 import { Matrix } from './types'
+import fs = require('fs/promises')
 
 export const scaleColorValue = ({ red, green, blue }: Color): Color => {
   const clamp = (c: number): number =>
@@ -35,4 +36,12 @@ export const colorArrayToString = (
   }
 
   return body
+}
+
+export const writeFile = (content: string): void => {
+  try {
+    void fs.writeFile('./render.ppm', content)
+  } catch (err) {
+    console.log(err)
+  }
 }
