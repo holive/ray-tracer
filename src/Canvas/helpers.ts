@@ -1,6 +1,7 @@
 import { BLACK, Color } from '../tuples'
 import { Matrix } from './types'
 import fs = require('fs/promises')
+import { PPM_MAX_COLORS_PER_LINE } from '../constants'
 
 export const scaleColorValue = ({ red, green, blue }: Color): Color => {
   const clamp = (c: number): number =>
@@ -22,26 +23,31 @@ const colorToString = ({ red, green, blue }: Color): string => {
 
 export const colorArrayToString = (
   colors: Color[],
-  maxColorsPerLine: number
+  maxColorsPerLine = PPM_MAX_COLORS_PER_LINE
 ): string => {
   let body = ''
-  const newColors = [...colors]
+  let counter = 0
 
-  while (newColors.length) {
-    body +=
-      newColors
-        .splice(0, maxColorsPerLine)
-        .map((c) => colorToString(c))
-        .join(' ') + '\n'
-  }
+  colors.forEach((color) => {
+    counter += 1
+    let divider = ` `
 
-  return body
+    if (counter >= maxColorsPerLine) {
+      divider = `\n`
+      counter = 0
+    }
+
+    body += `${colorToString(color)}${divider}`
+  })
+
+  return body + '\n'
 }
 
-export const writeFile = (content: string): void => {
+export const writeFile = (content: string): string => {
   try {
     void fs.writeFile('./render.ppm', content)
+    return content
   } catch (err) {
-    console.log(err)
+    return `Couldn't write the file: ${((err as Error) || undefined)?.message}`
   }
 }
