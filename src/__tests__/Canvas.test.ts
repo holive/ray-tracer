@@ -1,5 +1,6 @@
 import { Canvas } from '../Canvas'
 import { BLACK, Color, WHITE } from '../tuples'
+import { scaleColorValue } from '../Canvas/helpers'
 
 const COLOR_START_LINE = 3
 
@@ -9,12 +10,13 @@ describe('Canvas', () => {
     expect(c.width).toBe(10)
     expect(c.height).toBe(20)
 
-    c.canvas.map((row) => row.map((col) => expect(col).toEqual(BLACK)))
+    c.getCanvas().map((row) => row.map((col) => expect(col).toEqual(BLACK)))
   })
 
   it('should write pixels to a canvas', () => {
-    const c = new Canvas(10, 20)
-    const red = new Color(1, 0, 0)
+    const c = new Canvas(4, 8)
+    const red = scaleColorValue(new Color(1, 0, 0))
+
     c.writePixel(2, 3, red)
     expect(c.pixelAt(2, 3)).toEqual(red)
   })
@@ -39,9 +41,9 @@ describe('Canvas', () => {
     const ppm = c.toPPM()
     const lines = ppm.split('\n')
 
-    expect(lines[COLOR_START_LINE]).toBe('255 0 0 0 0 0 0 0 0 0 0 0 0 0 0')
+    expect(lines[COLOR_START_LINE]).toBe('0 0 0 0 0 0 0 0 0 0 0 0 0 0 255')
     expect(lines[COLOR_START_LINE + 1]).toBe('0 0 0 0 0 0 0 128 0 0 0 0 0 0 0')
-    expect(lines[COLOR_START_LINE + 2]).toBe('0 0 0 0 0 0 0 0 0 0 0 0 0 0 255')
+    expect(lines[COLOR_START_LINE + 2]).toBe('255 0 0 0 0 0 0 0 0 0 0 0 0 0 0')
     expect(ppm.substring(ppm.length - 1)).toBe('\n') // some image programs require a new line character at the end
   })
 

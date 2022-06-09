@@ -10,34 +10,34 @@ import { Matrix } from './types'
 export class Canvas {
   width: number
   height: number
-  canvas: Matrix
+  private readonly canvas: Matrix
 
   constructor(width: number, height: number) {
     this.width = width
     this.height = height
-    this.canvas = createBlackCanvas(width, height)
+    this.canvas = createBlackCanvas(height, width)
   }
 
   writePixel(x: number, y: number, color: Color): void {
-    this.canvas[x][y] = scaleColorValue(color)
+    this.canvas[y][x] = scaleColorValue(color)
   }
 
   pixelAt(x: number, y: number): Color {
-    return this.canvas[x][y]
+    return this.canvas[y][x]
   }
 
   toPPM(): string {
     const header = `P3\n${this.width} ${this.height}\n255\n`
 
     const data: Color[] = []
-    for (let i = 0; i < this.width; i++) {
-      for (let j = 0; j < this.height; j++) {
-        data.push(this.canvas[i][j])
-      }
-    }
+    this.canvas
+      .reverse() // flip the image vertically, because the canvas direction is from top to bottom
+      .forEach((items) => items.forEach((color) => data.push(color)))
 
-    const content = header + colorArrayToString(data, 5)
-    writeFile(content)
-    return content
+    return writeFile(header + colorArrayToString(data))
+  }
+
+  getCanvas(): Matrix {
+    return this.canvas
   }
 }
