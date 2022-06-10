@@ -1,3 +1,3 @@
 import { Color } from '../tuples'
 
-export type Matrix = Color[][]
+export type ColorMatrix = Color[][]

@@ -5,12 +5,12 @@ import {
   scaleColorValue,
   writeFile
 } from './helpers'
-import { Matrix } from './types'
+import { ColorMatrix } from './types'
 
 export class Canvas {
   width: number
   height: number
-  private readonly canvas: Matrix
+  private readonly canvas: ColorMatrix
 
   constructor(width: number, height: number) {
     this.width = width
@@ -37,7 +37,7 @@ export class Canvas {
     return writeFile(header + colorArrayToString(data))
   }
 
-  getCanvas(): Matrix {
+  getCanvas(): ColorMatrix {
     return this.canvas
   }
 }

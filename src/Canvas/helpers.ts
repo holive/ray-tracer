@@ -1,5 +1,5 @@
 import { BLACK, Color } from '../tuples'
-import { Matrix } from './types'
+import { ColorMatrix } from './types'
 import fs = require('fs/promises')
 import { PPM_MAX_COLORS_PER_LINE } from '../constants'
 
@@ -9,8 +9,11 @@ export const scaleColorValue = ({ red, green, blue }: Color): Color => {
   return new Color(clamp(red * 255), clamp(green * 255), clamp(blue * 255))
 }
 
-export const createBlackCanvas = (width: number, height: number): Matrix => {
-  const matrix: Matrix = []
+export const createBlackCanvas = (
+  width: number,
+  height: number
+): ColorMatrix => {
+  const matrix: ColorMatrix = []
   for (let i = 0; i < width; i++) {
     matrix.push(new Array(height).fill(BLACK))
   }
