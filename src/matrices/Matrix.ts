@@ -50,11 +50,20 @@ export class Matrix {
     })()
   }
 
+  transpose<T>(): T {
+    const newMatrix = Matrix.generateNewMatrix(this.matrix.length)
+
+    this.matrix.forEach(function goOverEachRow(row, rowPosit, source) {
+      row.forEach(function transposeColumnsIntoRows(element, columnPosit) {
+        newMatrix[rowPosit][columnPosit] = source[columnPosit][rowPosit]
+      })
+    })
+
+    return newMatrix as unknown as T
+  }
+
   private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
-    const newMatrix: number[][] = []
-    for (let i = 0; i < 4; i++) {
-      newMatrix.push(new Array(4).fill(null))
-    }
+    const newMatrix = this.generateNewMatrix(4)
 
     a.forEach(function goOverEachRow(row, rowPosition) {
       row.forEach(function dotProductOfEveryColumnCombination(
@@ -69,6 +78,14 @@ export class Matrix {
       })
     })
 
+    return newMatrix
+  }
+
+  private static generateNewMatrix(length: number): number[][] {
+    const newMatrix: number[][] = []
+    for (let i = 0; i < length; i++) {
+      newMatrix.push(new Array(length).fill(null))
+    }
     return newMatrix
   }
 }

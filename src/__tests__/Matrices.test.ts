@@ -138,4 +138,24 @@ describe('Matrices', () => {
     const tuple = new Tuple(1, 2, 3, 4)
     expect(new Matrix(IDENTITY_MATRIX).multiplyByTuple(tuple)).toEqual(tuple)
   })
+
+  it('should transpose a matrix', () => {
+    const matrix = new Matrix([
+      [0, 9, 3, 0],
+      [9, 8, 0, 8],
+      [1, 8, 5, 3],
+      [0, 0, 5, 8]
+    ])
+    const transposed = [
+      [0, 9, 1, 0],
+      [9, 8, 8, 0],
+      [3, 0, 5, 5],
+      [0, 8, 3, 8]
+    ]
+    expect(matrix.transpose()).toEqual(transposed)
+  })
+
+  it('should transpose the identity matrix', () => {
+    expect(new Matrix(IDENTITY_MATRIX).transpose()).toEqual(IDENTITY_MATRIX)
+  })
 })
