@@ -5,6 +5,7 @@ import {
 } from '../matrices/types'
 import { Matrix } from '../matrices/Matrix'
 import { Tuple } from '../tuples'
+import { IDENTITY_MATRIX } from '../matrices/constants'
 
 describe('Matrices', () => {
   it('should construct and inspect a 4x4 matrix', () => {
@@ -118,5 +119,23 @@ describe('Matrices', () => {
     const b = new Tuple(1, 2, 3, 1)
 
     expect(new Matrix(A).multiplyByTuple(b)).toEqual(new Tuple(18, 24, 33, 1))
+  })
+
+  it('should multiply a matrix by the identity matrix', () => {
+    const matrix = new Matrix([
+      [0, 1, 2, 4],
+      [1, 2, 4, 8],
+      [2, 4, 8, 16],
+      [4, 8, 16, 32]
+    ])
+
+    expect(matrix.multiply(new Matrix(IDENTITY_MATRIX).getMatrix())).toEqual(
+      matrix.matrix
+    )
+  })
+
+  it('should multiply a matrix by a tuple', () => {
+    const tuple = new Tuple(1, 2, 3, 4)
+    expect(new Matrix(IDENTITY_MATRIX).multiplyByTuple(tuple)).toEqual(tuple)
   })
 })
