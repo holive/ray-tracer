@@ -158,4 +158,12 @@ describe('Matrices', () => {
   it('should transpose the identity matrix', () => {
     expect(new Matrix(IDENTITY_MATRIX).transpose()).toEqual(IDENTITY_MATRIX)
   })
+
+  it('should calculate the determinant of a 2x2 matrix', () => {
+    const a = [
+      [1, 5],
+      [-3, 2]
+    ]
+    expect(Matrix.determinant(a)).toBe(17)
+  })
 })

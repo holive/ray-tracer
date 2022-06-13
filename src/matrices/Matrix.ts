@@ -62,6 +62,10 @@ export class Matrix {
     return newMatrix as unknown as T
   }
 
+  static determinant(matrix: number[][]): number {
+    return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+  }
+
   private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
     const newMatrix = this.generateNewMatrix(4)
 
