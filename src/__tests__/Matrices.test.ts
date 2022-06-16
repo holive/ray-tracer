@@ -166,4 +166,30 @@ describe('Matrices', () => {
     ]
     expect(Matrix.determinant(a)).toBe(17)
   })
+
+  it('should generate a submatrix of a 3x3 matrix', () => {
+    const a = [
+      [1, 5, 0],
+      [-3, 2, 7],
+      [0, 6, -3]
+    ]
+    expect(Matrix.submatrix(a, 0, 2)).toEqual([
+      [-3, 2],
+      [0, 6]
+    ])
+  })
+
+  it('should generate a submatrix of a 4x4 matrix', () => {
+    const a = [
+      [-6, 1, 1, 6],
+      [-8, 5, 8, 6],
+      [-1, 0, 8, 2],
+      [-7, 1, -1, 1]
+    ]
+    expect(Matrix.submatrix(a, 2, 1)).toEqual([
+      [-6, 1, 6],
+      [-8, 8, 6],
+      [-7, -1, 1]
+    ])
+  })
 })

@@ -66,6 +66,57 @@ export class Matrix {
     return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
   }
 
+  static submatrix(
+    matrix: number[][],
+    rowToRemove: number,
+    columnToRemove: number
+  ): number[][] {
+    const length = matrix.length
+    const subMatrix = this.generateNewMatrix(length - 1)
+
+    let newColumnPosition = 0
+    let newRowPosition = 0
+
+    for (let rowPosition = 0; rowPosition < length; rowPosition++) {
+      if (rowPosition == rowToRemove) continue
+      iterateOverColumnsAndSkipOne(rowPosition)
+      newRowPosition++
+    }
+
+    function iterateOverColumnsAndSkipOne(rowPosition: number) {
+      for (let columnPosition = 0; columnPosition < length; columnPosition++) {
+        const isLastColumn = columnPosition == length - 1
+        const shouldSkipTheCurrentColumn = columnPosition == columnToRemove
+
+        if (shouldSkipTheCurrentColumn) {
+          if (isLastColumn) newColumnPosition = 0
+          continue
+        }
+
+        assignValueToNewPosition(rowPosition, columnPosition)
+        incrementSubmatrixColumnPosition(columnPosition, isLastColumn)
+      }
+    }
+
+    function assignValueToNewPosition(
+      rowPosition: number,
+      columnPosition: number
+    ) {
+      subMatrix[newRowPosition][newColumnPosition] =
+        matrix[rowPosition][columnPosition]
+    }
+
+    function incrementSubmatrixColumnPosition(
+      columnPosition: number,
+      isLastColumn: boolean
+    ) {
+      if (isLastColumn) newColumnPosition = 0
+      else newColumnPosition++
+    }
+
+    return subMatrix
+  }
+
   private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
     const newMatrix = this.generateNewMatrix(4)
 
