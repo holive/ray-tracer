@@ -192,4 +192,15 @@ describe('Matrices', () => {
       [-7, -1, 1]
     ])
   })
+
+  it('should calculate a minor of a 3x3 matrix', () => {
+    const a = [
+      [3, 5, 0],
+      [2, -1, -7],
+      [6, -1, 5]
+    ]
+    const b = Matrix.submatrix(a, 1, 0)
+    expect(Matrix.determinant(b)).toBe(25)
+    expect(Matrix.minor(a, 1, 0)).toBe(25)
+  })
 })

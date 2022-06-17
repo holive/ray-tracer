@@ -117,6 +117,11 @@ export class Matrix {
     return subMatrix
   }
 
+  static minor(matrix: number[][], row: number, column: number): number {
+    const submatrix = this.submatrix(matrix, row, column)
+    return this.determinant(submatrix)
+  }
+
   private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
     const newMatrix = this.generateNewMatrix(4)
 
