@@ -203,4 +203,18 @@ describe('Matrices', () => {
     expect(Matrix.determinant(b)).toBe(25)
     expect(Matrix.minor(a, 1, 0)).toBe(25)
   })
+
+  it('should calculate a cofactor of a 3x3 matrix', () => {
+    const a = [
+      [3, 5, 0],
+      [2, -1, -7],
+      [6, -1, 5]
+    ]
+
+    expect(Matrix.minor(a, 0, 0)).toBe(-12)
+    expect(Matrix.cofactor(a, 0, 0)).toBe(-12)
+
+    expect(Matrix.minor(a, 1, 0)).toBe(25)
+    expect(Matrix.cofactor(a, 1, 0)).toBe(-25)
+  })
 })

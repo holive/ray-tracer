@@ -122,6 +122,12 @@ export class Matrix {
     return this.determinant(submatrix)
   }
 
+  static cofactor(matrix: number[][], row: number, column: number): number {
+    const isOdd = (row + column) % 2 != 0
+    const minor = this.minor(matrix, row, column)
+    return isOdd ? -Number(minor) : minor
+  }
+
   private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
     const newMatrix = this.generateNewMatrix(4)
 
