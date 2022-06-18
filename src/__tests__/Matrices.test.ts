@@ -245,4 +245,24 @@ describe('Matrices', () => {
     expect(Matrix.cofactor(a, 0, 3)).toBe(51)
     expect(Matrix.determinant(a)).toBe(-4071)
   })
+
+  it('should test an invertible matrix for invertibility', () => {
+    const a = [
+      [6, 4, 4, 4],
+      [5, 5, 7, 6],
+      [4, -9, 3, -7],
+      [9, 1, 7, -6]
+    ]
+    expect(Matrix.determinant(a)).toBe(-2120)
+  })
+
+  it('should test a non invertible matrix for invertibility', () => {
+    const a = [
+      [-4, 2, -2, -3],
+      [9, 6, 2, 6],
+      [0, -5, 1, -5],
+      [0, 0, 0, 0]
+    ]
+    expect(Matrix.determinant(a)).toBe(0)
+  })
 })
