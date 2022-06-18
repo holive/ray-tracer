@@ -138,6 +138,30 @@ export class Matrix {
     return result
   }
 
+  static inverse(matrix: number[][]): number[][] | undefined {
+    if (this.determinant(matrix) == 0) {
+      return
+    }
+
+    const newMatrix = this.generateNewMatrix(matrix.length)
+
+    for (let row = 0; row < matrix.length; row++) {
+      for (let col = 0; col < matrix.length; col++) {
+        const cofactor = this.cofactor(matrix, row, col)
+        // note that "col, row" here, to inverse
+        newMatrix[col][row] = cofactor / this.determinant(matrix)
+      }
+    }
+
+    return newMatrix
+  }
+
+  toFixed(): number[][] {
+    return this.matrix.map((rows) =>
+      rows.map((column) => Number(column.toFixed(5)))
+    )
+  }
+
   private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
     const newMatrix = this.generateNewMatrix(4)
 
