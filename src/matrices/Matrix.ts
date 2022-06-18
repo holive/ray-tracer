@@ -62,10 +62,6 @@ export class Matrix {
     return newMatrix as unknown as T
   }
 
-  static determinant(matrix: number[][]): number {
-    return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
-  }
-
   static submatrix(
     matrix: number[][],
     rowToRemove: number,
@@ -126,6 +122,20 @@ export class Matrix {
     const isOdd = (row + column) % 2 != 0
     const minor = this.minor(matrix, row, column)
     return isOdd ? -Number(minor) : minor
+  }
+
+  static determinant(matrix: number[][]): number {
+    let result = 0
+
+    if (matrix.length == 2) {
+      result = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    } else {
+      for (let column = 0; column < matrix.length; column++) {
+        result = result + matrix[0][column] * this.cofactor(matrix, 0, column)
+      }
+    }
+
+    return result
   }
 
   private static multiplyMatrices(a: number[][], b: number[][]): number[][] {

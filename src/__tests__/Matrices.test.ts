@@ -217,4 +217,32 @@ describe('Matrices', () => {
     expect(Matrix.minor(a, 1, 0)).toBe(25)
     expect(Matrix.cofactor(a, 1, 0)).toBe(-25)
   })
+
+  it('should calculate the determinant of a 3x3 matrix', () => {
+    const a = [
+      [1, 2, 6],
+      [-5, 8, -4],
+      [2, 6, 4]
+    ]
+
+    expect(Matrix.cofactor(a, 0, 0)).toBe(56)
+    expect(Matrix.cofactor(a, 0, 1)).toBe(12)
+    expect(Matrix.cofactor(a, 0, 2)).toBe(-46)
+    expect(Matrix.determinant(a)).toBe(-196)
+  })
+
+  it('should calculate the determinant of a 4x4 matrix', () => {
+    const a = [
+      [-2, -8, 3, 5],
+      [-3, 1, 7, 3],
+      [1, 2, -9, 6],
+      [-6, 7, 7, -9]
+    ]
+
+    expect(Matrix.cofactor(a, 0, 0)).toBe(690)
+    expect(Matrix.cofactor(a, 0, 1)).toBe(447)
+    expect(Matrix.cofactor(a, 0, 2)).toBe(210)
+    expect(Matrix.cofactor(a, 0, 3)).toBe(51)
+    expect(Matrix.determinant(a)).toBe(-4071)
+  })
 })
