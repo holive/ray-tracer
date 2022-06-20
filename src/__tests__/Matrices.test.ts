@@ -4,7 +4,7 @@ import {
   MatrixTypeTwo
 } from '../matrices/types'
 import { Matrix } from '../matrices/Matrix'
-import { Tuple } from '../tuples'
+import { Point, Tuple, Vector } from '../tuples'
 import { IDENTITY_MATRIX } from '../matrices/constants'
 
 describe('Matrices', () => {
@@ -369,5 +369,30 @@ describe('Matrices', () => {
     const d = c.multiply(Matrix.inverse(b) as MatrixTypeFour)
 
     expect(new Matrix(d).toFixed()).toEqual(a.matrix)
+  })
+})
+
+describe('Matrix transformations', () => {
+  it('should multiply by a translation matrix', () => {
+    const transformMatrix = new Matrix(Matrix.translation(5, -3, 2))
+    const point = new Point(-3, 4, 5)
+    const result = transformMatrix.multiplyByTuple(point)
+    expect(result).toEqual(new Point(2, 1, 7))
+  })
+
+  it('should multiply by the inverse of a translation matrix', () => {
+    const transformMatrix = new Matrix(Matrix.translation(5, -3, 2))
+    const inverse = new Matrix(
+      Matrix.inverse(transformMatrix.matrix) as MatrixTypeFour
+    )
+    const point = new Point(-3, 4, 5)
+    const result = inverse.multiplyByTuple(point)
+    expect(result).toEqual(new Point(-8, 7, 3))
+  })
+
+  it('should not affect vector when multiplying matrix by it', () => {
+    const transformMatrix = new Matrix(Matrix.translation(5, -3, 2))
+    const vector = new Vector(-3, 4, 5)
+    expect(transformMatrix.multiplyByTuple(vector)).toEqual(vector)
   })
 })

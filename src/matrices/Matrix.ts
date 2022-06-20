@@ -1,5 +1,10 @@
 import { MatrixTypeFour, MatrixTypeThree, MatrixTypeTwo } from './types'
 import { Tuple } from '../tuples'
+import {
+  dotProductOfEachElement,
+  generateNewMatrix,
+  removeRowAndColumn
+} from './helpers'
 
 export class Matrix {
   readonly matrix: number[][]
@@ -51,7 +56,7 @@ export class Matrix {
   }
 
   transpose<T>(): T {
-    const newMatrix = Matrix.generateNewMatrix(this.matrix.length)
+    const newMatrix = generateNewMatrix(this.matrix.length)
 
     this.matrix.forEach(function goOverEachRow(row, rowPosit, source) {
       row.forEach(function transposeColumnsIntoRows(element, columnPosit) {
@@ -67,50 +72,7 @@ export class Matrix {
     rowToRemove: number,
     columnToRemove: number
   ): number[][] {
-    const length = matrix.length
-    const subMatrix = this.generateNewMatrix(length - 1)
-
-    let newColumnPosition = 0
-    let newRowPosition = 0
-
-    for (let rowPosition = 0; rowPosition < length; rowPosition++) {
-      if (rowPosition == rowToRemove) continue
-      iterateOverColumnsAndSkipOne(rowPosition)
-      newRowPosition++
-    }
-
-    function iterateOverColumnsAndSkipOne(rowPosition: number) {
-      for (let columnPosition = 0; columnPosition < length; columnPosition++) {
-        const isLastColumn = columnPosition == length - 1
-        const shouldSkipTheCurrentColumn = columnPosition == columnToRemove
-
-        if (shouldSkipTheCurrentColumn) {
-          if (isLastColumn) newColumnPosition = 0
-          continue
-        }
-
-        assignValueToNewPosition(rowPosition, columnPosition)
-        incrementSubmatrixColumnPosition(columnPosition, isLastColumn)
-      }
-    }
-
-    function assignValueToNewPosition(
-      rowPosition: number,
-      columnPosition: number
-    ) {
-      subMatrix[newRowPosition][newColumnPosition] =
-        matrix[rowPosition][columnPosition]
-    }
-
-    function incrementSubmatrixColumnPosition(
-      columnPosition: number,
-      isLastColumn: boolean
-    ) {
-      if (isLastColumn) newColumnPosition = 0
-      else newColumnPosition++
-    }
-
-    return subMatrix
+    return removeRowAndColumn(matrix, rowToRemove, columnToRemove)
   }
 
   static minor(matrix: number[][], row: number, column: number): number {
@@ -143,7 +105,7 @@ export class Matrix {
       return
     }
 
-    const newMatrix = this.generateNewMatrix(matrix.length)
+    const newMatrix = generateNewMatrix(matrix.length)
 
     for (let row = 0; row < matrix.length; row++) {
       for (let col = 0; col < matrix.length; col++) {
@@ -163,29 +125,15 @@ export class Matrix {
   }
 
   private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
-    const newMatrix = this.generateNewMatrix(4)
-
-    a.forEach(function goOverEachRow(row, rowPosition) {
-      row.forEach(function dotProductOfEveryColumnCombination(
-        columnElement,
-        columnPosition
-      ) {
-        newMatrix[rowPosition][columnPosition] =
-          a[rowPosition][0] * b[0][columnPosition] +
-          a[rowPosition][1] * b[1][columnPosition] +
-          a[rowPosition][2] * b[2][columnPosition] +
-          a[rowPosition][3] * b[3][columnPosition]
-      })
-    })
-
-    return newMatrix
+    return dotProductOfEachElement(a, b)
   }
 
-  private static generateNewMatrix(length: number): number[][] {
-    const newMatrix: number[][] = []
-    for (let i = 0; i < length; i++) {
-      newMatrix.push(new Array(length).fill(null))
-    }
-    return newMatrix
+  static translation(x: number, y: number, z: number): MatrixTypeFour {
+    return [
+      [1, 0, 0, x],
+      [0, 1, 0, y],
+      [0, 0, 1, z],
+      [0, 0, 0, 1]
+    ]
   }
 }
