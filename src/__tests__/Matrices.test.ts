@@ -395,4 +395,36 @@ describe('Matrix transformations', () => {
     const vector = new Vector(-3, 4, 5)
     expect(transformMatrix.multiplyByTuple(vector)).toEqual(vector)
   })
+
+  it('should apply scaling to a point', () => {
+    const transformMatrix = new Matrix(Matrix.scaling(2, 3, 4))
+    const point = new Point(-4, 6, 8)
+    const result = transformMatrix.multiplyByTuple(point)
+    expect(result).toEqual(new Point(-8, 18, 32))
+  })
+
+  it('should apply scaling to a vector', () => {
+    const transformMatrix = new Matrix(Matrix.scaling(2, 3, 4))
+    const vector = new Vector(-4, 6, 8)
+    const result = transformMatrix.multiplyByTuple(vector)
+    expect(result).toEqual(new Vector(-8, 18, 32))
+  })
+
+  it('should multiply by the inverse of a scaling matrix', () => {
+    const transformMatrix = new Matrix(Matrix.scaling(2, 3, 4)).matrix
+    const vector = new Vector(-4, 6, 8)
+    const inverse = new Matrix(
+      Matrix.inverse(transformMatrix) as MatrixTypeFour
+    )
+
+    const result = inverse.multiplyByTuple(vector)
+    expect(result).toEqual(new Vector(-2, 2, 2))
+  })
+
+  it('Reflection is scaling by a negative value', () => {
+    const transformMatrix = new Matrix(Matrix.scaling(-1, 1, 1))
+    const point = new Point(2, 3, 4)
+    const result = transformMatrix.multiplyByTuple(point)
+    expect(result).toEqual(new Point(-2, 3, 4))
+  })
 })

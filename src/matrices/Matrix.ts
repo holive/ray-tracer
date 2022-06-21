@@ -124,10 +124,6 @@ export class Matrix {
     )
   }
 
-  private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
-    return dotProductOfEachElement(a, b)
-  }
-
   static translation(x: number, y: number, z: number): MatrixTypeFour {
     return [
       [1, 0, 0, x],
@@ -135,5 +131,18 @@ export class Matrix {
       [0, 0, 1, z],
       [0, 0, 0, 1]
     ]
+  }
+
+  static scaling(x: number, y: number, z: number): MatrixTypeFour {
+    return [
+      [x, 0, 0, 0],
+      [0, y, 0, 0],
+      [0, 0, z, 0],
+      [0, 0, 0, 1]
+    ]
+  }
+
+  private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
+    return dotProductOfEachElement(a, b)
   }
 }
