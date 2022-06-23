@@ -12,3 +12,11 @@ export const compareFloat = (
 export const sq = (value: number): number => {
   return Math.pow(value, 2)
 }
+
+export function degreesToRadians(degrees: number): number {
+  return degrees * (Math.PI / 180)
+}
+
+export function toFixed(value: number, decimals?: number): number {
+  return Number(value.toFixed(decimals || 5))
+}

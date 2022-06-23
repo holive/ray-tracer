@@ -6,6 +6,7 @@ import {
 import { Matrix } from '../matrices/Matrix'
 import { Point, Tuple, Vector } from '../tuples'
 import { IDENTITY_MATRIX } from '../matrices/constants'
+import { degreesToRadians, toFixed } from '../utils'
 
 describe('Matrices', () => {
   it('should construct and inspect a 4x4 matrix', () => {
@@ -426,5 +427,26 @@ describe('Matrix transformations', () => {
     const point = new Point(2, 3, 4)
     const result = transformMatrix.multiplyByTuple(point)
     expect(result).toEqual(new Point(-2, 3, 4))
+  })
+
+  it('should rotate a point around the x axis', () => {
+    const point = new Point(0, 1, 0)
+    const halfQuarter = new Matrix(Matrix.rotationX(degreesToRadians(45)))
+    const fullQuarter = new Matrix(Matrix.rotationX(degreesToRadians(90)))
+
+    expect(halfQuarter.multiplyByTuple(point)).toEqual(
+      new Point(0, toFixed(Math.sqrt(2) / 2), toFixed(Math.sqrt(2) / 2))
+    )
+    expect(fullQuarter.multiplyByTuple(point)).toEqual(new Point(0, 0, 1))
+  })
+
+  it('should rotate in the opposite direction if inverse the rotateX matrix', () => {
+    const point = new Point(0, 1, 0)
+    const halfQuarter = Matrix.rotationX(degreesToRadians(45))
+    const inverse = new Matrix(Matrix.inverse(halfQuarter) as MatrixTypeFour)
+
+    expect(inverse.multiplyByTuple(point)).toEqual(
+      new Point(0, toFixed(Math.sqrt(2) / 2, 4), -toFixed(Math.sqrt(2) / 2, 4))
+    )
   })
 })

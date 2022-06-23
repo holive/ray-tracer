@@ -5,6 +5,7 @@ import {
   generateNewMatrix,
   removeRowAndColumn
 } from './helpers'
+import { toFixed } from '../utils'
 
 export class Matrix {
   readonly matrix: number[][]
@@ -47,10 +48,10 @@ export class Matrix {
 
     return (function returnTheFirstColumnAsTuple() {
       return new Tuple(
-        multiplied[0][0],
-        multiplied[1][0],
-        multiplied[2][0],
-        multiplied[3][0]
+        toFixed(multiplied[0][0]),
+        toFixed(multiplied[1][0]),
+        toFixed(multiplied[2][0]),
+        toFixed(multiplied[3][0])
       )
     })()
   }
@@ -138,6 +139,18 @@ export class Matrix {
       [x, 0, 0, 0],
       [0, y, 0, 0],
       [0, 0, z, 0],
+      [0, 0, 0, 1]
+    ]
+  }
+
+  static rotationX(radians: number): MatrixTypeFour {
+    const cos = toFixed(Math.cos(radians))
+    const sin = toFixed(Math.sin(radians))
+
+    return [
+      [1, 0, 0, 0],
+      [0, cos, -sin, 0],
+      [0, sin, cos, 0],
       [0, 0, 0, 1]
     ]
   }
