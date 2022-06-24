@@ -3,6 +3,7 @@ import { Tuple } from '../tuples'
 import {
   dotProductOfEachElement,
   generateNewMatrix,
+  getCosSinFromRadians,
   removeRowAndColumn
 } from './helpers'
 import { toFixed } from '../utils'
@@ -144,13 +145,34 @@ export class Matrix {
   }
 
   static rotationX(radians: number): MatrixTypeFour {
-    const cos = toFixed(Math.cos(radians))
-    const sin = toFixed(Math.sin(radians))
+    const { cos, sin } = getCosSinFromRadians(radians)
 
     return [
       [1, 0, 0, 0],
       [0, cos, -sin, 0],
       [0, sin, cos, 0],
+      [0, 0, 0, 1]
+    ]
+  }
+
+  static rotationY(radians: number): MatrixTypeFour {
+    const { cos, sin } = getCosSinFromRadians(radians)
+
+    return [
+      [cos, 0, sin, 0],
+      [0, 1, 0, 0],
+      [-sin, 0, cos, 0],
+      [0, 0, 0, 1]
+    ]
+  }
+
+  static rotationZ(radians: number): MatrixTypeFour {
+    const { cos, sin } = getCosSinFromRadians(radians)
+
+    return [
+      [cos, -sin, 0, 0],
+      [sin, cos, 0, 0],
+      [0, 0, 1, 0],
       [0, 0, 0, 1]
     ]
   }

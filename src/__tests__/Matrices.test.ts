@@ -449,4 +449,32 @@ describe('Matrix transformations', () => {
       new Point(0, toFixed(Math.sqrt(2) / 2, 4), -toFixed(Math.sqrt(2) / 2, 4))
     )
   })
+
+  it('should rotate a point around the y axis', () => {
+    const point = new Point(0, 0, 1)
+    const halfQuarter = new Matrix(Matrix.rotationY(degreesToRadians(45)))
+    const fullQuarter = new Matrix(Matrix.rotationY(degreesToRadians(90)))
+    const expected = new Point(
+      toFixed(Math.sqrt(2) / 2),
+      0,
+      toFixed(Math.sqrt(2) / 2)
+    )
+
+    expect(halfQuarter.multiplyByTuple(point)).toEqual(expected)
+    expect(fullQuarter.multiplyByTuple(point)).toEqual(new Point(1, 0, 0))
+  })
+
+  it('should rotate a point around the y axis', () => {
+    const point = new Point(0, 1, 0)
+    const halfQuarter = new Matrix(Matrix.rotationZ(degreesToRadians(45)))
+    const fullQuarter = new Matrix(Matrix.rotationZ(degreesToRadians(90)))
+    const expected = new Point(
+      toFixed(-Math.sqrt(2) / 2),
+      toFixed(Math.sqrt(2) / 2),
+      0
+    )
+
+    expect(halfQuarter.multiplyByTuple(point)).toEqual(expected)
+    expect(fullQuarter.multiplyByTuple(point)).toEqual(new Point(-1, 0, 0))
+  })
 })

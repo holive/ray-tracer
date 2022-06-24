@@ -1,3 +1,5 @@
+import { toFixed } from '../utils'
+
 export function removeRowAndColumn(
   matrix: number[][],
   row: number,
@@ -76,4 +78,14 @@ export function generateNewMatrix(length: number): number[][] {
     newMatrix.push(new Array(length).fill(null))
   }
   return newMatrix
+}
+
+export function getCosSinFromRadians(radians: number): {
+  sin: number
+  cos: number
+} {
+  return {
+    cos: toFixed(Math.cos(radians)),
+    sin: toFixed(Math.sin(radians))
+  }
 }
