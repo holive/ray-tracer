@@ -477,4 +477,46 @@ describe('Matrix transformations', () => {
     expect(halfQuarter.multiplyByTuple(point)).toEqual(expected)
     expect(fullQuarter.multiplyByTuple(point)).toEqual(new Point(-1, 0, 0))
   })
+
+  describe('Shearing', () => {
+    function testShearing(
+      xY: number,
+      xZ: number,
+      yX: number,
+      yZ: number,
+      zX: number,
+      zY: number,
+      expected: Point
+    ) {
+      const transformMatrix = new Matrix(
+        Matrix.shearing(xY, xZ, yX, yZ, zX, zY)
+      )
+      const result = transformMatrix.multiplyByTuple(new Point(2, 3, 4))
+      expect(result).toEqual(expected)
+    }
+
+    it('moves x in proportion to y in a shearing transformation', () => {
+      testShearing(1, 0, 0, 0, 0, 0, new Point(5, 3, 4))
+    })
+
+    it('moves x in proportion to z in a shearing transformation', () => {
+      testShearing(0, 1, 0, 0, 0, 0, new Point(6, 3, 4))
+    })
+
+    it('moves y in proportion to x in a shearing transformation', () => {
+      testShearing(0, 0, 1, 0, 0, 0, new Point(2, 5, 4))
+    })
+
+    it('moves y in proportion to z in a shearing transformation', () => {
+      testShearing(0, 0, 0, 1, 0, 0, new Point(2, 7, 4))
+    })
+
+    it('moves z in proportion to x in a shearing transformation', () => {
+      testShearing(0, 0, 0, 0, 1, 0, new Point(2, 3, 6))
+    })
+
+    it('moves z in proportion to y in a shearing transformation', () => {
+      testShearing(0, 0, 0, 0, 0, 1, new Point(2, 3, 7))
+    })
+  })
 })

@@ -177,6 +177,22 @@ export class Matrix {
     ]
   }
 
+  static shearing(
+    xY: number,
+    xZ: number,
+    yX: number,
+    yZ: number,
+    zX: number,
+    zY: number
+  ): MatrixTypeFour {
+    return [
+      [1, xY, xZ, 0],
+      [yX, 1, yZ, 0],
+      [zX, zY, 1, 0],
+      [0, 0, 0, 1]
+    ]
+  }
+
   private static multiplyMatrices(a: number[][], b: number[][]): number[][] {
     return dotProductOfEachElement(a, b)
   }

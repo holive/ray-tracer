@@ -17,5 +17,5 @@ ___
 - [x] Translation
 - [x] Scaling
 - [x] Rotation
-- [ ] Shearing
+- [x] Shearing
 - [ ] Chaining Transformations
