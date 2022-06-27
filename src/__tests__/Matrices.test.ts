@@ -519,4 +519,32 @@ describe('Matrix transformations', () => {
       testShearing(0, 0, 0, 0, 0, 1, new Point(2, 3, 7))
     })
   })
+
+  describe('Chaining Transformations', () => {
+    it('should apply in sequence individual transformations', () => {
+      const p = new Point(1, 0, 1)
+      const A = Matrix.rotationX(degreesToRadians(90))
+      const B = Matrix.scaling(5, 5, 5)
+      const C = Matrix.translation(10, 5, 7)
+
+      const p2 = new Matrix(A).multiplyByTuple(p)
+      expect(p2).toEqual(new Point(1, -1, 0))
+
+      const p3 = new Matrix(B).multiplyByTuple(p2)
+      expect(p3).toEqual(new Point(5, -5, 0))
+
+      const p4 = new Matrix(C).multiplyByTuple(p3)
+      expect(p4).toEqual(new Point(15, 0, 7))
+    })
+
+    it('should apply chained transformations in reverse order', () => {
+      const p = new Point(1, 0, 1)
+      const A = Matrix.rotationX(degreesToRadians(90))
+      const B = Matrix.scaling(5, 5, 5)
+      const C = Matrix.translation(10, 5, 7)
+
+      const T = new Matrix(new Matrix(C).multiply(B)).multiply(A)
+      expect(new Matrix(T).multiplyByTuple(p)).toEqual(new Point(15, 0, 7))
+    })
+  })
 })

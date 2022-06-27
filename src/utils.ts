@@ -17,6 +17,6 @@ export function degreesToRadians(degrees: number): number {
   return degrees * (Math.PI / 180)
 }
 
-export function toFixed(value: number, decimals?: number): number {
-  return Number(value.toFixed(decimals || 5))
+export function toFixed(value: number, decimals = 5): number {
+  return Number(value.toFixed(decimals))
 }
