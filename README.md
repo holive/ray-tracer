@@ -18,4 +18,10 @@ ___
 - [x] Scaling
 - [x] Rotation
 - [x] Shearing
-- [ ] Chaining Transformations
+- [x] Chaining Transformations
+___
+- [ ] Creating Rays
+- [ ] Intersecting Rays with Spheres
+- [ ] Tracking Intersections
+- [ ] Identifying Hits
+- [ ] Transforming Rays and Spheres
