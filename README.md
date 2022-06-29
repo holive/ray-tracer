@@ -20,7 +20,7 @@ ___
 - [x] Shearing
 - [x] Chaining Transformations
 ___
-- [ ] Creating Rays
+- [x] Creating Rays
 - [ ] Intersecting Rays with Spheres
 - [ ] Tracking Intersections
 - [ ] Identifying Hits
