@@ -1,7 +1,3 @@
-export function getMessage(): string {
-  return 'Hello world!'
-}
-
 export const compareFloat = (
   a: number,
   b: number,

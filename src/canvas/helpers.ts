@@ -1,7 +1,7 @@
 import { BLACK, Color } from '../tuples'
 import { ColorMatrix } from './types'
 import fs = require('fs/promises')
-import { PPM_MAX_COLORS_PER_LINE } from '../constants'
+import { PPM_MAX_COLORS_PER_LINE } from './constants'
 
 export const scaleColorValue = ({ red, green, blue }: Color): Color => {
   const clamp = (c: number): number =>
