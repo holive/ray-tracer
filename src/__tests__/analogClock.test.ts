@@ -1,8 +1,7 @@
 import { Canvas } from '../Canvas'
 import { ALMOST_WHITE, GRAY, Point, WHITE } from '../tuples'
-import { Matrix } from '../matrices/Matrix'
 import { degreesToRadians } from '../utils'
-import { MatrixTypeFour } from '../matrices/types'
+import { MatrixTypeFour, Matrix } from '../Matrices'
 
 describe('build a analog clock to put together matrices operations', () => {
   it('write the clock in the ppm file', () => {
@@ -17,7 +16,11 @@ describe('build a analog clock to put together matrices operations', () => {
       )
       const transformed = transformMatrix.multiplyByTuple(initialPosition)
 
-      writePixel(c, transformed.x, transformed.y)
+      writePixel(
+        c,
+        Number(transformed.x.toFixed()),
+        Number(transformed.y.toFixed())
+      )
     }
 
     c.toPPM()
