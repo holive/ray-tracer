@@ -1,5 +1,5 @@
 import { Point, Vector } from '../tuples'
-import { Ray } from '../Rays'
+import { Ray } from '../rays'
 import { sq } from '../utils'
 
 export class Sphere {

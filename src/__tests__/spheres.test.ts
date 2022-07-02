@@ -1,6 +1,6 @@
-import { Ray } from '../Rays'
+import { Ray } from '../rays'
 import { Point, Vector } from '../tuples'
-import { Sphere } from '../Spheres'
+import { Sphere } from '../spheres'
 
 describe('Spheres', () => {
   it('A ray intersects a sphere at two points', () => {

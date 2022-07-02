@@ -1,4 +1,4 @@
-import { Canvas } from '../Canvas'
+import { Canvas } from '../canvas'
 import { ALMOST_WHITE, GRAY, Point, WHITE } from '../tuples'
 import { degreesToRadians } from '../utils'
 import { MatrixTypeFour, Matrix } from '../Matrices'

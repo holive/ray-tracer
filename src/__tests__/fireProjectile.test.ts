@@ -1,5 +1,5 @@
 import { Point, Tuple, Vector, WHITE } from '../tuples'
-import { Canvas } from '../Canvas'
+import { Canvas } from '../canvas'
 
 type Projectile = {
   position: Point
@@ -30,8 +30,6 @@ const tick = (
       results
     )
   }
-
-  console.log(`Took ${counter} steps to hit the ground.`)
 
   return results
 }

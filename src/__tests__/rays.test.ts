@@ -1,5 +1,5 @@
 import { Point, Vector } from '../tuples'
-import { Ray } from '../Rays'
+import { Ray } from '../rays'
 
 describe('Rays', () => {
   it('should create and query a ray', () => {

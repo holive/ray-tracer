@@ -1,6 +1,6 @@
-import { Canvas } from '../Canvas'
+import { Canvas } from '../canvas'
 import { BLACK, Color, WHITE } from '../tuples'
-import { scaleColorValue } from '../Canvas/helpers'
+import { scaleColorValue } from '../canvas/helpers'
 
 const COLOR_START_LINE = 3
 
