@@ -1,11 +1,11 @@
 import {
   MatrixTypeFour,
   MatrixTypeThree,
-  MatrixTypeTwo
-} from '../matrices/types'
-import { Matrix } from '../matrices/Matrix'
+  MatrixTypeTwo,
+  Matrix,
+  IDENTITY_MATRIX
+} from '../Matrices'
 import { Point, Tuple, Vector } from '../tuples'
-import { IDENTITY_MATRIX } from '../matrices/constants'
 import { degreesToRadians, toFixed } from '../utils'
 
 describe('Matrices', () => {
