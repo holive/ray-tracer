@@ -21,7 +21,7 @@ ___
 - [x] Chaining Transformations
 ___
 - [x] Creating Rays
-- [ ] Intersecting Rays with Spheres
+- [x] Intersecting Rays with Spheres
 - [ ] Tracking Intersections
 - [ ] Identifying Hits
 - [ ] Transforming Rays and Spheres
