@@ -18,4 +18,39 @@ describe('Intersections', () => {
     expect(xs[0].t).toBe(1)
     expect(xs[1].t).toBe(2)
   })
+
+  it('The hit, when all intersections have positive t', () => {
+    const s = new Sphere('dfs')
+    const i1 = new Intersection(1, s)
+    const i2 = new Intersection(2, s)
+    const i3 = new Intersection(0, s)
+    const xs = Intersection.intersections(i2, i3, i1)
+    expect(Intersection.hit(xs)).toEqual(i3)
+  })
+
+  it('The hit, when some intersections have negative t', () => {
+    const s = new Sphere('3ed')
+    const i1 = new Intersection(-1, s)
+    const i2 = new Intersection(1, s)
+    const xs = Intersection.intersections(i2, i1)
+    expect(Intersection.hit(xs)).toEqual(i2)
+  })
+
+  it('The hit, when all intersections have negative t', () => {
+    const s = new Sphere('2rr')
+    const i1 = new Intersection(-1, s)
+    const i2 = new Intersection(-2, s)
+    const xs = Intersection.intersections(i2, i1)
+    expect(Intersection.hit(xs)).toBeNull()
+  })
+
+  it('The hit is always the lowest non negative intersection', () => {
+    const s = new Sphere('7y')
+    const i1 = new Intersection(5, s)
+    const i2 = new Intersection(7, s)
+    const i3 = new Intersection(-3, s)
+    const i4 = new Intersection(2, s)
+    const xs = Intersection.intersections(i2, i1, i3, i4)
+    expect(Intersection.hit(xs)).toEqual(i4)
+  })
 })

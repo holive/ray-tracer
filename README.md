@@ -23,5 +23,5 @@ ___
 - [x] Creating Rays
 - [x] Intersecting Rays with Spheres
 - [x] Tracking Intersections
-- [ ] Identifying Hits
+- [x] Identifying Hits
 - [ ] Transforming Rays and Spheres
