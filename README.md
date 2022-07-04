@@ -24,4 +24,26 @@ ___
 - [x] Intersecting Rays with Spheres
 - [x] Tracking Intersections
 - [x] Identifying Hits
-- [ ] Transforming Rays and Spheres
+- [x] Transforming Rays and Spheres
+___
+- [ ] Surface Normals
+- [ ] Reflecting Vectors
+- [ ] The Phong Reflection Model
+___
+- [ ] Building a World
+- [ ] Defining a View Transformation
+- [ ] Implementing a Camera
+___
+- [ ] Lighting in Shadows
+- [ ] Testing for Shadows
+- [ ] Rendering Shadows
+___
+- [ ] Refactoring Shapes
+- [ ] Implementing a Plane
+___
+- [ ] Making a Striped Pattern
+- [ ] Transforming Patterns
+- [ ] Generalizing Patterns
+- [ ] Making a Gradient Pattern
+- [ ] Making a Ring Pattern
+- [ ] Making a 3D Checker Pattern

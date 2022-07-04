@@ -36,6 +36,7 @@ module.exports = {
 			  'semi': false,
 			  'trailingComma': 'none'
 		  }
-	  ]
+	  ],
+	  "no-unused-labels": "off"
   },
 };
