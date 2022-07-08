@@ -9,6 +9,6 @@ describe('utils', () => {
   })
 
   it('should return the square of a number', () => {
-    expect(utils.sq(13)).toBe(169)
+    expect(utils.pow2(13)).toBe(169)
   })
 })

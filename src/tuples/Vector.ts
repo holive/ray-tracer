@@ -1,6 +1,6 @@
 import { Tuple } from './Tuple'
 import { PointOrVector, VectorModel } from './types'
-import { sq } from '../utils'
+import { pow2 } from '../utils'
 
 export class Vector extends Tuple implements VectorModel {
   constructor(x: number, y: number, z: number, w = PointOrVector.VECTOR) {
@@ -8,7 +8,7 @@ export class Vector extends Tuple implements VectorModel {
   }
 
   magnitude(): number {
-    return Math.sqrt(sq(this.x) + sq(this.y) + sq(this.z) + sq(this.w))
+    return Math.sqrt(pow2(this.x) + pow2(this.y) + pow2(this.z) + pow2(this.w))
   }
 
   normalize(): Vector {

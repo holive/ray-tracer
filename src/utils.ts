@@ -4,8 +4,7 @@ export const compareFloat = (
   EPSILON = 0.00001
 ): boolean => Math.abs(a - b) < EPSILON
 
-// Get a square of a number
-export const sq = (value: number): number => {
+export const pow2 = (value: number): number => {
   return Math.pow(value, 2)
 }
 
