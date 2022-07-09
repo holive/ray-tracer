@@ -1,4 +1,4 @@
-import { Point } from '../tuples'
+import { Point, Vector } from '../tuples'
 
 import { IDENTITY_MATRIX, MatrixTypeFour } from '../matrices'
 
@@ -12,5 +12,10 @@ export class Sphere {
 
   setTransform(matrix: MatrixTypeFour): void {
     this.transform = matrix
+  }
+
+  normalAt(p: Point): Vector {
+    const t = p.subtract(this.position)
+    return new Vector(t.x, t.y, t.z).normalize()
   }
 }
