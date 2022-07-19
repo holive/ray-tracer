@@ -2,6 +2,7 @@ import { Ray } from '../rays'
 import { Point, Vector } from '../tuples'
 import { Sphere } from '../spheres'
 import { IDENTITY_MATRIX, Matrix } from '../matrices'
+import { degreesToRadians } from '../utils'
 
 describe('Spheres', () => {
   it('A ray intersects a sphere at two points', () => {
@@ -127,5 +128,25 @@ describe('Spheres', () => {
       new Point(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3)
     )
     expect(n).toEqual(n.normalize())
+  })
+})
+
+describe('Sphere - transforming normals', () => {
+  it('should compute the normal on a translated sphere', () => {
+    const s = new Sphere()
+    s.setTransform(Matrix.translation(0, 1, 0))
+    const n = s.normalAt(new Point(0, 1.70711, -0.70711))
+    expect(n).toEqual(new Vector(0, 0.7071067811865476, -0.7071067811865476))
+  })
+
+  it('should compute the normal on a transformed sphere', () => {
+    const s = new Sphere()
+    const m = new Matrix(Matrix.scaling(1, 0.5, 1)).multiply(
+      Matrix.rotationZ(degreesToRadians(180 / 5))
+    )
+    s.setTransform(m)
+
+    const n = s.normalAt(new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2))
+    expect(n).toEqual(new Vector(0, 0.970141693080727, -0.24253885327192506))
   })
 })
