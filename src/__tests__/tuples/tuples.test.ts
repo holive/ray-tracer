@@ -1,5 +1,6 @@
 import { InvalidTupleAddition } from '../../errors'
 import { PointOrVector, Tuple, Vector, Point } from '../../tuples'
+import { toFixed } from '../../utils'
 
 describe('Tuples', () => {
   it('should be a point when w=1', () => {
@@ -55,86 +56,100 @@ describe('Tuples', () => {
       a.add(a)
     }).toThrow(new InvalidTupleAddition())
   })
-})
 
-describe('Subtract', () => {
-  it('should subtract two points', () => {
-    const a = new Point(3, 2, 1)
-    const b = new Point(5, 6, 7)
-    expect(a.subtract(b)).toEqual(new Vector(-2, -4, -6))
+  describe('Subtract', () => {
+    it('should subtract two points', () => {
+      const a = new Point(3, 2, 1)
+      const b = new Point(5, 6, 7)
+      expect(a.subtract(b)).toEqual(new Vector(-2, -4, -6))
+    })
+
+    it('should subtract a vector from a point', () => {
+      const a = new Point(3, 2, 1)
+      const b = new Vector(5, 6, 7)
+      expect(a.subtract(b)).toEqual(new Point(-2, -4, -6))
+    })
+
+    it('should subtract two vectors', () => {
+      const a = new Vector(3, 2, 1)
+      const b = new Vector(5, 6, 7)
+      expect(a.subtract(b)).toEqual(new Vector(-2, -4, -6))
+    })
+
+    it('should subtract a vector from the zero vector', () => {
+      const a = new Vector(0, 0, 0)
+      const b = new Vector(1, -2, 3)
+      expect(a.subtract(b)).toEqual(new Vector(-1, 2, -3))
+    })
+
+    it('should negate a tuple', () => {
+      expect(new Tuple(1, -2, 3, -4).negate()).toEqual(new Tuple(-1, 2, -3, 4))
+    })
   })
 
-  it('should subtract a vector from a point', () => {
-    const a = new Point(3, 2, 1)
-    const b = new Vector(5, 6, 7)
-    expect(a.subtract(b)).toEqual(new Point(-2, -4, -6))
+  describe('Multiply', () => {
+    it('should multiply a tuple by a scalar', () => {
+      const a = new Tuple(1, -2, 3, -4)
+      expect(a.multiply(3.5)).toEqual(new Tuple(3.5, -7, 10.5, -14))
+    })
+
+    it('should multiply a tuple by a fraction', () => {
+      const a = new Tuple(1, -2, 3, -4)
+      expect(a.multiply(0.5)).toEqual(new Tuple(0.5, -1, 1.5, -2))
+    })
   })
 
-  it('should subtract two vectors', () => {
-    const a = new Vector(3, 2, 1)
-    const b = new Vector(5, 6, 7)
-    expect(a.subtract(b)).toEqual(new Vector(-2, -4, -6))
+  describe('Magnitude', () => {
+    it('should compute the magnitude of vectors', () => {
+      expect(new Vector(1, 0, 0).magnitude()).toEqual(1)
+      expect(new Vector(0, 1, 0).magnitude()).toEqual(1)
+      expect(new Vector(0, 0, 1).magnitude()).toEqual(1)
+      expect(new Vector(1, 2, 3).magnitude()).toEqual(Math.sqrt(14))
+    })
   })
 
-  it('should subtract a vector from the zero vector', () => {
-    const a = new Vector(0, 0, 0)
-    const b = new Vector(1, -2, 3)
-    expect(a.subtract(b)).toEqual(new Vector(-1, 2, -3))
+  describe('Normalization', () => {
+    it('should normalize vectors', () => {
+      expect(new Vector(4, 0, 0).normalize()).toEqual(new Vector(1, 0, 0))
+      expect(new Vector(1, 2, 3).normalize()).toEqual(
+        new Vector(1 / Math.sqrt(14), 2 / Math.sqrt(14), 3 / Math.sqrt(14))
+      )
+    })
+
+    it('should have the right magnitude of a normalized vector', () => {
+      const normalizedVector = new Vector(4, 0, 0).normalize()
+      expect(normalizedVector.magnitude()).toBe(1)
+    })
   })
 
-  it('should negate a tuple', () => {
-    expect(new Tuple(1, -2, 3, -4).negate()).toEqual(new Tuple(-1, 2, -3, 4))
-  })
-})
-
-describe('Multiply', () => {
-  it('should multiply a tuple by a scalar', () => {
-    const a = new Tuple(1, -2, 3, -4)
-    expect(a.multiply(3.5)).toEqual(new Tuple(3.5, -7, 10.5, -14))
+  describe('Dot Product', () => {
+    it('should return the dot product of two tuples', () => {
+      const a = new Vector(1, 2, 3)
+      const b = new Vector(2, 3, 4)
+      expect(a.dot(b)).toBe(20)
+    })
   })
 
-  it('should multiply a tuple by a fraction', () => {
-    const a = new Tuple(1, -2, 3, -4)
-    expect(a.multiply(0.5)).toEqual(new Tuple(0.5, -1, 1.5, -2))
-  })
-})
-
-describe('Magnitude', () => {
-  it('should compute the magnitude of vectors', () => {
-    expect(new Vector(1, 0, 0).magnitude()).toEqual(1)
-    expect(new Vector(0, 1, 0).magnitude()).toEqual(1)
-    expect(new Vector(0, 0, 1).magnitude()).toEqual(1)
-    expect(new Vector(1, 2, 3).magnitude()).toEqual(Math.sqrt(14))
-  })
-})
-
-describe('Normalization', () => {
-  it('should normalize vectors', () => {
-    expect(new Vector(4, 0, 0).normalize()).toEqual(new Vector(1, 0, 0))
-    expect(new Vector(1, 2, 3).normalize()).toEqual(
-      new Vector(1 / Math.sqrt(14), 2 / Math.sqrt(14), 3 / Math.sqrt(14))
-    )
+  describe('Cross Product', () => {
+    it('should return the cross product of two tuples', () => {
+      const a = new Vector(1, 2, 3)
+      const b = new Vector(2, 3, 4)
+      expect(a.cross(b)).toEqual(new Vector(-1, 2, -1))
+      expect(b.cross(a)).toEqual(new Vector(1, -2, 1))
+    })
   })
 
-  it('should have the right magnitude of a normalized vector', () => {
-    const normalizedVector = new Vector(4, 0, 0).normalize()
-    expect(normalizedVector.magnitude()).toBe(1)
-  })
-})
+  describe('Reflection', () => {
+    it('should reflect a vector  approaching at 45deg', () => {
+      const v = new Vector(1, -1, 0)
+      const n = new Vector(0, 1, 0)
+      expect(v.reflect(n)).toEqual(new Vector(1, 1, 0))
+    })
 
-describe('Dot Product', () => {
-  it('should return the dot product of two tuples', () => {
-    const a = new Vector(1, 2, 3)
-    const b = new Vector(2, 3, 4)
-    expect(a.dot(b)).toBe(20)
-  })
-})
-
-describe('Cross Product', () => {
-  it('should return the cross product of two tuples', () => {
-    const a = new Vector(1, 2, 3)
-    const b = new Vector(2, 3, 4)
-    expect(a.cross(b)).toEqual(new Vector(-1, 2, -1))
-    expect(b.cross(a)).toEqual(new Vector(1, -2, 1))
+    it('should reflect a vector off a slanted surface', () => {
+      const v = new Vector(0, -1, 0)
+      const n = new Vector(Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0)
+      expect(v.reflect(n)).toEqual(new Vector(1, 0, 0))
+    })
   })
 })

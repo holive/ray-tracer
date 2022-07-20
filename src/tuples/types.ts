@@ -21,6 +21,7 @@ export interface TupleModel extends Coordinates {
 export interface VectorModel extends Coordinates {
   magnitude(): number
   normalize(): VectorModel
+  reflect(normal: VectorModel): VectorModel
 }
 
 export type ColorType = {
