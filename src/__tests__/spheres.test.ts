@@ -1,8 +1,9 @@
 import { Ray } from '../rays'
-import { Point, Vector } from '../tuples'
+import { Color, Point, Vector } from '../tuples'
 import { Sphere } from '../spheres'
 import { IDENTITY_MATRIX, Matrix } from '../matrices'
 import { degreesToRadians } from '../utils'
+import { Material } from '../lights/Material'
 
 describe('Spheres', () => {
   it('A ray intersects a sphere at two points', () => {
@@ -148,5 +149,19 @@ describe('Sphere - transforming normals', () => {
 
     const n = s.normalAt(new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2))
     expect(n).toEqual(new Vector(0, 0.970141693080727, -0.24253885327192506))
+  })
+
+  it('should have a default material', () => {
+    const s = new Sphere()
+    const m = s.material
+    expect(m).toEqual(new Material())
+  })
+
+  it('should may be assigned a material', () => {
+    const s = new Sphere()
+    const m = new Material()
+    m.ambient = 1
+    s.material = m
+    expect(s.material).toEqual(m)
   })
 })

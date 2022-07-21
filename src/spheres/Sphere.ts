@@ -2,8 +2,10 @@ import { Point, Vector } from '../tuples'
 
 import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
 import { toFixed } from '../utils'
+import { Material } from '../lights/Material'
 
 export class Sphere {
+  material = new Material()
   position = new Point(0, 0, 0)
   private transform: MatrixTypeFour = IDENTITY_MATRIX
 
