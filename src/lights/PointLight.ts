@@ -8,14 +8,4 @@ export class PointLight {
     this.intensity = intensity
     this.position = position
   }
-
-  // material(): Material {
-  //   return {
-  //     color: this.color,
-  //     ambient: this.ambient,
-  //     diffuse: this.diffuse,
-  //     shininess: this.shininess,
-  //     specular: this.specular
-  //   }
-  // }
 }

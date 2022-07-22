@@ -26,9 +26,9 @@ ___
 - [x] Identifying Hits
 - [x] Transforming Rays and Spheres
 ___
-- [ ] Surface Normals
-- [ ] Reflecting Vectors
-- [ ] The Phong Reflection Model
+- [x] Surface Normals
+- [x] Reflecting Vectors
+- [x] The Phong Reflection Model
 ___
 - [ ] Building a World
 - [ ] Defining a View Transformation
