@@ -30,9 +30,7 @@ export class Canvas {
     const header = `P3\n${this.width} ${this.height}\n255\n`
 
     const data: Color[] = []
-    this.canvas
-      .reverse() // flip the image vertically, because the canvas direction is from top to bottom
-      .forEach((items) => items.forEach((color) => data.push(color)))
+    this.canvas.forEach((items) => items.forEach((color) => data.push(color)))
 
     return writeFile(header + colorArrayToString(data))
   }
