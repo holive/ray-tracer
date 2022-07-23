@@ -29,11 +29,15 @@ ___
 - [x] Surface Normals
 - [x] Reflecting Vectors
 - [x] The Phong Reflection Model
+
+![render](https://user-images.githubusercontent.com/6090596/180615193-82b8b147-9ad6-4a9d-84e5-5511d2a46978.jpg)
+
 ___
 - [ ] Building a World
 - [ ] Defining a View Transformation
 - [ ] Implementing a Camera
 ___
+
 - [ ] Lighting in Shadows
 - [ ] Testing for Shadows
 - [ ] Rendering Shadows
