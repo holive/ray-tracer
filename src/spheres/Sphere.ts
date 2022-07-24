@@ -2,7 +2,7 @@ import { Point, Vector } from '../tuples'
 
 import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
 import { toFixed } from '../utils'
-import { Material } from '../lights/Material'
+import { Material } from '../lights'
 
 export class Sphere {
   material = new Material()
