@@ -1,7 +1,8 @@
 import { World } from '../world'
 import { DefaultWord } from '../world/DefaultWord'
 import { PointLight } from '../lights'
-import { Color, Point } from '../tuples'
+import { Color, Point, Vector } from '../tuples'
+import { Ray } from '../rays'
 
 describe('World', () => {
   it('Creates a world', () => {
@@ -24,5 +25,16 @@ describe('World', () => {
       [0, 0, 0.5, 0],
       [0, 0, 0, 1]
     ])
+  })
+
+  it('Intersects a world with a ray', () => {
+    const w = new DefaultWord()
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
+    const xs = w.intersect(r)
+    expect(xs.length).toBe(4)
+    expect(xs[0].t).toBe(4)
+    expect(xs[1].t).toBe(4.5)
+    expect(xs[2].t).toBe(5.5)
+    expect(xs[3].t).toBe(6)
   })
 })

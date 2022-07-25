@@ -1,5 +1,7 @@
 import { Sphere } from '../spheres'
 import { Intersection } from '../intersections'
+import { Ray } from '../rays'
+import { Point, Vector } from '../tuples'
 
 describe('Intersections', () => {
   it('should encapsulate t and object in an intersection', () => {
@@ -52,5 +54,18 @@ describe('Intersections', () => {
     const i4 = new Intersection(2, s)
     const xs = Intersection.intersections(i2, i1, i3, i4)
     expect(Intersection.hit(xs)).toEqual(i4)
+  })
+
+  it('Precomputes the state of an intersection', () => {
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
+    const shape = new Sphere()
+    const i = new Intersection(4, shape)
+    const comps = i.prepareComputations(r)
+
+    expect(comps.t).toBe(i.t)
+    expect(comps.object).toBe(i.object)
+    expect(comps.point).toEqual(new Point(0, 0, -1))
+    expect(comps.eyeV).toEqual(new Vector(0, 0, -1))
+    expect(comps.normalV).toEqual(new Vector(0, 0, -1))
   })
 })
