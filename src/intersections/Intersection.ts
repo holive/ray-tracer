@@ -19,19 +19,26 @@ export class Intersection {
     const t = this.t
     const object = this.object
     const point = r.position(t)
-    const normalV = object.normalAt(point)
-    const eyeV = this.negateDirection(r.direction)
+    const eyeV = this.negateVector(r.direction)
+    let normalV = object.normalAt(point)
+    let inside = false
+
+    if (normalV.dot(eyeV) < 0) {
+      inside = true
+      normalV = this.negateVector(normalV)
+    }
 
     return {
       t,
       eyeV,
       point,
       object,
-      normalV
+      normalV,
+      inside
     }
   }
 
-  private negateDirection(value: Vector): Vector {
+  private negateVector(value: Vector): Vector {
     const n = (v: number) => (v != 0 ? -v : v)
     return new Vector(n(value.x), n(value.y), n(value.z))
   }

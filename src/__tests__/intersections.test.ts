@@ -68,4 +68,24 @@ describe('Intersections', () => {
     expect(comps.eyeV).toEqual(new Vector(0, 0, -1))
     expect(comps.normalV).toEqual(new Vector(0, 0, -1))
   })
+
+  it('should compute the hit when an intersection occurs on the outside', () => {
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
+    const shape = new Sphere()
+    const i = new Intersection(4, shape)
+    const comps = i.prepareComputations(r)
+    expect(comps.inside).toBeFalsy()
+  })
+
+  it('should compute the hit when an intersection occurs on the inside', () => {
+    const r = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1))
+    const shape = new Sphere()
+    const i = new Intersection(1, shape)
+    const comps = i.prepareComputations(r)
+    expect(comps.point).toEqual(new Point(0, 0, 1))
+    expect(comps.eyeV).toEqual(new Vector(0, 0, -1))
+    expect(comps.inside).toBeTruthy()
+    // normal would have been (0,0,1), but is inverted!
+    expect(comps.normalV).toEqual(new Vector(0, 0, -1))
+  })
 })

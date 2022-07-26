@@ -7,6 +7,7 @@ export type ComputationsType = {
   point: Point
   eyeV: Vector
   normalV: Vector
+  inside: boolean
 }
 
 export type IntersectionObjectType = Sphere
