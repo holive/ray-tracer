@@ -53,12 +53,11 @@ export class World {
   }
 
   colorAt(r: Ray): Color {
-    const intersections = this.intersect(r)
-
-    if (!intersections.length) {
+    const hit = Intersection.hit(this.intersect(r))
+    if (!hit) {
       return BLACK
     }
 
-    return this.shadeHit(intersections[0].prepareComputations(r))
+    return this.shadeHit(hit.prepareComputations(r))
   }
 }

@@ -1,6 +1,5 @@
 import { Color, Point, Vector } from '../tuples'
-import { Material } from '../lights/Material'
-import { PointLight } from '../lights/PointLight'
+import { Material, PointLight } from '../lights'
 
 describe('Materials', () => {
   it('should have a default material', () => {

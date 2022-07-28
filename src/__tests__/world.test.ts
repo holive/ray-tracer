@@ -78,4 +78,16 @@ describe('World', () => {
       new Color(0.38066119308103435, 0.47582649135129296, 0.28549589481077575)
     )
   })
+
+  it('should return the color with an intersection behind the ray', () => {
+    const w = new DefaultWord()
+    const outer = w.objects[0]
+    outer.material.ambient = 1
+    const inner = w.objects[1]
+    inner.material.ambient = 1
+    const r = new Ray(new Point(0, 0, 0.75), new Vector(0, 0, -1))
+
+    const c = w.colorAt(r)
+    expect(c).toEqual(inner.material.color)
+  })
 })

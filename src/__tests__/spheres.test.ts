@@ -1,9 +1,9 @@
 import { Ray } from '../rays'
-import { Color, Point, Vector } from '../tuples'
+import { Point, Vector } from '../tuples'
 import { Sphere } from '../spheres'
 import { IDENTITY_MATRIX, Matrix } from '../matrices'
 import { degreesToRadians } from '../utils'
-import { Material } from '../lights/Material'
+import { Material } from '../lights'
 
 describe('Spheres', () => {
   it('A ray intersects a sphere at two points', () => {
