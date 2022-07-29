@@ -34,7 +34,7 @@ ___
 
 ___
 - [x] Building a World
-- [ ] Defining a View Transformation
+- [x] Defining a View Transformation
 - [ ] Implementing a Camera
 ___
 
