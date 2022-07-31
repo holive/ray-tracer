@@ -1,5 +1,7 @@
-import { IDENTITY_MATRIX, MatrixTypeFour } from '../matrices'
+import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
 import { toFixed } from '../utils'
+import { Ray } from '../rays'
+import { Point, Vector } from '../tuples'
 
 export class Camera {
   hSize: number
@@ -25,6 +27,33 @@ export class Camera {
       this.halfHeight = halfView
     }
 
-    this.pixelSize = toFixed((this.halfWidth * 2) / hSize)
+    this.pixelSize = (this.halfWidth * 2) / hSize
+  }
+
+  rayForPixel(px: number, py: number): Ray {
+    // the offset from the edge of the canvas to the pixel's center
+    const xOffset = (px + 0.5) * this.pixelSize
+    const yOffset = (py + 0.5) * this.pixelSize
+
+    // the untransformed coordinates of the pixel in world space.
+    // (the camera looks toward -z, so +x is to the left)
+    const worldX = toFixed(this.halfWidth - xOffset)
+    const worldY = toFixed(this.halfHeight - yOffset)
+
+    // transform the canvas point and the origin, and then compute the ray's direction vector.
+    const transformMatrix = new Matrix(
+      Matrix.inverse(this.transform) as MatrixTypeFour
+    )
+    const pixel = transformMatrix.multiplyByTuple(new Point(worldX, worldY, -1))
+    const origin = transformMatrix.multiplyByTuple(new Point(0, 0, 0))
+
+    const direction = pixel.subtract(origin)
+    const normalizedDirection = new Vector(
+      direction.x,
+      direction.y,
+      direction.z
+    )
+
+    return new Ray(origin, normalizedDirection)
   }
 }

@@ -1,5 +1,7 @@
 import { Camera } from '../camera'
-import { IDENTITY_MATRIX } from '../matrices'
+import { IDENTITY_MATRIX, Matrix } from '../matrices'
+import { Point, Vector } from '../tuples'
+import { toFixed } from '../utils'
 
 describe('Camera', () => {
   it('constructs a camera', () => {
@@ -14,12 +16,12 @@ describe('Camera', () => {
     expect(c.transform).toEqual(IDENTITY_MATRIX)
   })
 
-  it('check the pixel size for a horizontal canvas', () => {
+  it('checks the pixel size for a horizontal canvas', () => {
     const c = new Camera(200, 125, Math.PI / 2)
     expect(c.pixelSize).toBe(0.01)
   })
 
-  it('check the pixel size for a vertical canvas', () => {
+  it('checks the pixel size for a vertical canvas', () => {
     const c = new Camera(200, 125, Math.PI / 2)
     expect(c.pixelSize).toBe(0.01)
   })
