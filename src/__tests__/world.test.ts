@@ -14,9 +14,9 @@ describe('World', () => {
 
   it('creates the default world', () => {
     const w = new DefaultWord()
-    expect(w.lights).toEqual(
+    expect(w.lights).toEqual([
       new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1))
-    )
+    ])
     expect(w.objects[0].material.color).toEqual(new Color(0.8, 1.0, 0.6))
     expect(w.objects[0].material.diffuse).toBe(0.7)
     expect(w.objects[0].material.specular).toBe(0.2)
@@ -59,7 +59,7 @@ describe('World', () => {
     const comps = new Intersection(0.5, shape).prepareComputations(r)
     const c = w.shadeHit(comps)
     expect(c).toEqual(
-      new Color(0.9049844720833727, 0.9049844720833727, 0.9049844720833727)
+      new Color(0.9049844720832575, 0.9049844720832575, 0.9049844720832575)
     )
   })
 

@@ -1,8 +1,8 @@
 import { Tuple } from './Tuple'
-import { PointOrVector, VectorModel } from './types'
+import { PointOrVector } from './types'
 import { pow2, toFixed } from '../utils'
 
-export class Vector extends Tuple implements VectorModel {
+export class Vector extends Tuple {
   constructor(x: number, y: number, z: number, w = PointOrVector.VECTOR) {
     super(x, y, z, w)
   }
@@ -29,7 +29,15 @@ export class Vector extends Tuple implements VectorModel {
   }
 
   reflect(normal: Vector): Vector {
-    const result = this.subtract(normal.multiply(2).multiply(this.dot(normal)))
-    return new Vector(toFixed(result.x), toFixed(result.y), toFixed(result.z))
+    const res = this.subtract(normal.multiply(this.dot(normal) * 2))
+    return new Vector(res.x, res.y, res.z)
+  }
+
+  toFixed(decimals?: number): Vector {
+    return new Vector(
+      toFixed(this.x, decimals),
+      toFixed(this.y, decimals),
+      toFixed(this.z, decimals)
+    )
   }
 }

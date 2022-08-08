@@ -14,42 +14,29 @@ export class Material {
     eyeV: Vector,
     normalV: Vector
   ): Color {
-    const effectiveColor = this.color.multiplyByColor(light.intensity)
-
     const pos = light.position.subtract(position)
-    const lightV = new Vector(pos.x, pos.y, pos.z).normalize()
-
+    const lightV = new Vector(pos.x, pos.y, pos.z, pos.w).normalize()
+    const effectiveColor = this.color.multiplyByColor(light.intensity)
     const ambient = effectiveColor.multiplyByScalar(this.ambient)
 
-    // lightDotNormal represents the cosine of the angle between the light vector and the normal
-    // vector. A negative number means the light is on the other side of the surface.
     const lightDotNormal = lightV.dot(normalV)
-    let diffuse: Color
-    let specular: Color
+    let diffuse = BLACK
+    let specular = BLACK
 
-    if (lightDotNormal < 0) {
-      diffuse = BLACK
-      specular = BLACK
-    } else {
+    if (lightDotNormal >= 0) {
       diffuse = effectiveColor
         .multiplyByScalar(this.diffuse)
         .multiplyByScalar(lightDotNormal)
 
-      const lightNegative = lightV.negate()
-      const reflectV = new Vector(
-        lightNegative.x,
-        lightNegative.y,
-        lightNegative.z
-      ).reflect(normalV)
-      const reflectDotEye = reflectV.dot(eyeV)
+      const { x, y, z, w } = lightV.negate()
+      const reflectDotEye = new Vector(x, y, z, w).reflect(normalV).dot(eyeV)
 
       if (reflectDotEye <= 0) {
         specular = BLACK
       } else {
-        const factor = Math.pow(reflectDotEye, this.shininess)
         specular = light.intensity
           .multiplyByScalar(this.specular)
-          .multiplyByScalar(factor)
+          .multiplyByScalar(reflectDotEye ** this.shininess)
       }
     }
 

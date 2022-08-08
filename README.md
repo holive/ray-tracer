@@ -35,7 +35,7 @@ ___
 ___
 - [x] Building a World
 - [x] Defining a View Transformation
-- [ ] Implementing a Camera
+- [x] Implementing a Camera
 ___
 
 - [ ] Lighting in Shadows

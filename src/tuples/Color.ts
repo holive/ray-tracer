@@ -1,6 +1,4 @@
-import { ColorType } from './types'
-
-export class Color implements ColorType {
+export class Color {
   red: number
   green: number
   blue: number
@@ -28,6 +26,7 @@ export class Color implements ColorType {
   }
 
   multiplyByScalar(scalar: number): Color {
+    if (scalar == 0) return new Color(0, 0, 0)
     return new Color(this.red * scalar, this.green * scalar, this.blue * scalar)
   }
 
@@ -36,6 +35,14 @@ export class Color implements ColorType {
       this.red * color.red,
       this.green * color.green,
       this.blue * color.blue
+    )
+  }
+
+  rgb(): Color {
+    return new Color(
+      Math.round(this.red * 255),
+      Math.round(this.green * 255),
+      Math.round(this.blue * 255)
     )
   }
 }

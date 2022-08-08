@@ -1,8 +1,8 @@
-import { PointOrVector, TupleModel } from './types'
+import { PointOrVector } from './types'
 import { compareFloat } from '../utils'
 import { InvalidTupleAddition } from '../errors'
 
-export class Tuple implements TupleModel {
+export class Tuple {
   x: number
   y: number
   z: number
