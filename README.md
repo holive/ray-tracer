@@ -38,8 +38,8 @@ ___
 - [x] Implementing a Camera
 ___
 
-- [ ] Lighting in Shadows
-- [ ] Testing for Shadows
+- [x] Lighting in Shadows
+- [x] Testing for Shadows
 - [ ] Rendering Shadows
 ___
 - [ ] Refactoring Shapes

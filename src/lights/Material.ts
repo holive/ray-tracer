@@ -12,12 +12,17 @@ export class Material {
     light: PointLight,
     position: Point,
     eyeV: Vector,
-    normalV: Vector
+    normalV: Vector,
+    inShadow = false
   ): Color {
-    const pos = light.position.subtract(position)
-    const lightV = new Vector(pos.x, pos.y, pos.z, pos.w).normalize()
     const effectiveColor = this.color.multiplyByColor(light.intensity)
     const ambient = effectiveColor.multiplyByScalar(this.ambient)
+    if (inShadow) {
+      return ambient
+    }
+
+    const pos = light.position.subtract(position)
+    const lightV = new Vector(pos.x, pos.y, pos.z, pos.w).normalize()
 
     const lightDotNormal = lightV.dot(normalV)
     let diffuse = BLACK

@@ -2,7 +2,7 @@ import { PointLight } from '../lights'
 import { Sphere } from '../spheres'
 import { Ray } from '../rays'
 import { Intersection, ComputationsType } from '../intersections'
-import { BLACK, Color } from '../tuples'
+import { BLACK, Color, Point, Tuple, Vector } from '../tuples'
 
 export class World {
   objects: Sphere[] = []
@@ -59,5 +59,22 @@ export class World {
     }
 
     return this.shadeHit(hit.prepareComputations(r))
+  }
+
+  isShadowed(point: Point): boolean {
+    if (!this.lights?.length) {
+      console.log('Hey: world initialized without lights.')
+      return true
+    }
+
+    const { x, y, z } = this.lights[0].position.subtract(point)
+    const v = new Vector(x, y, z)
+    const distance = v.magnitude()
+    const direction = v.normalize()
+
+    const intersections = this.intersect(new Ray(point, direction))
+
+    const h = Intersection.hit(intersections)
+    return h != null && h.t < distance
   }
 }

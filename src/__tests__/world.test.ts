@@ -90,4 +90,28 @@ describe('World', () => {
     const c = w.colorAt(r)
     expect(c).toEqual(inner.material.color)
   })
+
+  it('should not have shadow when nothing is collinear with point and light', () => {
+    const w = new DefaultWord()
+    const p = new Point(0, 10, 0)
+    expect(w.isShadowed(p)).toBeFalsy()
+  })
+
+  it('should check the shadow when an object is between the point and the light', () => {
+    const w = new DefaultWord()
+    const p = new Point(10, -10, 10)
+    expect(w.isShadowed(p)).toBeTruthy()
+  })
+
+  it('should have no shadow when an object is behind the light', () => {
+    const w = new DefaultWord()
+    const p = new Point(-20, 20, -20)
+    expect(w.isShadowed(p)).toBeFalsy()
+  })
+
+  it('should have no shadow when an object is behind the point', () => {
+    const w = new DefaultWord()
+    const p = new Point(-2, 2, -2)
+    expect(w.isShadowed(p)).toBeFalsy()
+  })
 })
