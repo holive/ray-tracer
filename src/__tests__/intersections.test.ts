@@ -2,6 +2,8 @@ import { Sphere } from '../spheres'
 import { Intersection } from '../intersections'
 import { Ray } from '../rays'
 import { Point, Vector } from '../tuples'
+import { Matrix } from '../matrices'
+import { EPSILON } from '../utils'
 
 describe('Intersections', () => {
   it('should encapsulate t and object in an intersection', () => {
@@ -87,5 +89,15 @@ describe('Intersections', () => {
     expect(comps.inside).toBeTruthy()
     // normal would have been (0,0,1), but is inverted!
     expect(comps.normalV).toEqual(new Vector(0, 0, -1))
+  })
+
+  it(', the hit, should offset the point', () => {
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
+    const shape = new Sphere()
+    shape.setTransform(Matrix.translation(0, 0, 1))
+    const i = new Intersection(5, shape)
+    const comps = i.prepareComputations(r)
+    expect(comps.overPoint.z < -EPSILON / 2).toBeTruthy()
+    expect(comps.point.z > comps.overPoint.z)
   })
 })

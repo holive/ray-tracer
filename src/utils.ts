@@ -1,8 +1,7 @@
-export const compareFloat = (
-  a: number,
-  b: number,
-  EPSILON = 0.00001
-): boolean => Math.abs(a - b) < EPSILON
+export const EPSILON = 0.00005
+
+export const compareFloat = (a: number, b: number): boolean =>
+  Math.abs(a - b) < EPSILON
 
 export const pow2 = (value: number): number => {
   return Math.pow(value, 2)

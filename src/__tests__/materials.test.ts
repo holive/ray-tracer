@@ -47,7 +47,7 @@ describe('Materials', () => {
       const light = new PointLight(new Point(0, 10, -10), new Color(1, 1, 1))
       const result = m.lighting(light, position, eyeV, normalV)
       expect(result).toEqual(
-        new Color(1.6372158504369034, 1.6372158504369034, 1.6372158504369034)
+        new Color(1.6363961030678928, 1.6363961030678928, 1.6363961030678928)
       )
     })
 

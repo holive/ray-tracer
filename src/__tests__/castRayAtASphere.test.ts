@@ -98,7 +98,7 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
     world.lights = [new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1))]
     world.objects = [floor, leftWall, rightWall, middle, left, right]
 
-    const camera = new Camera(600, 300, Math.PI / 3)
+    const camera = new Camera(100, 50, Math.PI / 3)
     camera.transform = viewTransform(
       new Point(0, 1.5, -5),
       new Point(0, 1, 0),

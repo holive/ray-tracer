@@ -40,7 +40,7 @@ ___
 
 - [x] Lighting in Shadows
 - [x] Testing for Shadows
-- [ ] Rendering Shadows
+- [x] Rendering Shadows
 ___
 - [ ] Refactoring Shapes
 - [ ] Implementing a Plane

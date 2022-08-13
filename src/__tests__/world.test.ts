@@ -4,6 +4,8 @@ import { PointLight } from '../lights'
 import { BLACK, Color, Point, Vector } from '../tuples'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
+import { Sphere } from '../spheres'
+import { Matrix } from '../matrices'
 
 describe('World', () => {
   it('Creates a world', () => {
@@ -113,5 +115,20 @@ describe('World', () => {
     const w = new DefaultWord()
     const p = new Point(-2, 2, -2)
     expect(w.isShadowed(p)).toBeFalsy()
+  })
+
+  it('should call shadeHit() with an intersection in shadow', () => {
+    const w = new World()
+    w.lights = [new PointLight(new Point(0, 0, -10), new Color(1, 1, 1))]
+    const s1 = new Sphere()
+    w.objects.push(s1)
+    const s2 = new Sphere()
+    s2.setTransform(Matrix.translation(0, 0, 10))
+    w.objects.push(s2)
+    const r = new Ray(new Point(0, 0, 5), new Vector(0, 0, 1))
+    const i = new Intersection(4, s2)
+    const comps = i.prepareComputations(r)
+    const c = w.shadeHit(comps)
+    expect(c).toEqual(new Color(0.1, 0.1, 0.1))
   })
 })

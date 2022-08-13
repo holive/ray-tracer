@@ -28,6 +28,8 @@ export class World {
   }
 
   shadeHit(comps: ComputationsType): Color {
+    const shadowed = this.isShadowed(comps.overPoint)
+
     const colors: Color[] = []
 
     if (!this.lights?.length || !this.lights[0]) {
@@ -40,7 +42,8 @@ export class World {
           light,
           comps.point,
           comps.eyeV,
-          comps.normalV
+          comps.normalV,
+          shadowed
         )
       )
     })

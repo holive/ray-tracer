@@ -1,5 +1,5 @@
 import { Sphere } from '../spheres'
-import { Point, Vector } from '../tuples'
+import { Point, Tuple, Vector } from '../tuples'
 
 export type ComputationsType = {
   t: IntersectionValueType
@@ -8,6 +8,7 @@ export type ComputationsType = {
   eyeV: Vector
   normalV: Vector
   inside: boolean
+  overPoint: Tuple
 }
 
 export type IntersectionObjectType = Sphere

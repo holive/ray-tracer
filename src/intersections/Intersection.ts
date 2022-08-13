@@ -5,6 +5,7 @@ import {
   IntersectionValueType
 } from './types'
 import { Vector } from '../tuples'
+import { EPSILON } from '../utils'
 
 export class Intersection {
   t: IntersectionValueType
@@ -28,13 +29,16 @@ export class Intersection {
       normalV = this.negateVector(normalV)
     }
 
+    const overPoint = point.add(normalV.multiply(EPSILON))
+
     return {
       t,
       eyeV,
       point,
       object,
       normalV,
-      inside
+      inside,
+      overPoint
     }
   }
 
