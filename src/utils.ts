@@ -1,4 +1,4 @@
-export const EPSILON = 0.00005
+export const EPSILON = 0.00004
 
 export const compareFloat = (a: number, b: number): boolean =>
   Math.abs(a - b) < EPSILON

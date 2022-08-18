@@ -15,7 +15,7 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
     const rayOrigin = new Point(0, 0, -5)
     const wallZ = 10
     const wallSize = 7.0
-    const canvasPixels = 600
+    const canvasPixels = 100
 
     const pixelSize = wallSize / canvasPixels
     const half = wallSize / 2
@@ -42,7 +42,7 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
           new Vector(rayVector.x, rayVector.y, rayVector.z).normalize()
         )
 
-        const xs = r.intersect(sphere)
+        const xs = sphere.intersect(r)
         const intersection = Intersection.hit(xs)
         if (intersection) {
           const point = r.position(intersection.t)
@@ -98,7 +98,7 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
     world.lights = [new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1))]
     world.objects = [floor, leftWall, rightWall, middle, left, right]
 
-    const camera = new Camera(100, 50, Math.PI / 3)
+    const camera = new Camera(150, 100, Math.PI / 3)
     camera.transform = viewTransform(
       new Point(0, 1.5, -5),
       new Point(0, 1, 0),

@@ -42,7 +42,7 @@ ___
 - [x] Testing for Shadows
 - [x] Rendering Shadows
 ___
-- [ ] Refactoring Shapes
+- [x] Refactoring Shapes
 - [ ] Implementing a Plane
 ___
 - [ ] Making a Striped Pattern

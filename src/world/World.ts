@@ -2,7 +2,7 @@ import { PointLight } from '../lights'
 import { Sphere } from '../spheres'
 import { Ray } from '../rays'
 import { Intersection, ComputationsType } from '../intersections'
-import { BLACK, Color, Point, Tuple, Vector } from '../tuples'
+import { BLACK, Color, Point, Vector } from '../tuples'
 
 export class World {
   objects: Sphere[] = []
@@ -21,7 +21,7 @@ export class World {
     }
 
     this.objects.forEach(function intersectEachObjectInTheWorld(sphere) {
-      intersections.push(...r.intersect(sphere))
+      intersections.push(...sphere.intersect(r))
     })
 
     return intersections.sort((a, b) => a.t - b.t)

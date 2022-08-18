@@ -1,39 +1,33 @@
 import { Point, Vector } from '../tuples'
 
-import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
-import { toFixed } from '../utils'
-import { Material } from '../lights'
+import { TestShape } from '../shapes'
+import { Intersection } from '../intersections'
+import { Ray } from '../rays'
 
-export class Sphere {
-  material = new Material()
-  position = new Point(0, 0, 0)
-  private transform: MatrixTypeFour = IDENTITY_MATRIX
-
-  getTransform(): MatrixTypeFour {
-    return this.transform
+export class Sphere extends TestShape {
+  localNormalAt(p: Point): Vector {
+    const { x, y, z } = p.subtract(this.position)
+    return new Vector(x, y, z)
   }
 
-  setTransform(matrix: MatrixTypeFour): void {
-    this.transform = matrix
-  }
+  localIntersect(ray: Ray): Intersection[] {
+    const { origin, direction } = ray
 
-  normalAt(p: Point): Vector {
-    const objectPoint = new Matrix(
-      Matrix.inverse(this.transform) as MatrixTypeFour
-    ).multiplyByTuple(p)
+    // the vector from the sphere's center, to the ray origin
+    const { x, y, z } = origin.subtract(this.position)
+    const sphereToRay = new Vector(x, y, z)
 
-    const objectNormal = objectPoint.subtract(this.position)
+    const a = direction.dot(direction)
+    const b = 2 * direction.dot(sphereToRay)
+    const c = sphereToRay.dot(sphereToRay) - 1
+    const discriminant = b * b - 4 * a * c
 
-    const worldNormal = new Matrix(
-      new Matrix(
-        Matrix.inverse(this.transform) as MatrixTypeFour
-      ).transpose<MatrixTypeFour>()
-    ).multiplyByTuple(objectNormal)
+    if (discriminant < 0) {
+      return []
+    }
 
-    return new Vector(
-      toFixed(worldNormal.x),
-      toFixed(worldNormal.y),
-      toFixed(worldNormal.z)
-    ).normalize()
+    const t1 = (-b - Math.sqrt(discriminant)) / (2 * a)
+    const t2 = (-b + Math.sqrt(discriminant)) / (2 * a)
+    return [new Intersection(t1, this), new Intersection(t2, this)]
   }
 }
