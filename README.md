@@ -43,7 +43,7 @@ ___
 - [x] Rendering Shadows
 ___
 - [x] Refactoring Shapes
-- [ ] Implementing a Plane
+- [x] Implementing a Plane
 ___
 - [ ] Making a Striped Pattern
 - [ ] Transforming Patterns

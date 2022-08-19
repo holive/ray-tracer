@@ -8,8 +8,8 @@ export const IDENTITY_MATRIX: MatrixTypeFour = [
 ]
 
 export const RANDOM_MATRIX: MatrixTypeFour = [
-  [1, 3, 3, 3],
-  [3, 1, 4, 4],
-  [4, 5, 1, 5],
-  [5, 6, 0, 1]
+  [1, 3, 0, 0],
+  [0, 1, 2, 0],
+  [0, 6, 1, 6],
+  [6, 6, 0, 1]
 ]

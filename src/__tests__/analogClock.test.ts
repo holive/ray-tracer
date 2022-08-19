@@ -1,7 +1,7 @@
 import { Canvas } from '../canvas'
 import { ALMOST_WHITE, GRAY, Point, WHITE } from '../tuples'
 import { degreesToRadians } from '../utils'
-import { MatrixTypeFour, Matrix } from '../Matrices'
+import { MatrixTypeFour, Matrix } from '../matrices'
 
 describe('build a analog clock to put together matrices operations', () => {
   it('write the clock in the ppm file', () => {

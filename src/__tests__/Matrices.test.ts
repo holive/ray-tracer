@@ -4,7 +4,7 @@ import {
   MatrixTypeTwo,
   Matrix,
   IDENTITY_MATRIX
-} from '../Matrices'
+} from '../matrices'
 import { Point, Tuple, Vector } from '../tuples'
 import { degreesToRadians, toFixed } from '../utils'
 
