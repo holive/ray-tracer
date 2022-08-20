@@ -9,6 +9,7 @@ import { Matrix } from '../matrices'
 import { World } from '../world'
 import { Camera } from '../camera'
 import { viewTransform } from '../transformations'
+import { Plane } from '../plane'
 
 describe('Cast rays at a sphere and draw the picture to a canvas', () => {
   it('goes and writes in the ppm', () => {
@@ -93,12 +94,12 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
     left.material.diffuse = 0.7
     left.material.specular = 0.3
 
-    const { leftWall, rightWall, floor } = buildWalls()
+    const { floor } = buildWalls()
     const world = new World()
     world.lights = [new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1))]
-    world.objects = [floor, leftWall, rightWall, middle, left, right]
+    world.objects = [floor, middle, left, right]
 
-    const camera = new Camera(150, 100, Math.PI / 3)
+    const camera = new Camera(300, 200, Math.PI / 3)
     camera.transform = viewTransform(
       new Point(0, 1.5, -5),
       new Point(0, 1, 0),
@@ -115,29 +116,29 @@ function buildWalls() {
   floor.material.color = new Color(1, 0.9, 0.9)
   floor.material.specular = 0
 
-  const leftWall = new Sphere()
-  leftWall.setTransform(
-    new Matrix(
-      new Matrix(
-        new Matrix(Matrix.translation(0, 0, 5)).multiply(
-          Matrix.rotationY(-Math.PI / 4)
-        )
-      ).multiply(Matrix.rotationX(Math.PI / 2))
-    ).multiply(Matrix.scaling(10, 0.01, 10))
-  )
-  leftWall.material = floor.material
+  // const leftWall = new Sphere()
+  // leftWall.setTransform(
+  //   new Matrix(
+  //     new Matrix(
+  //       new Matrix(Matrix.translation(0, 0, 5)).multiply(
+  //         Matrix.rotationY(-Math.PI / 4)
+  //       )
+  //     ).multiply(Matrix.rotationX(Math.PI / 2))
+  //   ).multiply(Matrix.scaling(10, 0.01, 10))
+  // )
+  // leftWall.material = floor.material
+  //
+  // const rightWall = new Sphere()
+  // rightWall.setTransform(
+  //   new Matrix(
+  //     new Matrix(
+  //       new Matrix(Matrix.translation(0, 0, 5)).multiply(
+  //         Matrix.rotationY(Math.PI / 4)
+  //       )
+  //     ).multiply(Matrix.rotationX(Math.PI / 2))
+  //   ).multiply(Matrix.scaling(10, 0.01, 10))
+  // )
+  // rightWall.material = floor.material
 
-  const rightWall = new Sphere()
-  rightWall.setTransform(
-    new Matrix(
-      new Matrix(
-        new Matrix(Matrix.translation(0, 0, 5)).multiply(
-          Matrix.rotationY(Math.PI / 4)
-        )
-      ).multiply(Matrix.rotationX(Math.PI / 2))
-    ).multiply(Matrix.scaling(10, 0.01, 10))
-  )
-  rightWall.material = floor.material
-
-  return { floor, leftWall, rightWall }
+  return { floor: new Plane() }
 }
