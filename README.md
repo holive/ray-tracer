@@ -45,7 +45,7 @@ ___
 - [x] Refactoring Shapes
 - [x] Implementing a Plane
 ___
-- [ ] Making a Striped Pattern
+- [x] Making a Striped Pattern
 - [ ] Transforming Patterns
 - [ ] Generalizing Patterns
 - [ ] Making a Gradient Pattern
