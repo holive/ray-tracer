@@ -43,7 +43,8 @@ export class World {
           comps.point,
           comps.eyeV,
           comps.normalV,
-          shadowed
+          shadowed,
+          comps.object
         )
       )
     })

@@ -1,10 +1,10 @@
-import { TestShape } from '../shapes'
+import { BaseShape } from '../shapes'
 import { Point, Vector } from '../tuples'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
 import { EPSILON } from '../utils'
 
-export class Plane extends TestShape {
+export class Plane extends BaseShape {
   localNormalAt(_: Point): Vector {
     return new Vector(0, 1, 0)
   }

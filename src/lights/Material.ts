@@ -1,6 +1,7 @@
 import { BLACK, Color, Point, Vector } from '../tuples'
 import { PointLight } from './PointLight'
 import { StripePattern } from '../patterns/StripePattern'
+import { BaseShape } from '../shapes'
 
 export class Material {
   ambient = 0.1
@@ -15,10 +16,11 @@ export class Material {
     position: Point,
     eyeV: Vector,
     normalV: Vector,
-    inShadow = false
+    inShadow = false,
+    object: BaseShape
   ): Color {
     if (this.pattern) {
-      this.color = this.pattern.stripeAt(position)
+      this.color = this.pattern.stripeAtObject(object, position)
     }
 
     const effectiveColor = this.color.multiplyByColor(light.intensity)

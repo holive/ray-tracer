@@ -1,10 +1,10 @@
 import { Point, Vector } from '../tuples'
 
-import { TestShape } from '../shapes'
+import { BaseShape } from '../shapes'
 import { Intersection } from '../intersections'
 import { Ray } from '../rays'
 
-export class Sphere extends TestShape {
+export class Sphere extends BaseShape {
   localNormalAt(p: Point): Vector {
     const { x, y, z } = p.subtract(this.position)
     return new Vector(x, y, z)

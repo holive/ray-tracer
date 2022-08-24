@@ -4,7 +4,7 @@ import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
 
-export class TestShape {
+export class BaseShape {
   material = new Material()
   position = new Point(0, 0, 0)
   protected transform: MatrixTypeFour = IDENTITY_MATRIX

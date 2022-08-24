@@ -1,1 +1,1 @@
-export * from './TestShape'
+export * from './BaseShape'

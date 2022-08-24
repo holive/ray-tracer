@@ -4,7 +4,7 @@ import { Sphere } from '../spheres'
 import { Matrix, RANDOM_MATRIX } from '../matrices'
 import { degreesToRadians } from '../utils'
 import { Material } from '../lights'
-import { TestShape } from '../shapes'
+import { BaseShape } from '../shapes'
 
 describe('Spheres', () => {
   it('A ray intersects a sphere at two points', () => {
@@ -61,7 +61,7 @@ describe('Spheres', () => {
 
   it('should intersect a scaled sphere with a ray', () => {
     const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
-    const s = new TestShape()
+    const s = new BaseShape()
     s.setTransform(Matrix.scaling(2, 2, 2))
     s.intersect(r)
     expect(s.savedRay.origin).toEqual(new Point(0, 0, -2.5))
@@ -70,7 +70,7 @@ describe('Spheres', () => {
 
   it('should intersect a translated sphere with a ray', () => {
     const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
-    const s = new TestShape()
+    const s = new BaseShape()
     s.setTransform(Matrix.translation(5, 0, 0))
     s.intersect(r)
     expect(s.savedRay.origin).toEqual(new Point(-5, 0, -5))

@@ -46,7 +46,7 @@ ___
 - [x] Implementing a Plane
 ___
 - [x] Making a Striped Pattern
-- [ ] Transforming Patterns
+- [x] Transforming Patterns
 - [ ] Generalizing Patterns
 - [ ] Making a Gradient Pattern
 - [ ] Making a Ring Pattern

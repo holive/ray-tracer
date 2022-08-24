@@ -10,6 +10,7 @@ import { World } from '../world'
 import { Camera } from '../camera'
 import { viewTransform } from '../transformations'
 import { Plane } from '../plane'
+import { StripePattern } from '../patterns/StripePattern'
 
 describe('Cast rays at a sphere and draw the picture to a canvas', () => {
   it('goes and writes in the ppm', () => {
@@ -53,7 +54,9 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
             light,
             point,
             new Vector(eye.x, eye.y, eye.z),
-            normal
+            normal,
+            false,
+            intersection.object
           )
 
           canvas.writePixel(x, y, color)
@@ -71,6 +74,10 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
     middle.material.color = new Color(0.1, 1, 0.5)
     middle.material.diffuse = 0.7
     middle.material.specular = 0.3
+    middle.material.pattern = new StripePattern(
+      middle.material.color,
+      new Color(0, 0, 0)
+    )
 
     const right = new Sphere()
     right.setTransform(
@@ -82,6 +89,10 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
     right.material.color = new Color(0.5, 1, 0.1)
     right.material.diffuse = 0.7
     right.material.specular = 0.3
+    right.material.pattern = new StripePattern(
+      right.material.color,
+      new Color(0, 0, 0)
+    )
 
     const left = new Sphere()
     left.setTransform(
@@ -93,13 +104,17 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
     left.material.color = new Color(1, 0.8, 0.1)
     left.material.diffuse = 0.7
     left.material.specular = 0.3
+    left.material.pattern = new StripePattern(
+      left.material.color,
+      new Color(0, 0, 0)
+    )
 
     const { floor } = buildWalls()
     const world = new World()
     world.lights = [new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1))]
     world.objects = [floor, middle, left, right]
 
-    const camera = new Camera(300, 200, Math.PI / 3)
+    const camera = new Camera(300, 150, Math.PI / 3)
     camera.transform = viewTransform(
       new Point(0, 1.5, -5),
       new Point(0, 1, 0),
