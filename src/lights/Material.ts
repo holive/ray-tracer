@@ -20,7 +20,7 @@ export class Material {
     object: BaseShape
   ): Color {
     if (this.pattern) {
-      this.color = this.pattern.stripeAtObject(object, position)
+      this.color = this.pattern.patternAtShape(object, position)
     }
 
     const effectiveColor = this.color.multiplyByColor(light.intensity)
