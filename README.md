@@ -48,6 +48,6 @@ ___
 - [x] Making a Striped Pattern
 - [x] Transforming Patterns
 - [x] Generalizing Patterns
-- [ ] Making a Gradient Pattern
+- [x] Making a Gradient Pattern
 - [ ] Making a Ring Pattern
 - [ ] Making a 3D Checker Pattern

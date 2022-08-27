@@ -3,6 +3,7 @@ import { BLACK, Color, Point, WHITE } from '../tuples'
 import { TestPattern } from '../patterns/TestPattern'
 import { IDENTITY_MATRIX, Matrix } from '../matrices'
 import { Sphere } from '../spheres'
+import { GradientPattern } from '../patterns/GradientPattern'
 
 describe('Patterns', () => {
   it('should create a stripe pattern', () => {
@@ -69,5 +70,20 @@ describe('Patterns', () => {
     pattern.setPatternTransform(Matrix.translation(0.5, 1, 1.5))
     const c = pattern.patternAtShape(shape, new Point(2.5, 3, 3.5))
     expect(c).toEqual(new Color(0.75, 0.5, 0.25))
+  })
+
+  it('should check a gradient linearly interpolates between colors', () => {
+    const white = new Color(1, 1, 1)
+    const pattern = new GradientPattern(white, BLACK)
+    expect(pattern.patternAt(new Point(0, 0, 0))).toEqual(white)
+    expect(pattern.patternAt(new Point(0.25, 0, 0))).toEqual(
+      new Color(0.75, 0.75, 0.75)
+    )
+    expect(pattern.patternAt(new Point(0.5, 0, 0))).toEqual(
+      new Color(0.5, 0.5, 0.5)
+    )
+    expect(pattern.patternAt(new Point(0.75, 0, 0))).toEqual(
+      new Color(0.25, 0.25, 0.25)
+    )
   })
 })
