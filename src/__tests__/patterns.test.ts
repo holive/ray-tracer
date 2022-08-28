@@ -4,6 +4,7 @@ import { TestPattern } from '../patterns/TestPattern'
 import { IDENTITY_MATRIX, Matrix } from '../matrices'
 import { Sphere } from '../spheres'
 import { GradientPattern } from '../patterns/GradientPattern'
+import { RingPattern } from '../patterns/RingPattern'
 
 describe('Patterns', () => {
   it('should create a stripe pattern', () => {
@@ -85,5 +86,13 @@ describe('Patterns', () => {
     expect(pattern.patternAt(new Point(0.75, 0, 0))).toEqual(
       new Color(0.25, 0.25, 0.25)
     )
+  })
+
+  it('should check if ring extends in both x and z', () => {
+    const pattern = new RingPattern(WHITE, BLACK)
+    expect(pattern.patternAt(new Point(0, 0, 0))).toEqual(WHITE)
+    expect(pattern.patternAt(new Point(1, 0, 0))).toEqual(BLACK)
+    expect(pattern.patternAt(new Point(0, 0, 1))).toEqual(BLACK)
+    expect(pattern.patternAt(new Point(0.708, 0, 0.708))).toEqual(BLACK)
   })
 })

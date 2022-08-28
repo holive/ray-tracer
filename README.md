@@ -49,5 +49,40 @@ ___
 - [x] Transforming Patterns
 - [x] Generalizing Patterns
 - [x] Making a Gradient Pattern
-- [ ] Making a Ring Pattern
+- [x] Making a Ring Pattern
 - [ ] Making a 3D Checker Pattern
+___
+
+- [ ] Reflection
+- [ ] Transparency and Refraction
+- [ ] Fresnel Effect
+___
+- [ ] Intersecting a Ray with a Cube
+- [ ] Finding the Normal on a Cube
+___
+- [ ] Intersecting a Ray with a Cylinder
+- [ ] Finding the Normal on a Cylinder
+- [ ] Truncating Cylinders
+- [ ] Capped Cylinders
+- [ ] Cones
+___
+- [ ] Implementing Groups
+- [ ] Finding the Normal on a Child Object
+- [ ] Using Bounding Boxes to Optimize Large Scenes
+___
+- [ ] Triangles
+- [ ] Wavefront OBJ Files
+- [ ] Smooth Triangles
+- [ ] Smooth Triangles in OBJ Files
+___
+- [ ] Implementing CSG
+- [ ] Coloring CSG Shapes
+___
+- [ ] Area Lights and Soft Shadows
+- [ ] Spotlights
+- [ ] Focal Blur
+- [ ] Motion Blur
+- [ ] Anti-aliasing
+- [ ] Texture Maps
+- [ ] Normal Perturbation
+- [ ] Torus Primitive
