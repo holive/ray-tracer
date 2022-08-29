@@ -5,6 +5,7 @@ import { IDENTITY_MATRIX, Matrix } from '../matrices'
 import { Sphere } from '../spheres'
 import { GradientPattern } from '../patterns/GradientPattern'
 import { RingPattern } from '../patterns/RingPattern'
+import { CheckersPattern } from '../patterns/CheckersPattern'
 
 describe('Patterns', () => {
   it('should create a stripe pattern', () => {
@@ -94,5 +95,26 @@ describe('Patterns', () => {
     expect(pattern.patternAt(new Point(1, 0, 0))).toEqual(BLACK)
     expect(pattern.patternAt(new Point(0, 0, 1))).toEqual(BLACK)
     expect(pattern.patternAt(new Point(0.708, 0, 0.708))).toEqual(BLACK)
+  })
+
+  it('should check if checkers repear in x', () => {
+    const pattern = new CheckersPattern(WHITE, BLACK)
+    expect(pattern.patternAt(new Point(0, 0, 0))).toEqual(WHITE)
+    expect(pattern.patternAt(new Point(0.99, 0, 0))).toEqual(WHITE)
+    expect(pattern.patternAt(new Point(1.01, 0, 0))).toEqual(BLACK)
+  })
+
+  it('should check if checkers repear in y', () => {
+    const pattern = new CheckersPattern(WHITE, BLACK)
+    expect(pattern.patternAt(new Point(0, 0, 0))).toEqual(WHITE)
+    expect(pattern.patternAt(new Point(0, 0.99, 0))).toEqual(WHITE)
+    expect(pattern.patternAt(new Point(0, 1.01, 0))).toEqual(BLACK)
+  })
+
+  it('should check if checkers repear in z', () => {
+    const pattern = new CheckersPattern(WHITE, BLACK)
+    expect(pattern.patternAt(new Point(0, 0, 0))).toEqual(WHITE)
+    expect(pattern.patternAt(new Point(0, 0, 0.99))).toEqual(WHITE)
+    expect(pattern.patternAt(new Point(0, 0, 1.01))).toEqual(BLACK)
   })
 })
