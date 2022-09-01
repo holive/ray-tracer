@@ -109,7 +109,7 @@ describe('Materials', () => {
       const object = new Sphere()
       object.setTransform(Matrix.scaling(2, 2, 2))
       const pattern = new StripePattern(white, black)
-      const c = pattern.patternAt(object, new Point(1.5, 0, 0))
+      const c = pattern.patternAtShape(object, new Point(1.5, 0, 0))
       expect(c).toEqual(white)
     })
 
@@ -117,7 +117,7 @@ describe('Materials', () => {
       const object = new Sphere()
       const pattern = new StripePattern(white, black)
       pattern.setPatternTransform(Matrix.scaling(2, 2, 2))
-      const c = pattern.patternAt(object, new Point(1.5, 0, 0))
+      const c = pattern.patternAtShape(object, new Point(1.5, 0, 0))
       expect(c).toEqual(white)
     })
 
@@ -126,7 +126,7 @@ describe('Materials', () => {
       object.setTransform(Matrix.scaling(2, 2, 2))
       const pattern = new StripePattern(white, black)
       pattern.setPatternTransform(Matrix.translation(0.5, 0, 0))
-      const c = pattern.patternAt(object, new Point(2.5, 0, 0))
+      const c = pattern.patternAtShape(object, new Point(2.5, 0, 0))
       expect(c).toEqual(white)
     })
   })

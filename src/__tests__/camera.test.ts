@@ -31,7 +31,7 @@ describe('Camera', () => {
     const c = new Camera(201, 101, Math.PI / 2)
     const r = c.rayForPixel(100, 50)
     expect(r.origin).toEqual(new Point(0, 0, 0))
-    expect(r.direction).toEqual(new Vector(0, 0, -1))
+    expect(r.direction.toFixed(4)).toEqual(new Vector(0, 0, -1))
   })
 
   it('constructs a ray through a corner of the canvas', () => {

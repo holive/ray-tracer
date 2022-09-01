@@ -4,7 +4,7 @@ import { degreesToRadians } from '../utils'
 import { MatrixTypeFour, Matrix } from '../matrices'
 
 describe('build a analog clock to put together matrices operations', () => {
-  it('write the clock in the ppm file', () => {
+  it.skip('write the clock in the ppm file', () => {
     const width = 1000
     const height = 1000
     const c = new Canvas(width, height)

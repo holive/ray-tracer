@@ -133,7 +133,7 @@ describe('Sphere - transforming normals', () => {
   it('should compute the normal on a translated sphere', () => {
     const s = new Sphere()
     s.setTransform(Matrix.translation(0, 1, 0))
-    const n = s.localNormalAt(new Point(0, 1.70711, -0.70711))
+    const n = s.normalAt(new Point(0, 1.70711, -0.70711))
     expect(n).toEqual(new Vector(0, 0.7071067811865476, -0.7071067811865476))
   })
 
@@ -144,7 +144,7 @@ describe('Sphere - transforming normals', () => {
     )
     s.setTransform(m)
 
-    const n = s.localNormalAt(new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2))
+    const n = s.normalAt(new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2))
     expect(n).toEqual(new Vector(0, 0.970141693080727, -0.24253885327192506))
   })
 })

@@ -35,7 +35,7 @@ const tick = (
 }
 
 describe('Fire Projectile', () => {
-  it('executes tick()', () => {
+  it.skip('executes tick()', () => {
     const width = 900
     const height = 550
     const e: Environment = {

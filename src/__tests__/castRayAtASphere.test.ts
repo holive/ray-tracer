@@ -13,7 +13,7 @@ import { Plane } from '../plane'
 import { StripePattern } from '../patterns/StripePattern'
 
 describe('Cast rays at a sphere and draw the picture to a canvas', () => {
-  it('goes and writes in the ppm', () => {
+  it.skip('goes and writes in the ppm', () => {
     const rayOrigin = new Point(0, 0, -5)
     const wallZ = 10
     const wallSize = 7.0
@@ -67,7 +67,7 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
     canvas.toPPM()
   })
 
-  it('draws the first scene', () => {
+  it.skip('draws the first scene', () => {
     const middle = new Sphere()
     middle.setTransform(Matrix.translation(-0.5, 1, 0.5))
     middle.material = new Material()

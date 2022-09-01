@@ -54,6 +54,9 @@ export class BaseShape {
       ).transpose<MatrixTypeFour>()
     ).multiplyByTuple(localNormal)
 
-    return new Vector(worldNormal.x, worldNormal.y, worldNormal.z).normalize()
+    const x = Object.is(worldNormal.x, -0) ? 0 : worldNormal.x
+    const y = Object.is(worldNormal.y, -0) ? 0 : worldNormal.y
+    const z = Object.is(worldNormal.z, -0) ? 0 : worldNormal.z
+    return new Vector(x, y, z).normalize()
   }
 }
