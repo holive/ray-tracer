@@ -30,6 +30,7 @@ export class Intersection {
     }
 
     const overPoint = point.add(normalV.multiply(EPSILON))
+    const reflectV = r.direction.reflect(normalV)
 
     return {
       t,
@@ -38,7 +39,8 @@ export class Intersection {
       object,
       normalV,
       inside,
-      overPoint
+      overPoint,
+      reflectV
     }
   }
 

@@ -8,6 +8,7 @@ export class Material {
   diffuse = 0.9
   specular = 0.9
   shininess = 200
+  reflective = 0
   color = new Color(1, 1, 1)
   pattern?: StripePattern
 

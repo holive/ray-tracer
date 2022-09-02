@@ -3,6 +3,9 @@ import { Material, PointLight } from '../lights'
 import { StripePattern } from '../patterns/StripePattern'
 import { Sphere } from '../spheres'
 import { Matrix } from '../matrices'
+import { Plane } from '../plane'
+import { Ray } from '../rays'
+import { Intersection } from '../intersections'
 
 describe('Materials', () => {
   it('should have a default material', () => {
@@ -129,5 +132,23 @@ describe('Materials', () => {
       const c = pattern.patternAtShape(object, new Point(2.5, 0, 0))
       expect(c).toEqual(white)
     })
+  })
+
+  it('checks the reflectivity for the default material', () => {
+    const m = new Material()
+    expect(m.reflective).toBe(0)
+  })
+
+  it('precomputes the reflection vector', () => {
+    const shape = new Plane()
+    const r = new Ray(
+      new Point(0, 1, -1),
+      new Vector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2)
+    )
+    const i = new Intersection(Math.sqrt(2), shape)
+    const comps = i.prepareComputations(r)
+    expect(comps.reflectV).toEqual(
+      new Vector(0, Math.sqrt(2) / 2, Math.sqrt(2) / 2)
+    )
   })
 })

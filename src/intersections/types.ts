@@ -9,6 +9,7 @@ export type ComputationsType = {
   normalV: Vector
   inside: boolean
   overPoint: Tuple
+  reflectV: Vector
 }
 
 export type IntersectionObjectType = Sphere
