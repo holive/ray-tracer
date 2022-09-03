@@ -81,4 +81,13 @@ export class World {
     const h = Intersection.hit(intersections)
     return h != null && h.t < distance
   }
+
+  reflectedColor(comps: ComputationsType): Color {
+    if (comps.object.material.reflective == 0) {
+      return new Color(0, 0, 0)
+    }
+    const reflectRay = new Ray(comps.overPoint, comps.reflectV)
+    const color = this.colorAt(reflectRay)
+    return color.multiplyByScalar(comps.object.material.reflective)
+  }
 }

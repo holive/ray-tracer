@@ -6,6 +6,7 @@ import { Ray } from '../rays'
 import { Intersection } from '../intersections'
 import { Sphere } from '../spheres'
 import { Matrix } from '../matrices'
+import { Plane } from '../plane'
 
 describe('World', () => {
   it('Creates a world', () => {
@@ -130,5 +131,32 @@ describe('World', () => {
     const comps = i.prepareComputations(r)
     const c = w.shadeHit(comps)
     expect(c).toEqual(new Color(0.1, 0.1, 0.1))
+  })
+
+  it('checks for the reflected color for a nonreflective material', () => {
+    const w = new DefaultWord()
+    const r = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1))
+    const shape = w.objects[1]
+    shape.material.ambient = 1
+    const i = new Intersection(1, shape)
+    const comps = i.prepareComputations(r)
+    const color = w.reflectedColor(comps)
+    expect(color).toEqual(new Color(0, 0, 0))
+  })
+
+  it('checks the reflected color for a reflective material', () => {
+    const w = new DefaultWord()
+    const shape = new Plane()
+    shape.material.reflective = 0.5
+    shape.setTransform(Matrix.translation(0, -1, 0))
+    w.objects.push(shape)
+    const r = new Ray(
+      new Point(0, 0, -3),
+      new Vector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2)
+    )
+    const i = new Intersection(Math.sqrt(2), shape)
+    const comps = i.prepareComputations(r)
+    const color = w.reflectedColor(comps)
+    expect(color.toFixed()).toEqual(new Color(0.19034, 0.23792, 0.14275))
   })
 })

@@ -50,7 +50,8 @@ ___
 - [x] Generalizing Patterns
 - [x] Making a Gradient Pattern
 - [x] Making a Ring Pattern
-- [x] Making a 3D Checker Pattern
+- [xrftdctgyu74
+- 1] Making a 3D Checker Pattern
 ___
 
 - [ ] Reflection

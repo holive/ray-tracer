@@ -1,3 +1,5 @@
+import { toFixed } from '../utils'
+
 export class Color {
   red: number
   green: number
@@ -44,5 +46,9 @@ export class Color {
       Math.round(this.green * 255),
       Math.round(this.blue * 255)
     )
+  }
+
+  toFixed(): Color {
+    return new Color(toFixed(this.red), toFixed(this.green), toFixed(this.blue))
   }
 }
