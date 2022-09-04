@@ -159,4 +159,22 @@ describe('World', () => {
     const color = w.reflectedColor(comps)
     expect(color.toFixed()).toEqual(new Color(0.19034, 0.23792, 0.14275))
   })
+
+  it('checks shadeHit() with a reflective material', () => {
+    const w = new DefaultWord()
+    const shape = new Plane()
+    shape.material.reflective = 0.5
+    shape.setTransform(Matrix.translation(0, -1, 0))
+    w.objects.push(shape)
+
+    const r = new Ray(
+      new Point(0, 0, -3),
+      new Vector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2)
+    )
+    const i = new Intersection(Math.sqrt(2), shape)
+    const comps = i.prepareComputations(r)
+    const color = w.shadeHit(comps)
+
+    expect(color.toFixed()).toEqual(new Color(0.87676, 0.92435, 0.82918))
+  })
 })

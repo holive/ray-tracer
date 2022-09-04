@@ -37,16 +37,16 @@ export class World {
     }
 
     this.lights?.forEach((light) => {
-      colors.push(
-        comps.object.material.lighting(
-          light,
-          comps.point,
-          comps.eyeV,
-          comps.normalV,
-          shadowed,
-          comps.object
-        )
+      const surface = comps.object.material.lighting(
+        light,
+        comps.point,
+        comps.eyeV,
+        comps.normalV,
+        shadowed,
+        comps.object
       )
+      const reflected = this.reflectedColor(comps)
+      colors.push(surface.add(reflected))
     })
 
     if (colors.length >= 2) {
