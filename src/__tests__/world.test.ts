@@ -11,7 +11,7 @@ import { Plane } from '../plane'
 describe('World', () => {
   it('Creates a world', () => {
     const w = new World()
-    expect(w.lights).toBeUndefined()
+    expect(w.lights?.length).toBe(0)
     expect(w.objects.length).toBe(0)
   })
 
@@ -69,14 +69,14 @@ describe('World', () => {
   it('should return black if a ray misses', () => {
     const w = new DefaultWord()
     const r = new Ray(new Point(0, 0, -5), new Vector(0, 1, 0))
-    const c = w.colorAt(r)
+    const c = w.colorAt(r, 5)
     expect(c).toEqual(BLACK)
   })
 
   it('should return black if a ray hits', () => {
     const w = new DefaultWord()
     const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
-    const c = w.colorAt(r)
+    const c = w.colorAt(r, 5)
     expect(c).toEqual(
       new Color(0.38066119308103435, 0.47582649135129296, 0.28549589481077575)
     )
@@ -90,7 +90,7 @@ describe('World', () => {
     inner.material.ambient = 1
     const r = new Ray(new Point(0, 0, 0.75), new Vector(0, 0, -1))
 
-    const c = w.colorAt(r)
+    const c = w.colorAt(r, 5)
     expect(c).toEqual(inner.material.color)
   })
 
@@ -140,7 +140,7 @@ describe('World', () => {
     shape.material.ambient = 1
     const i = new Intersection(1, shape)
     const comps = i.prepareComputations(r)
-    const color = w.reflectedColor(comps)
+    const color = w.reflectedColor(comps, 5)
     expect(color).toEqual(new Color(0, 0, 0))
   })
 
@@ -156,7 +156,7 @@ describe('World', () => {
     )
     const i = new Intersection(Math.sqrt(2), shape)
     const comps = i.prepareComputations(r)
-    const color = w.reflectedColor(comps)
+    const color = w.reflectedColor(comps, 5)
     expect(color.toFixed()).toEqual(new Color(0.19034, 0.23792, 0.14275))
   })
 
@@ -176,5 +176,21 @@ describe('World', () => {
     const color = w.shadeHit(comps)
 
     expect(color.toFixed()).toEqual(new Color(0.87676, 0.92435, 0.82918))
+  })
+
+  it('checks the reflected color at the maximum recursive depth', () => {
+    const w = new DefaultWord()
+    const shape = new Plane()
+    shape.material.reflective = 0.5
+    shape.setTransform(Matrix.translation(0, -1, 0))
+    w.objects.push(shape)
+    const r = new Ray(
+      new Point(0, 0, -3),
+      new Vector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2)
+    )
+    const i = new Intersection(Math.sqrt(2), shape)
+    const comps = i.prepareComputations(r)
+    const color = w.reflectedColor(comps, 0)
+    expect(color.toFixed()).toEqual(new Color(0, 0, 0))
   })
 })

@@ -78,6 +78,7 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
       middle.material.color,
       new Color(0, 0, 0)
     )
+    middle.material.reflective = 1
 
     const right = new Sphere()
     right.setTransform(
@@ -93,6 +94,7 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
       right.material.color,
       new Color(0, 0, 0)
     )
+    right.material.reflective = 0.5
 
     const left = new Sphere()
     left.setTransform(
@@ -114,7 +116,7 @@ describe('Cast rays at a sphere and draw the picture to a canvas', () => {
     world.lights = [new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1))]
     world.objects = [floor, middle, left, right]
 
-    const camera = new Camera(300, 150, Math.PI / 3)
+    const camera = new Camera(600, 300, Math.PI / 3)
     camera.transform = viewTransform(
       new Point(0, 1.5, -5),
       new Point(0, 1, 0),

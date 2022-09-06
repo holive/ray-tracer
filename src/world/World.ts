@@ -6,9 +6,9 @@ import { BLACK, Color, Point, Vector } from '../tuples'
 
 export class World {
   objects: Sphere[] = []
-  lights?: PointLight[]
+  lights?: PointLight[] = []
 
-  constructor(objects = [], light?: PointLight[]) {
+  constructor(objects = [], light = []) {
     this.objects = objects
     this.lights = light
   }
@@ -27,7 +27,7 @@ export class World {
     return intersections.sort((a, b) => a.t - b.t)
   }
 
-  shadeHit(comps: ComputationsType): Color {
+  shadeHit(comps: ComputationsType, remaining = 5): Color {
     const shadowed = this.isShadowed(comps.overPoint)
 
     const colors: Color[] = []
@@ -45,7 +45,7 @@ export class World {
         shadowed,
         comps.object
       )
-      const reflected = this.reflectedColor(comps)
+      const reflected = this.reflectedColor(comps, remaining)
       colors.push(surface.add(reflected))
     })
 
@@ -56,13 +56,13 @@ export class World {
     return colors[0]
   }
 
-  colorAt(r: Ray): Color {
+  colorAt(r: Ray, remaining = 5): Color {
     const hit = Intersection.hit(this.intersect(r))
     if (!hit) {
       return BLACK
     }
 
-    return this.shadeHit(hit.prepareComputations(r))
+    return this.shadeHit(hit.prepareComputations(r), remaining)
   }
 
   isShadowed(point: Point): boolean {
@@ -82,12 +82,13 @@ export class World {
     return h != null && h.t < distance
   }
 
-  reflectedColor(comps: ComputationsType): Color {
-    if (comps.object.material.reflective == 0) {
+  reflectedColor(comps: ComputationsType, remaining: number): Color {
+    if (comps.object.material.reflective == 0 || remaining < 1) {
       return new Color(0, 0, 0)
     }
+
     const reflectRay = new Ray(comps.overPoint, comps.reflectV)
-    const color = this.colorAt(reflectRay)
+    const color = this.colorAt(reflectRay, remaining - 1)
     return color.multiplyByScalar(comps.object.material.reflective)
   }
 }

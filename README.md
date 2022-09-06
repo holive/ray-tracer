@@ -54,7 +54,7 @@ ___
 - 1] Making a 3D Checker Pattern
 ___
 
-- [ ] Reflection
+- [x] Reflection
 - [ ] Transparency and Refraction
 - [ ] Fresnel Effect
 ___
