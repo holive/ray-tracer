@@ -50,11 +50,13 @@ ___
 - [x] Generalizing Patterns
 - [x] Making a Gradient Pattern
 - [x] Making a Ring Pattern
-- [xrftdctgyu74
-- 1] Making a 3D Checker Pattern
+- [x] Making a 3D Checker Pattern
 ___
 
 - [x] Reflection
+
+<img width="299" alt="Screen Shot 2022-09-06 at 08 22 20" src="https://user-images.githubusercontent.com/6090596/188624803-dbc38aee-c402-4116-bb6f-5f2b4bb78617.png">
+
 - [ ] Transparency and Refraction
 - [ ] Fresnel Effect
 ___
