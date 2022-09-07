@@ -151,4 +151,10 @@ describe('Materials', () => {
       new Vector(0, Math.sqrt(2) / 2, Math.sqrt(2) / 2)
     )
   })
+
+  it('checks the transparency and refractive index for the default material', () => {
+    const m = new Material()
+    expect(m.transparency).toBe(0)
+    expect(m.refractiveIndex).toBe(1)
+  })
 })

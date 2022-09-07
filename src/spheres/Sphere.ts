@@ -30,4 +30,11 @@ export class Sphere extends BaseShape {
     const t2 = (-b + Math.sqrt(discriminant)) / (2 * a)
     return [new Intersection(t1, this), new Intersection(t2, this)]
   }
+
+  static glassSphere(): Sphere {
+    const s = new Sphere()
+    s.material.transparency = 1
+    s.material.refractiveIndex = 1.5
+    return s
+  }
 }

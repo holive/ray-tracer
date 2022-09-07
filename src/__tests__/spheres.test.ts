@@ -1,7 +1,7 @@
 import { Ray } from '../rays'
 import { Point, Vector } from '../tuples'
 import { Sphere } from '../spheres'
-import { Matrix, RANDOM_MATRIX } from '../matrices'
+import { IDENTITY_MATRIX, Matrix, RANDOM_MATRIX } from '../matrices'
 import { degreesToRadians } from '../utils'
 import { Material } from '../lights'
 import { BaseShape } from '../shapes'
@@ -126,6 +126,13 @@ describe('Spheres', () => {
 
     expect(s.material).toEqual(new Material())
     expect(s.position).toEqual(new Point(0, 0, 0))
+  })
+
+  it('should have a helper for producting a sphere with a glassy material', () => {
+    const s = Sphere.glassSphere()
+    expect(s.getTransform()).toEqual(IDENTITY_MATRIX)
+    expect(s.material.transparency).toBe(1)
+    expect(s.material.refractiveIndex).toBe(1.5)
   })
 })
 
