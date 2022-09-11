@@ -100,4 +100,43 @@ describe('Intersections', () => {
     expect(comps.overPoint.z < -EPSILON / 2).toBeTruthy()
     expect(comps.point.z > comps.overPoint.z)
   })
+
+  it('should find n1 and n2 at various intersections', () => {
+    const A = Sphere.glassSphere()
+    A.setTransform(Matrix.scaling(2, 2, 2))
+    A.material.refractiveIndex = 1.5
+
+    const B = Sphere.glassSphere()
+    B.setTransform(Matrix.translation(0, 0, -0.25))
+    B.material.refractiveIndex = 2
+
+    const C = Sphere.glassSphere()
+    C.setTransform(Matrix.translation(0, 0, 0.25))
+    C.material.refractiveIndex = 2.5
+
+    const r = new Ray(new Point(0, 0, -4), new Vector(0, 0, 1))
+    const xs = Intersection.intersections(
+      new Intersection(2, A),
+      new Intersection(2.75, B),
+      new Intersection(3.25, C),
+      new Intersection(4.75, B),
+      new Intersection(5.25, C),
+      new Intersection(6, A)
+    )
+
+    const reference: { n1: number; n2: number }[] = [
+      { n1: 1, n2: 1.5 },
+      { n1: 1.5, n2: 2 },
+      { n1: 2, n2: 2.5 },
+      { n1: 2.5, n2: 2.5 },
+      { n1: 2.5, n2: 1.5 },
+      { n1: 1.5, n2: 1 }
+    ]
+
+    xs.forEach((intersection, index) => {
+      const comps = intersection.prepareComputations(r, xs)
+      expect(comps.n1).toBe(reference[index].n1)
+      expect(comps.n2).toBe(reference[index].n2)
+    })
+  })
 })

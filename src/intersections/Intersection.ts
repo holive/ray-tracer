@@ -16,7 +16,7 @@ export class Intersection {
     this.object = object
   }
 
-  prepareComputations(r: Ray): ComputationsType {
+  prepareComputations(r: Ray, xs?: Intersection[]): ComputationsType {
     const t = this.t
     const object = this.object
     const point = r.position(t)
@@ -32,6 +32,35 @@ export class Intersection {
     const overPoint = point.add(normalV.multiply(EPSILON))
     const reflectV = r.direction.reflect(normalV)
 
+    let n1 = NaN
+    let n2 = NaN
+    let containers: IntersectionObjectType[] = []
+
+    for (const intersection of xs || []) {
+      if (this === intersection) {
+        n1 = containers.length
+          ? containers[containers.length - 1].material.refractiveIndex
+          : 1
+      }
+
+      const filtered = []
+      containers = containers.filter((container) => {
+        if (container !== intersection.object) return true
+        filtered.push(container)
+      })
+      if (filtered.length == 0) {
+        containers.push(intersection.object)
+      }
+
+      if (this === intersection) {
+        n2 = containers.length
+          ? containers[containers.length - 1].material.refractiveIndex
+          : 1
+
+        break
+      }
+    }
+
     return {
       t,
       eyeV,
@@ -40,7 +69,9 @@ export class Intersection {
       normalV,
       inside,
       overPoint,
-      reflectV
+      reflectV,
+      n1,
+      n2
     }
   }
 
