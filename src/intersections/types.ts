@@ -9,6 +9,7 @@ export type ComputationsType = {
   normalV: Vector
   inside: boolean
   overPoint: Tuple
+  underPoint: Tuple
   reflectV: Vector
   n1: number
   n2: number

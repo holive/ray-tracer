@@ -98,7 +98,7 @@ describe('Intersections', () => {
     const i = new Intersection(5, shape)
     const comps = i.prepareComputations(r)
     expect(comps.overPoint.z < -EPSILON / 2).toBeTruthy()
-    expect(comps.point.z > comps.overPoint.z)
+    expect(comps.point.z > comps.overPoint.z).toBeTruthy()
   })
 
   it('should find n1 and n2 at various intersections', () => {
@@ -138,5 +138,16 @@ describe('Intersections', () => {
       expect(comps.n1).toBe(reference[index].n1)
       expect(comps.n2).toBe(reference[index].n2)
     })
+  })
+
+  it('checks if the under point is offset below the surface', () => {
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
+    const shape = Sphere.glassSphere()
+    shape.setTransform(Matrix.translation(0, 0, 1))
+    const i = new Intersection(5, shape)
+    const xs = Intersection.intersections(i)
+    const comps = i.prepareComputations(r, xs)
+    expect(comps.underPoint.z > EPSILON / 2).toBeTruthy()
+    expect(comps.point.z < comps.underPoint.z).toBeTruthy()
   })
 })

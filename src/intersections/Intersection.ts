@@ -30,13 +30,32 @@ export class Intersection {
     }
 
     const overPoint = point.add(normalV.multiply(EPSILON))
+    const underPoint = point.subtract(normalV.multiply(EPSILON))
     const reflectV = r.direction.reflect(normalV)
 
+    const { n1, n2 } = this.calculateN1N2(xs || [])
+
+    return {
+      t,
+      eyeV,
+      point,
+      object,
+      normalV,
+      inside,
+      overPoint,
+      underPoint,
+      reflectV,
+      n1,
+      n2
+    }
+  }
+
+  private calculateN1N2(xs: Intersection[]) {
     let n1 = NaN
     let n2 = NaN
     let containers: IntersectionObjectType[] = []
 
-    for (const intersection of xs || []) {
+    for (const intersection of xs) {
       if (this === intersection) {
         n1 = containers.length
           ? containers[containers.length - 1].material.refractiveIndex
@@ -48,31 +67,17 @@ export class Intersection {
         if (container !== intersection.object) return true
         filtered.push(container)
       })
-      if (filtered.length == 0) {
-        containers.push(intersection.object)
-      }
+      if (filtered.length == 0) containers.push(intersection.object)
 
       if (this === intersection) {
         n2 = containers.length
           ? containers[containers.length - 1].material.refractiveIndex
           : 1
-
         break
       }
     }
 
-    return {
-      t,
-      eyeV,
-      point,
-      object,
-      normalV,
-      inside,
-      overPoint,
-      reflectV,
-      n1,
-      n2
-    }
+    return { n1, n2 }
   }
 
   private negateVector(value: Vector): Vector {
