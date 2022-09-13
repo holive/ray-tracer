@@ -1,9 +1,10 @@
 import { Sphere } from '../spheres'
 import { Intersection } from '../intersections'
 import { Ray } from '../rays'
-import { Point, Vector } from '../tuples'
+import { Color, Point, Vector } from '../tuples'
 import { Matrix } from '../matrices'
 import { EPSILON } from '../utils'
+import { DefaultWord } from '../world/DefaultWord'
 
 describe('Intersections', () => {
   it('should encapsulate t and object in an intersection', () => {
@@ -149,5 +150,34 @@ describe('Intersections', () => {
     const comps = i.prepareComputations(r, xs)
     expect(comps.underPoint.z > EPSILON / 2).toBeTruthy()
     expect(comps.point.z < comps.underPoint.z).toBeTruthy()
+  })
+
+  it('checks the refracted color with an opaque surface', () => {
+    const w = new DefaultWord()
+    const shape = w.objects[0]
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
+    const xs = Intersection.intersections(
+      new Intersection(4, shape),
+      new Intersection(6, shape)
+    )
+    const comps = xs[0].prepareComputations(r, xs)
+    const c = w.refractedColor(comps, 5)
+    expect(c).toEqual(new Color(0, 0, 0))
+  })
+
+  it('checks the refracted color at the maximum recursive depth', () => {
+    const w = new DefaultWord()
+    const shape = w.objects[0]
+    shape.material.transparency = 1
+    shape.material.refractiveIndex = 1.5
+
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
+    const xs = Intersection.intersections(
+      new Intersection(4, shape),
+      new Intersection(6, shape)
+    )
+    const comps = xs[0].prepareComputations(r, xs)
+    const c = w.refractedColor(comps, 0)
+    expect(c).toEqual(new Color(0, 0, 0))
   })
 })

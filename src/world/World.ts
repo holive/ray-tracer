@@ -91,4 +91,11 @@ export class World {
     const color = this.colorAt(reflectRay, remaining - 1)
     return color.multiplyByScalar(comps.object.material.reflective)
   }
+
+  refractedColor(comps: ComputationsType, remaining: number): Color {
+    if (comps.object.material.transparency == 0 || remaining == 0) {
+      return new Color(0, 0, 0)
+    }
+    return new Color(1, 1, 1)
+  }
 }
