@@ -193,4 +193,21 @@ describe('World', () => {
     const color = w.reflectedColor(comps, 0)
     expect(color.toFixed()).toEqual(new Color(0, 0, 0))
   })
+
+  it('checks the refracted color under total interl reflection', () => {
+    const w = new DefaultWord()
+    const shape = w.objects[0]
+    shape.material.transparency = 1
+    shape.material.refractiveIndex = 1.5
+    const r = new Ray(new Point(0, 0, Math.sqrt(2) / 2), new Vector(0, 1, 0))
+    const xs = Intersection.intersections(
+      new Intersection(-Math.sqrt(2) / 2, shape),
+      new Intersection(Math.sqrt(2) / 2, shape)
+    )
+    // note: this time you're inside the sphere, so you need to look at the
+    // second intersection
+    const comps = xs[1].prepareComputations(r, xs)
+    const c = w.refractedColor(comps, 5)
+    expect(c).toEqual(new Color(0, 0, 0))
+  })
 })

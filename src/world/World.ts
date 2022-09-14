@@ -93,7 +93,15 @@ export class World {
   }
 
   refractedColor(comps: ComputationsType, remaining: number): Color {
-    if (comps.object.material.transparency == 0 || remaining == 0) {
+    const nRatio = comps.n1 / comps.n2
+    const cosI = comps.eyeV.dot(comps.normalV)
+    const sin2T = nRatio ** 2 * (1 - cosI ** 2)
+
+    if (
+      comps.object.material.transparency == 0 ||
+      remaining == 0 ||
+      sin2T > 1
+    ) {
       return new Color(0, 0, 0)
     }
     return new Color(1, 1, 1)
