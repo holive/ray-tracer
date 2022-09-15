@@ -104,6 +104,19 @@ export class World {
     ) {
       return new Color(0, 0, 0)
     }
-    return new Color(1, 1, 1)
+
+    const cosT = Math.sqrt(1 - sin2T)
+    const direction = comps.normalV
+      .multiply(nRatio * cosI - cosT)
+      .subtract(comps.eyeV.multiply(nRatio))
+
+    const refractedRay = new Ray(
+      comps.underPoint,
+      new Vector(direction.x, direction.y, direction.z)
+    )
+
+    return this.colorAt(refractedRay, remaining - 1).multiplyByScalar(
+      comps.object.material.transparency
+    )
   }
 }

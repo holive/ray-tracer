@@ -7,6 +7,8 @@ import { Intersection } from '../intersections'
 import { Sphere } from '../spheres'
 import { Matrix } from '../matrices'
 import { Plane } from '../plane'
+import { TestPattern } from '../patterns/TestPattern'
+import { FooPattern } from '../patterns/FooPattern'
 
 describe('World', () => {
   it('Creates a world', () => {
@@ -209,5 +211,26 @@ describe('World', () => {
     const comps = xs[1].prepareComputations(r, xs)
     const c = w.refractedColor(comps, 5)
     expect(c).toEqual(new Color(0, 0, 0))
+  })
+
+  it('checks the refracted color with a refracted ray', () => {
+    const w = new DefaultWord()
+    const A = w.objects[0]
+    A.material.ambient = 1
+    A.material.pattern = new FooPattern()
+
+    const B = w.objects[1]
+    B.material.transparency = 1
+    B.material.refractiveIndex = 1.5
+    const r = new Ray(new Point(0, 0, 0.1), new Vector(0, 1, 0))
+    const xs = Intersection.intersections(
+      new Intersection(-0.9899, A),
+      new Intersection(-0.4899, B),
+      new Intersection(0.4899, B),
+      new Intersection(0.9899, A)
+    )
+    const comps = xs[2].prepareComputations(r, xs)
+    const c = w.refractedColor(comps, 5)
+    expect(c).toEqual(new Color(0, 0.99888, 0.04734))
   })
 })

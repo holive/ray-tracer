@@ -1,7 +1,7 @@
 import { BLACK, Color, Point, Vector } from '../tuples'
 import { PointLight } from './PointLight'
-import { StripePattern } from '../patterns/StripePattern'
 import { BaseShape } from '../shapes'
+import { FooPattern } from '../patterns/FooPattern'
 
 export class Material {
   ambient = 0.1
@@ -12,7 +12,7 @@ export class Material {
   transparency = 0
   refractiveIndex = 1
   color = new Color(1, 1, 1)
-  pattern?: StripePattern
+  pattern?: FooPattern
 
   lighting(
     light: PointLight,
