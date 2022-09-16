@@ -28,13 +28,12 @@ export class World {
   }
 
   shadeHit(comps: ComputationsType, remaining = 5): Color {
-    const shadowed = this.isShadowed(comps.overPoint)
-
-    const colors: Color[] = []
-
     if (!this.lights?.length || !this.lights[0]) {
       throw new Error('The world light cannot be empty!')
     }
+
+    const shadowed = this.isShadowed(comps.overPoint)
+    const colors: Color[] = []
 
     this.lights?.forEach((light) => {
       const surface = comps.object.material.lighting(
@@ -46,7 +45,9 @@ export class World {
         comps.object
       )
       const reflected = this.reflectedColor(comps, remaining)
-      colors.push(surface.add(reflected))
+      const refractedColor = this.refractedColor(comps, remaining)
+
+      colors.push(surface.add(reflected).add(refractedColor))
     })
 
     if (colors.length >= 2) {
