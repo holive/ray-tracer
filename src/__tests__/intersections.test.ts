@@ -180,4 +180,16 @@ describe('Intersections', () => {
     const c = w.refractedColor(comps, 0)
     expect(c).toEqual(new Color(0, 0, 0))
   })
+
+  it('checks the Schlick approximation under total internal reflection', () => {
+    const shape = Sphere.glassSphere()
+    const r = new Ray(new Point(0, 0, Math.sqrt(2) / 2), new Vector(0, 1, 0))
+    const xs = Intersection.intersections(
+      new Intersection(-Math.sqrt(2) / 2, shape),
+      new Intersection(Math.sqrt(2) / 2, shape)
+    )
+    const comps = xs[1].prepareComputations(r, xs)
+    const reflectance = Intersection.schlick(comps)
+    expect(reflectance).toBe(1)
+  })
 })

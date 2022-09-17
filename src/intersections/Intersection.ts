@@ -100,4 +100,16 @@ export class Intersection {
 
     return hits.length ? hits[0] : null
   }
+
+  static schlick(comps: ComputationsType): 0 | 1 {
+    const cos = comps.eyeV.dot(comps.normalV)
+
+    if (comps.n1 > comps.n2) {
+      const n = comps.n1 / comps.n2
+      const sin2T = n ** 2 * (1 - cos ** 2)
+      if (sin2T > 1) return 1
+    }
+
+    return 0
+  }
 }
