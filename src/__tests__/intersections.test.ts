@@ -192,4 +192,25 @@ describe('Intersections', () => {
     const reflectance = Intersection.schlick(comps)
     expect(reflectance).toBe(1)
   })
+
+  it('checks the Schlick approximation with a perpendicular viewing angle', () => {
+    const shape = Sphere.glassSphere()
+    const r = new Ray(new Point(0, 0, 0), new Vector(0, 1, 0))
+    const xs = Intersection.intersections(
+      new Intersection(-1, shape),
+      new Intersection(1, shape)
+    )
+    const comps = xs[1].prepareComputations(r, xs)
+    const reflectance = Intersection.schlick(comps)
+    expect(Number(reflectance.toFixed(5))).toBe(0.04)
+  })
+
+  it('checks the Schlick approximation with small angle and n2 > n1', () => {
+    const shape = Sphere.glassSphere()
+    const r = new Ray(new Point(0, 0.99, -2), new Vector(0, 0, 1))
+    const xs = Intersection.intersections(new Intersection(1.8589, shape))
+    const comps = xs[0].prepareComputations(r, xs)
+    const reflectance = Intersection.schlick(comps)
+    expect(reflectance).toBe(0.4887308101221217)
+  })
 })
