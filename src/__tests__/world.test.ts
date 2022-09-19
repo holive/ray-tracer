@@ -257,4 +257,29 @@ describe('World', () => {
     const color = w.shadeHit(comps, 5)
     expect(color.toFixed()).toEqual(new Color(0.93643, 0.68643, 0.68643))
   })
+
+  it('checks shadeHit() with a reflective, transparent material', () => {
+    const w = new DefaultWord()
+    const r = new Ray(
+      new Point(0, 0, -3),
+      new Vector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2)
+    )
+    const floor = new Plane()
+    floor.setTransform(Matrix.translation(0, -1, 0))
+    floor.material.reflective = 0.5
+    floor.material.transparency = 0.5
+    floor.material.refractiveIndex = 1.5
+    w.objects.push(floor)
+
+    const ball = new Sphere()
+    ball.material.color = new Color(1, 0, 0)
+    ball.material.ambient = 0.5
+    ball.setTransform(Matrix.translation(0, -3.5, -0.5))
+    w.objects.push(ball)
+
+    const xs = Intersection.intersections(new Intersection(Math.sqrt(2), floor))
+    const comps = xs[0].prepareComputations(r, xs)
+    const color = w.shadeHit(comps, 5)
+    expect(color.toFixed()).toEqual(new Color(0.93392, 0.69644, 0.69243))
+  })
 })

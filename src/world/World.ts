@@ -32,11 +32,12 @@ export class World {
       throw new Error('The world light cannot be empty!')
     }
 
+    const { material } = comps.object
     const shadowed = this.isShadowed(comps.overPoint)
     const colors: Color[] = []
 
     this.lights?.forEach((light) => {
-      const surface = comps.object.material.lighting(
+      const surface = material.lighting(
         light,
         comps.point,
         comps.eyeV,
@@ -47,7 +48,16 @@ export class World {
       const reflected = this.reflectedColor(comps, remaining)
       const refractedColor = this.refractedColor(comps, remaining)
 
-      colors.push(surface.add(reflected).add(refractedColor))
+      if (material.reflective > 0 && material.transparency > 0) {
+        const reflectance = Intersection.schlick(comps)
+        colors.push(
+          surface
+            .add(reflected.multiplyByScalar(reflectance))
+            .add(refractedColor.multiplyByScalar(1 - reflectance))
+        )
+      } else {
+        colors.push(surface.add(reflected).add(refractedColor))
+      }
     })
 
     if (colors.length >= 2) {
