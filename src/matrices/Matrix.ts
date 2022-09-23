@@ -134,6 +134,9 @@ export class Matrix {
       [0, 0, 0, 1]
     ]
   }
+  static translationC(x: number, y: number, z: number): Matrix {
+    return new Matrix(Matrix.translation(x, y, z))
+  }
 
   static scaling(x: number, y: number, z: number): MatrixTypeFour {
     return [
@@ -142,6 +145,9 @@ export class Matrix {
       [0, 0, z, 0],
       [0, 0, 0, 1]
     ]
+  }
+  static scalingC(x: number, y: number, z: number): Matrix {
+    return new Matrix(Matrix.scaling(x, y, z))
   }
 
   static rotationX(radians: number): MatrixTypeFour {
@@ -154,6 +160,9 @@ export class Matrix {
       [0, 0, 0, 1]
     ]
   }
+  static rotationXC(radians: number): Matrix {
+    return new Matrix(Matrix.rotationX(radians))
+  }
 
   static rotationY(radians: number): MatrixTypeFour {
     const { cos, sin } = getCosSinFromRadians(radians)
@@ -165,6 +174,9 @@ export class Matrix {
       [0, 0, 0, 1]
     ]
   }
+  static rotationYC(radians: number): Matrix {
+    return new Matrix(Matrix.rotationY(radians))
+  }
 
   static rotationZ(radians: number): MatrixTypeFour {
     const { cos, sin } = getCosSinFromRadians(radians)
@@ -175,6 +187,9 @@ export class Matrix {
       [0, 0, 1, 0],
       [0, 0, 0, 1]
     ]
+  }
+  static rotationZC(radians: number): Matrix {
+    return new Matrix(Matrix.rotationZ(radians))
   }
 
   static shearing(

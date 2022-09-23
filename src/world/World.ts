@@ -1,11 +1,11 @@
 import { PointLight } from '../lights'
-import { Sphere } from '../spheres'
 import { Ray } from '../rays'
 import { Intersection, ComputationsType } from '../intersections'
 import { BLACK, Color, Point, Vector } from '../tuples'
+import { BaseShape } from '../shapes'
 
 export class World {
-  objects: Sphere[] = []
+  objects: BaseShape[] = []
   lights?: PointLight[] = []
 
   constructor(objects = [], light = []) {
@@ -39,7 +39,7 @@ export class World {
     this.lights?.forEach((light) => {
       const surface = material.lighting(
         light,
-        comps.point,
+        comps.overPoint,
         comps.eyeV,
         comps.normalV,
         shadowed,
@@ -68,12 +68,13 @@ export class World {
   }
 
   colorAt(r: Ray, remaining = 5): Color {
-    const hit = Intersection.hit(this.intersect(r))
+    const xs = this.intersect(r)
+    const hit = Intersection.hit(xs)
     if (!hit) {
       return BLACK
     }
 
-    return this.shadeHit(hit.prepareComputations(r), remaining)
+    return this.shadeHit(hit.prepareComputations(r, xs), remaining)
   }
 
   isShadowed(point: Point): boolean {

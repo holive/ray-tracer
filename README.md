@@ -30,9 +30,10 @@ ___
 - [x] Reflecting Vectors
 - [x] The Phong Reflection Model
 
-![render](https://user-images.githubusercontent.com/6090596/180615193-82b8b147-9ad6-4a9d-84e5-5511d2a46978.jpg)
+<img width="299" src="https://user-images.githubusercontent.com/6090596/180615193-82b8b147-9ad6-4a9d-84e5-5511d2a46978.jpg">
 
 ___
+
 - [x] Building a World
 - [x] Defining a View Transformation
 - [x] Implementing a Camera
@@ -57,8 +58,8 @@ ___
 
 <img width="299" alt="Screen Shot 2022-09-06 at 08 22 20" src="https://user-images.githubusercontent.com/6090596/188624803-dbc38aee-c402-4116-bb6f-5f2b4bb78617.png">
 
-- [ ] Transparency and Refraction
-- [ ] Fresnel Effect
+- [x] Transparency and Refraction
+- [x] Fresnel Effect
 ___
 - [ ] Intersecting a Ray with a Cube
 - [ ] Finding the Normal on a Cube
