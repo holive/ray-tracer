@@ -60,6 +60,9 @@ ___
 
 - [x] Transparency and Refraction
 - [x] Fresnel Effect
+
+![reflextions and refractions (1)](https://user-images.githubusercontent.com/6090596/191959275-bea34ea1-4e29-4f3a-8645-ad53412e5dd6.jpeg)
+
 ___
 - [ ] Intersecting a Ray with a Cube
 - [ ] Finding the Normal on a Cube
