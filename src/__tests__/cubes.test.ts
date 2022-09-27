@@ -61,4 +61,40 @@ describe('Cubes', () => {
       expect(xs[1].t).toBe(ctx.t2)
     })
   })
+
+  it('checks if a ray misses a cube', () => {
+    const cases = [
+      {
+        origin: new Point(-2, 0, 0),
+        direction: new Vector(0.2673, 0.5345, 0.8018)
+      },
+      {
+        origin: new Point(0, -2, 0),
+        direction: new Vector(0.8018, 0.2673, 0.5345)
+      },
+      {
+        origin: new Point(0, 0, -2),
+        direction: new Vector(0.5345, 0.8018, 0.2673)
+      },
+      {
+        origin: new Point(2, 0, 2),
+        direction: new Vector(0, 0, -1)
+      },
+      {
+        origin: new Point(0, 2, 2),
+        direction: new Vector(0, -1, 0)
+      },
+      {
+        origin: new Point(2, 2, 0),
+        direction: new Vector(-1, 0, 0)
+      }
+    ]
+
+    cases.forEach((cs) => {
+      const c = new Cube()
+      const r = new Ray(cs.origin, cs.direction)
+      const xs = c.localIntersect(r)
+      expect(xs.length).toBe(0)
+    })
+  })
 })

@@ -12,6 +12,8 @@ export class Cube extends BaseShape {
     const tMin = Math.max(xtMin, ytMin, ztMin)
     const tMax = Math.min(xtMax, ytMax, ztMax)
 
+    if (tMin > tMax) return []
+
     return Intersection.intersections(
       new Intersection(tMin, this),
       new Intersection(tMax, this)
