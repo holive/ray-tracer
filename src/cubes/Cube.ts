@@ -2,6 +2,7 @@ import { BaseShape } from '../shapes'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
 import { EPSILON } from '../utils'
+import { Point, Vector } from '../tuples'
 
 export class Cube extends BaseShape {
   localIntersect(r: Ray): Intersection[] {
@@ -39,5 +40,21 @@ export class Cube extends BaseShape {
     }
 
     return [tMin, tMax]
+  }
+
+  localNormalAt(point: Point): Vector {
+    const maxc = Math.max(
+      Math.abs(point.x),
+      Math.abs(point.y),
+      Math.abs(point.z)
+    )
+
+    if (maxc == Math.abs(point.x)) {
+      return new Vector(point.x, 0, 0)
+    } else if (maxc == Math.abs(point.y)) {
+      return new Vector(0, point.y, 0)
+    }
+
+    return new Vector(0, 0, point.z)
   }
 }

@@ -97,4 +97,24 @@ describe('Cubes', () => {
       expect(xs.length).toBe(0)
     })
   })
+
+  it('checks the normal on the surface of a cube', () => {
+    const cases = [
+      { point: new Point(1, 0.5, -0.8), normal: new Vector(1, 0, 0) },
+      { point: new Point(-1, -0.2, 0.9), normal: new Vector(-1, 0, 0) },
+      { point: new Point(-0.4, 1, -0.1), normal: new Vector(0, 1, 0) },
+      { point: new Point(0.3, -1, -0.7), normal: new Vector(0, -1, 0) },
+      { point: new Point(-0.6, 0.3, 1), normal: new Vector(0, 0, 1) },
+      { point: new Point(0.4, 0.4, -1), normal: new Vector(0, 0, -1) },
+      { point: new Point(1, 1, 1), normal: new Vector(1, 0, 0) },
+      { point: new Point(-1, -1, -1), normal: new Vector(-1, 0, 0) }
+    ]
+
+    cases.forEach((cs) => {
+      const c = new Cube()
+      const p = cs.point
+      const normal = c.localNormalAt(p)
+      expect(normal).toEqual(cs.normal)
+    })
+  })
 })
