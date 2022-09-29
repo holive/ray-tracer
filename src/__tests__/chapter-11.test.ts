@@ -10,7 +10,7 @@ import { CheckersPattern } from '../patterns/CheckersPattern'
 import { Sphere } from '../spheres'
 
 describe('Putting together chapter 11', () => {
-  it('renders the scene', () => {
+  it.skip('renders the scene', () => {
     // camera
     const camera = new Camera(400, 200, 1.152)
     camera.transform = viewTransform(

@@ -1,6 +1,12 @@
 import { Cube } from '../cubes'
 import { Ray } from '../rays'
-import { Point, Vector } from '../tuples'
+import { Color, Point, Vector } from '../tuples'
+import { Camera } from '../camera'
+import { viewTransform } from '../transformations'
+import { World } from '../world'
+import { PointLight } from '../lights'
+import { Sphere } from '../spheres'
+import { Matrix } from '../matrices'
 
 describe('Cubes', () => {
   it('checks if a ray intersects a cube', () => {
@@ -116,5 +122,41 @@ describe('Cubes', () => {
       const normal = c.localNormalAt(p)
       expect(normal).toEqual(cs.normal)
     })
+  })
+
+  it.skip('renders a cube', () => {
+    const camera = new Camera(300, 150, 1.152)
+    camera.transform = viewTransform(
+      new Point(-2.6, 1.5, -3.9),
+      new Point(-0.6, 1, -0.8),
+      new Vector(0, 1, 0)
+    )
+
+    const world = new World()
+    world.lights = [
+      new PointLight(new Point(-4.9, 4.9, -1), new Color(1, 1, 1))
+    ]
+
+    const cube1 = new Cube()
+    cube1.setTransform(
+      Matrix.translationC(-0.6, 0, 0.6).multiply(Matrix.rotationX(-0.3))
+    )
+    cube1.material.color = new Color(1, 0.3, 0.2)
+    cube1.material.specular = 0.4
+    cube1.material.shininess = 100
+
+    const cube2 = new Cube()
+    cube2.setTransform(
+      Matrix.translationC(1, 1, 0).multiply(
+        Matrix.rotationXC(-0.3).multiply(Matrix.scaling(0.5, 0.5, 0.5))
+      )
+    )
+    cube2.material.color = new Color(0.3, 1, 0.2)
+    cube2.material.specular = 0.4
+    cube2.material.shininess = 100
+    cube2.material.reflective = 0.8
+
+    world.objects.push(cube1, cube2)
+    camera.render(world).toPPM()
   })
 })
