@@ -60,4 +60,19 @@ describe('Cylinders', () => {
       expect(+xs[1].t.toFixed(5)).toBe(cs.t1)
     })
   })
+
+  it('finds normal vector on a cylinder', () => {
+    const cases = [
+      { point: new Point(1, 0, 0), normal: new Vector(1, 0, 0) },
+      { point: new Point(0, 5, -1), normal: new Vector(0, 0, -1) },
+      { point: new Point(0, -2, 1), normal: new Vector(0, 0, 1) },
+      { point: new Point(-1, 1, 0), normal: new Vector(-1, 0, 0) }
+    ]
+
+    cases.forEach((cs) => {
+      const cyl = new Cylinder()
+      const n = cyl.localNormalAt(cs.point)
+      expect(n).toEqual(cs.normal)
+    })
+  })
 })

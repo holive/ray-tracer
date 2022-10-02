@@ -2,6 +2,7 @@ import { BaseShape } from '../shapes'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
 import { EPSILON } from '../utils'
+import { Point, Vector } from '../tuples'
 
 export class Cylinder extends BaseShape {
   localIntersect(r: Ray): Intersection[] {
@@ -19,5 +20,9 @@ export class Cylinder extends BaseShape {
     const t1 = (-b + Math.sqrt(disc)) / (2 * a)
 
     return [new Intersection(t0, this), new Intersection(t1, this)]
+  }
+
+  localNormalAt({ x, z }: Point): Vector {
+    return new Vector(x, 0, z)
   }
 }
