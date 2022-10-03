@@ -75,4 +75,55 @@ describe('Cylinders', () => {
       expect(n).toEqual(cs.normal)
     })
   })
+
+  it('checks the default minimum and maximum for a cylinder', () => {
+    const cyl = new Cylinder(-Infinity, Infinity)
+    expect(cyl.minimum).toEqual(-Infinity)
+    expect(cyl.maximum).toEqual(Infinity)
+  })
+
+  it('checks the intersection of a constrained cylinder', () => {
+    const cases = [
+      {
+        point: new Point(0, 1.5, 0),
+        direction: new Vector(0.1, 1, 0),
+        count: 0
+      },
+      {
+        point: new Point(0, 3, -5),
+        direction: new Vector(0, 0, 1),
+        count: 0
+      },
+      {
+        point: new Point(0, 0, -5),
+        direction: new Vector(0, 0, 1),
+        count: 0
+      },
+      {
+        point: new Point(0, 2, -5),
+        direction: new Vector(0, 0, 1),
+        count: 0
+      },
+      {
+        point: new Point(0, 1, -5),
+        direction: new Vector(0, 0, 1),
+        count: 0
+      },
+      {
+        point: new Point(0, 1.5, -2),
+        direction: new Vector(0, 0, 1),
+        count: 2
+      }
+    ]
+
+    cases.forEach((cs) => {
+      const cyl = new Cylinder()
+      cyl.minimum = 1
+      cyl.maximum = 2
+      const direction = cs.direction.normalize()
+      const r = new Ray(cs.point, direction)
+      const xs = cyl.localIntersect(r)
+      expect(xs.length).toBe(cs.count)
+    })
+  })
 })
