@@ -126,4 +126,30 @@ describe('Cylinders', () => {
       expect(xs.length).toBe(cs.count)
     })
   })
+
+  it('checks the default closed value for a cylinder', () => {
+    const cyl = new Cylinder()
+    expect(cyl.closed).toBeFalsy()
+  })
+
+  it('intersects the caps of a closed cylinder', () => {
+    const cases = [
+      { point: new Point(0, 3, 0), direction: new Vector(0, -1, 0), count: 2 },
+      { point: new Point(0, 3, -2), direction: new Vector(0, -1, 2), count: 2 },
+      { point: new Point(0, 4, -2), direction: new Vector(0, -1, 1), count: 2 }, // corner case
+      { point: new Point(0, 0, -2), direction: new Vector(0, 1, 2), count: 2 },
+      { point: new Point(0, -1, -2), direction: new Vector(0, 1, 1), count: 2 } // corner case
+    ]
+
+    cases.forEach((cs) => {
+      const cyl = new Cylinder()
+      cyl.minimum = 1
+      cyl.maximum = 2
+      cyl.closed = true
+      const direction = cs.direction.normalize()
+      const r = new Ray(cs.point, direction)
+      const xs = cyl.localIntersect(r)
+      expect(xs.length).toBe(cs.count)
+    })
+  })
 })
