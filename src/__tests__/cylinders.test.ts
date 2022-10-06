@@ -152,4 +152,24 @@ describe('Cylinders', () => {
       expect(xs.length).toBe(cs.count)
     })
   })
+
+  it("checks the normal vector on a cylinder's end caps", () => {
+    const cases = [
+      { point: new Point(0, 1, 0), normal: new Vector(0, -1, 0) },
+      { point: new Point(0.5, 1, 0), normal: new Vector(0, -1, 0) },
+      { point: new Point(0, 1, 0.5), normal: new Vector(0, -1, 0) },
+      { point: new Point(0, 2, 0), normal: new Vector(0, 1, 0) },
+      { point: new Point(0.5, 2, 0), normal: new Vector(0, 1, 0) },
+      { point: new Point(0, 2, 0.5), normal: new Vector(0, 1, 0) }
+    ]
+
+    cases.forEach((cs) => {
+      const cyl = new Cylinder()
+      cyl.minimum = 1
+      cyl.maximum = 2
+      cyl.closed = true
+      const n = cyl.localNormalAt(cs.point)
+      expect(n).toEqual(cs.normal)
+    })
+  })
 })

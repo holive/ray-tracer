@@ -45,7 +45,14 @@ export class Cylinder extends BaseShape {
     return xs
   }
 
-  localNormalAt({ x, z }: Point): Vector {
+  localNormalAt({ x, y, z }: Point): Vector {
+    const dist = x ** 2 + z ** 2
+    if (dist < 1 && y >= this.maximum - EPSILON) {
+      return new Vector(0, 1, 0)
+    } else if (dist < 1 && y <= this.minimum + EPSILON) {
+      return new Vector(0, -1, 0)
+    }
+
     return new Vector(x, 0, z)
   }
 
