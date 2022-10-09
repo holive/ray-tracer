@@ -71,7 +71,7 @@ ___
 - [x] Finding the Normal on a Cylinder
 - [x] Truncating Cylinders
 - [x] Capped Cylinders
-- [ ] Cones
+- [x] Cones
 ___
 - [ ] Implementing Groups
 - [ ] Finding the Normal on a Child Object

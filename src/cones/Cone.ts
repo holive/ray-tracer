@@ -18,30 +18,33 @@ export class Cone extends BaseShape {
   localIntersect(r: Ray): Intersection[] {
     const xs = this.intersectCaps(r, [])
 
-    let disc = 0
     const a = r.direction.x ** 2 - r.direction.y ** 2 + r.direction.z ** 2
-    let b = 0
-    b =
+    const b =
       2 * r.origin.x * r.direction.x -
       2 * r.origin.y * r.direction.y +
       2 * r.origin.z * r.direction.z
     const c = r.origin.x ** 2 - r.origin.y ** 2 + r.origin.z ** 2
 
-    if (Math.abs(a) < EPSILON && Math.abs(b) < EPSILON) {
-      return []
-    }
-
     if (Math.abs(a) < EPSILON) {
+      if (Math.abs(b) < EPSILON) {
+        return xs
+      }
+
       const t = -c / (b * 2)
       xs.push(new Intersection(t, this))
+      return xs
     } else {
-      disc = b ** 2 - 4 * a * c
-      if (disc < 0) return []
+      const disc = b ** 2 - 4 * a * c
 
-      const t0 = (-b - Math.sqrt(disc)) / (2 * a)
-      const t1 = (-b + Math.sqrt(disc)) / (2 * a)
-      if (t0 > t1)
-        return [new Intersection(t1, this), new Intersection(t0, this)]
+      // ray does not intersect cone itself
+      if (disc < 0) return xs
+
+      let t0 = (-b - Math.sqrt(disc)) / (2 * a)
+      let t1 = (-b + Math.sqrt(disc)) / (2 * a)
+
+      if (t0 > t1) {
+        ;[t0, t1] = [t1, t0]
+      }
 
       const y0 = r.origin.y + t0 * r.direction.y
       if (this.minimum < y0 && y0 < this.maximum) {
@@ -74,16 +77,19 @@ export class Cone extends BaseShape {
     return newXs
   }
 
-  localNormalAt({ x, y, z }: Point): Vector {
-    const dist = x ** 2 + z ** 2
+  localNormalAt(p: Point): Vector {
+    const dist = p.x ** 2 + p.z ** 2
 
-    if (dist < 1 && y >= this.maximum - EPSILON) {
+    if (dist < 1 && p.y >= this.maximum - EPSILON) {
       return new Vector(0, 1, 0)
-    } else if (dist < 1 && y <= this.minimum + EPSILON) {
+    } else if (dist < 1 && p.y <= this.minimum + EPSILON) {
       return new Vector(0, -1, 0)
     }
 
-    return new Vector(x, 0, z) // todo: check this one
+    let y = Math.sqrt(p.x ** 2 + p.z ** 2)
+    y = p.y > 0 ? -y : y
+
+    return new Vector(p.x, y, p.z) // todo: check this one
   }
 
   private checkCap(

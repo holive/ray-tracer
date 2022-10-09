@@ -41,7 +41,11 @@ describe('cones', () => {
 
   it("intersects a cone's end caps", () => {
     const cases = [
-      { origin: new Point(0, 0, -5), direction: new Vector(0, 1, 0), count: 0 },
+      {
+        origin: new Point(0, 0, -5),
+        direction: new Vector(0, 1, 0),
+        count: 0
+      },
       {
         origin: new Point(0, 0, -0.25),
         direction: new Vector(0, 1, 1),
@@ -63,6 +67,29 @@ describe('cones', () => {
       const r = new Ray(cs.origin, direction)
       const xs = shape.localIntersect(r)
       expect(xs.length).toBe(cs.count)
+    })
+  })
+
+  it('computes the normal vector on a cone', () => {
+    const cases = [
+      {
+        point: new Point(0, 0, 0),
+        normal: new Vector(0, 0, 0)
+      },
+      {
+        point: new Point(1, 1, 1),
+        normal: new Vector(1, -Math.sqrt(2), 1)
+      },
+      {
+        point: new Point(-1, -1, 0),
+        normal: new Vector(-1, 1, 0)
+      }
+    ]
+
+    cases.forEach((cs) => {
+      const shape = new Cone()
+      const n = shape.localNormalAt(cs.point)
+      expect(n).toEqual(cs.normal)
     })
   })
 })
