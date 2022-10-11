@@ -77,7 +77,7 @@ ___
 - [ ] Finding the Normal on a Child Object
 - [ ] Using Bounding Boxes to Optimize Large Scenes
 ___
-- [ ] Triangles
+- [x] Triangles
 - [ ] Wavefront OBJ Files
 - [ ] Smooth Triangles
 - [ ] Smooth Triangles in OBJ Files

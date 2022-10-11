@@ -1,6 +1,7 @@
 import { PointOrVector } from './types'
 import { compareFloat } from '../utils'
 import { InvalidTupleAddition } from '../errors'
+import { Vector } from './Vector'
 
 export class Tuple {
   x: number
