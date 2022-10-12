@@ -53,4 +53,15 @@ describe('Groups', () => {
     expect(xs[2].object).toEqual(s1)
     expect(xs[3].object).toEqual(s1)
   })
+
+  it('should intersect a transformed group', () => {
+    const g = new Group()
+    g.setTransform(Matrix.scaling(2, 2, 2))
+    const s = new Sphere()
+    s.setTransform(Matrix.translation(5, 0, 0))
+    g.addChild(s)
+    const r = new Ray(new Point(10, 0, -10), new Vector(0, 0, 1))
+    const xs = g.intersect(r)
+    expect(xs.length).toBe(2)
+  })
 })
