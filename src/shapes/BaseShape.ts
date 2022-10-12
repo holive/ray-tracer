@@ -3,12 +3,14 @@ import { Point, Vector } from '../tuples'
 import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
+import { Group } from '../groups'
 
 export class BaseShape {
   material = new Material()
   position = new Point(0, 0, 0)
   protected transform: MatrixTypeFour = IDENTITY_MATRIX
   savedRay: Ray = new Ray(this.position, new Vector(0, 0, 0))
+  parent?: Group
 
   getTransform(): MatrixTypeFour {
     return this.transform
