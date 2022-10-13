@@ -73,7 +73,7 @@ ___
 - [x] Capped Cylinders
 - [x] Cones
 ___
-- [ ] Implementing Groups
+- [x] Implementing Groups
 - [ ] Finding the Normal on a Child Object
 - [ ] Using Bounding Boxes to Optimize Large Scenes
 ___

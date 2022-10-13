@@ -2,6 +2,8 @@ import { BaseShape } from '../shapes'
 import { IDENTITY_MATRIX, Matrix } from '../matrices'
 import { Material } from '../lights'
 import { Point, Vector } from '../tuples'
+import { Group } from '../groups'
+import { Sphere } from '../spheres'
 
 describe('Shapes', () => {
   it('should check the default transformation', () => {
@@ -44,5 +46,33 @@ describe('Shapes', () => {
     s.setTransform(m)
     const n = s.normalAt(new Point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2))
     expect(n.toFixed()).toEqual(new Vector(0, 0.97014, -0.24254))
+  })
+
+  it('should convert a point from world to object space', () => {
+    const g1 = new Group()
+    g1.setTransform(Matrix.rotationY(Math.PI / 2))
+    const g2 = new Group()
+    g2.setTransform(Matrix.scaling(2, 2, 2))
+    g1.addChild(g2)
+    const s = new Sphere()
+    s.setTransform(Matrix.translation(5, 0, 0))
+    g2.addChild(s)
+    const p = s.worldToObject(new Point(-2, 0, -10))
+    expect(p).toEqual(new Point(0, 0, -1))
+  })
+
+  it('converts a normal from object to world space', () => {
+    const g1 = new Group()
+    g1.setTransform(Matrix.rotationY(Math.PI / 2))
+    const g2 = new Group()
+    g2.setTransform(Matrix.scaling(1, 2, 3))
+    g1.addChild(g2)
+    const s = new Sphere()
+    s.setTransform(Matrix.translation(5, 0, 0))
+    g2.addChild(s)
+    const n = s.normalToWorld(
+      new Vector(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3)
+    )
+    expect(n.toFixed(4)).toEqual(new Vector(0.2857, 0.4286, -0.8571))
   })
 })

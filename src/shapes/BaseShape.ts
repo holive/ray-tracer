@@ -1,5 +1,5 @@
 import { Material } from '../lights'
-import { Point, Vector } from '../tuples'
+import { Point, Tuple, Vector } from '../tuples'
 import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
@@ -60,5 +60,36 @@ export class BaseShape {
     const y = Object.is(worldNormal.y, -0) ? 0 : worldNormal.y
     const z = Object.is(worldNormal.z, -0) ? 0 : worldNormal.z
     return new Vector(x, y, z).normalize()
+  }
+
+  worldToObject({ x, y, z }: Point): Point {
+    let newPoint = new Point(x, y, z)
+    if (this.parent) {
+      newPoint = this.parent.worldToObject(newPoint)
+    }
+
+    return new Matrix(
+      Matrix.inverse(this.transform) as MatrixTypeFour
+    ).multiplyByTuple(newPoint)
+  }
+
+  normalToWorld(normal: Vector): Vector {
+    const newNormal: Tuple = new Matrix(
+      new Matrix(
+        Matrix.inverse(this.transform) as MatrixTypeFour
+      ).transpose<MatrixTypeFour>()
+    ).multiplyByTuple(normal)
+
+    let normalizedNormal = new Vector(
+      newNormal.x,
+      newNormal.y,
+      newNormal.z
+    ).normalize()
+
+    if (this.parent) {
+      normalizedNormal = this.parent.normalToWorld(normalizedNormal)
+    }
+
+    return normalizedNormal
   }
 }
