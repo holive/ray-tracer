@@ -75,4 +75,17 @@ describe('Shapes', () => {
     )
     expect(n.toFixed(4)).toEqual(new Vector(0.2857, 0.4286, -0.8571))
   })
+
+  it('finds the normal on a child object', () => {
+    const g1 = new Group()
+    g1.setTransform(Matrix.rotationY(Math.PI / 2))
+    const g2 = new Group()
+    g2.setTransform(Matrix.scaling(1, 2, 3))
+    g1.addChild(g2)
+    const s = new Sphere()
+    s.setTransform(Matrix.translation(5, 0, 0))
+    g2.addChild(s)
+    const n = s.normalAt(new Point(1.7321, 1.1547, -5.5774))
+    expect(n.toFixed(4)).toEqual(new Vector(0.2857, 0.4285, -0.8572))
+  })
 })

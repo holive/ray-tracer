@@ -45,21 +45,9 @@ export class BaseShape {
   }
 
   normalAt(point: Point): Vector {
-    const localPoint = new Matrix(
-      Matrix.inverse(this.transform) as MatrixTypeFour
-    ).multiplyByTuple(point)
-
+    const localPoint = this.worldToObject(point)
     const localNormal = this.localNormalAt(localPoint)
-    const worldNormal = new Matrix(
-      new Matrix(
-        Matrix.inverse(this.transform) as MatrixTypeFour
-      ).transpose<MatrixTypeFour>()
-    ).multiplyByTuple(localNormal)
-
-    const x = Object.is(worldNormal.x, -0) ? 0 : worldNormal.x
-    const y = Object.is(worldNormal.y, -0) ? 0 : worldNormal.y
-    const z = Object.is(worldNormal.z, -0) ? 0 : worldNormal.z
-    return new Vector(x, y, z).normalize()
+    return this.normalToWorld(localNormal)
   }
 
   worldToObject({ x, y, z }: Point): Point {
