@@ -74,8 +74,11 @@ ___
 - [x] Cones
 ___
 - [x] Implementing Groups
-- [ ] Finding the Normal on a Child Object
+- [x] Finding the Normal on a Child Object
 - [ ] Using Bounding Boxes to Optimize Large Scenes
+
+![render](https://user-images.githubusercontent.com/6090596/196035480-f65715bf-2fa3-4eb6-b113-621e0db1a863.jpg)
+
 ___
 - [x] Triangles
 - [ ] Wavefront OBJ Files
