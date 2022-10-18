@@ -1,6 +1,6 @@
-import { Point, Vector } from './tuples'
-import { Triangle } from './triangles/Triangle'
-import { Ray } from './rays'
+import { Point, Vector } from '../tuples'
+import { Triangle } from '../triangles/Triangle'
+import { Ray } from '../rays'
 
 describe('Triangles', () => {
   it('constructs a triangle', () => {

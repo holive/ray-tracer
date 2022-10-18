@@ -6,6 +6,11 @@ import { Point, Vector } from '../tuples'
 export class Group extends BaseShape {
   children: BaseShape[] = []
 
+  constructor(firstChild?: BaseShape) {
+    super()
+    firstChild && this.addChild(firstChild)
+  }
+
   addChild(shape: BaseShape): void {
     shape.parent = this
     this.children.push(shape)
