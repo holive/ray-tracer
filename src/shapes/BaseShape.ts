@@ -11,6 +11,7 @@ export class BaseShape {
   protected transform: MatrixTypeFour = IDENTITY_MATRIX
   savedRay: Ray = new Ray(this.position, new Vector(0, 0, 0))
   parent?: Group
+  name?: string
 
   getTransform(): MatrixTypeFour {
     return this.transform

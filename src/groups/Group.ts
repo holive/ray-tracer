@@ -5,6 +5,7 @@ import { Point, Vector } from '../tuples'
 
 export class Group extends BaseShape {
   children: BaseShape[] = []
+  name = ''
 
   constructor(firstChild?: BaseShape) {
     super()
