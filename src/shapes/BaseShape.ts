@@ -37,7 +37,7 @@ export class BaseShape {
     return []
   }
 
-  localNormalAt(point: Point): Vector {
+  localNormalAt(point: Point, hit?: Intersection): Vector {
     if (process.env.NODE_ENV != 'test') {
       throw new Error('localNormalAt must be implemented in the subclass')
     }
@@ -45,9 +45,9 @@ export class BaseShape {
     return new Vector(point.x, point.y, point.z)
   }
 
-  normalAt(point: Point): Vector {
+  normalAt(point: Point, hit?: Intersection): Vector {
     const localPoint = this.worldToObject(point)
-    const localNormal = this.localNormalAt(localPoint)
+    const localNormal = this.localNormalAt(localPoint, hit)
     return this.normalToWorld(localNormal)
   }
 

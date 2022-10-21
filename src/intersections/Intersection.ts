@@ -10,10 +10,19 @@ import { EPSILON } from '../utils'
 export class Intersection {
   t: IntersectionValueType
   object: IntersectionObjectType
+  u?: number
+  v?: number
 
-  constructor(t: IntersectionValueType, object: IntersectionObjectType) {
+  constructor(
+    t: IntersectionValueType,
+    object: IntersectionObjectType,
+    u?: number,
+    v?: number
+  ) {
     this.t = t
     this.object = object
+    this.u = u
+    this.v = v
   }
 
   prepareComputations(r: Ray, xs?: Intersection[]): ComputationsType {

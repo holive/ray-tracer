@@ -29,6 +29,9 @@ export class ParseObjFile {
       // @ts-ignore
       const splitted: [string, string, string, string] = line.split(' ')
 
+      if (line[0] == 'g') currentGroup = splitted[1]
+      else if (line[0] != 'f') currentGroup = ''
+
       if (line[0] == 'v') {
         this.vertices.push(this.parseVertexLine(splitted))
       } else if (line[0] == 'f') {
@@ -38,8 +41,6 @@ export class ParseObjFile {
           }
           this.defaultGroup.addChild(tri)
         })
-
-        currentGroup = ''
       } else if (line[0] == 'g' && splitted.length > 1) {
         currentGroup = splitted[1]
         this.groups[currentGroup] = new Group({} as BaseShape)

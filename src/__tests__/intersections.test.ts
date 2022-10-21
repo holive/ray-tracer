@@ -5,6 +5,7 @@ import { Color, Point, Vector } from '../tuples'
 import { Matrix } from '../matrices'
 import { EPSILON } from '../utils'
 import { DefaultWord } from '../world/DefaultWord'
+import { Triangle } from '../triangles/Triangle'
 
 describe('Intersections', () => {
   it('should encapsulate t and object in an intersection', () => {
@@ -212,5 +213,16 @@ describe('Intersections', () => {
     const comps = xs[0].prepareComputations(r, xs)
     const reflectance = Intersection.schlick(comps)
     expect(reflectance).toBe(0.4887308101221217)
+  })
+
+  it('checks if an intersection can encapsulate "u" and "v"', () => {
+    const s = new Triangle(
+      new Point(0, 1, 0),
+      new Point(-1, 0, 0),
+      new Point(1, 0, 0)
+    )
+    const i = new Intersection(3.5, s, 0.2, 0.4)
+    expect(i.u).toBe(0.2)
+    expect(i.v).toBe(0.4)
   })
 })

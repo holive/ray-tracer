@@ -36,7 +36,7 @@ export class Triangle extends BaseShape {
     return Object.is(value, -0) ? 0 : value
   }
 
-  localNormalAt(point: Point): Vector {
+  localNormalAt(point: Point, hit: Intersection): Vector {
     return this.normal
   }
 
@@ -63,6 +63,6 @@ export class Triangle extends BaseShape {
     if (v < 0 || u + v > 1) return []
 
     const t = f * this.e2.dot(originCrossEl)
-    return [new Intersection(t, this)]
+    return [new Intersection(t, this, u, v)]
   }
 }

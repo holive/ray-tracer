@@ -1,5 +1,5 @@
-import { Sphere } from '../spheres'
 import { Point, Tuple, Vector } from '../tuples'
+import { BaseShape } from '../shapes'
 
 export type ComputationsType = {
   t: IntersectionValueType
@@ -15,5 +15,5 @@ export type ComputationsType = {
   n2: number
 }
 
-export type IntersectionObjectType = Sphere
+export type IntersectionObjectType = BaseShape
 export type IntersectionValueType = number
