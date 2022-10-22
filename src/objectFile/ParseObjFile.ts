@@ -1,12 +1,13 @@
 import fs = require('fs')
-import { Point } from '../tuples'
+import { Point, Vector } from '../tuples'
 import { Group } from '../groups'
 import { Triangle } from '../triangles/Triangle'
 import { BaseShape } from '../shapes'
 
 export class ParseObjFile {
   ignoredLines = 0
-  vertices: Point[] = [null as unknown as Point]
+  vertices: Point[] = [{} as Point]
+  normals: Vector[] = [{} as Vector]
   defaultGroup = new Group({} as BaseShape) // fillers first element
   groups: { [name: string]: Group } = {}
   fileName = ''
@@ -25,27 +26,34 @@ export class ParseObjFile {
     data?.split(/\r?\n/).forEach((line, index) => {
       if (index == 0) return this.ignoredLines++
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const splitted: [string, string, string, string] = line.split(' ')
+      const splitted = line.split(' ')
 
       if (line[0] == 'g') currentGroup = splitted[1]
       else if (line[0] != 'f') currentGroup = ''
 
-      if (line[0] == 'v') {
-        this.vertices.push(this.parseVertexLine(splitted))
-      } else if (line[0] == 'f') {
-        this.fanTriangulation().forEach((tri) => {
-          if (currentGroup) {
-            return this.groups[currentGroup].addChild(tri)
-          }
-          this.defaultGroup.addChild(tri)
-        })
-      } else if (line[0] == 'g' && splitted.length > 1) {
-        currentGroup = splitted[1]
-        this.groups[currentGroup] = new Group({} as BaseShape)
-      } else {
-        this.ignoredLines++
+      switch (true) {
+        case line.startsWith('vn'):
+          this.normals.push(this.parseNormalsLine(splitted))
+          break
+
+        case line[0] == 'v':
+          this.vertices.push(this.parseVertexLine(splitted))
+          break
+
+        case line[0] == 'f':
+          this.fanTriangulation().forEach((tri) => {
+            if (currentGroup) return this.groups[currentGroup].addChild(tri)
+            this.defaultGroup.addChild(tri)
+          })
+          break
+
+        case line[0] == 'g' && splitted.length > 1:
+          currentGroup = splitted[1]
+          this.groups[currentGroup] = new Group({} as BaseShape)
+          break
+
+        default:
+          this.ignoredLines++
       }
     })
   }
@@ -78,8 +86,16 @@ export class ParseObjFile {
     return triangles
   }
 
-  private parseVertexLine(entities: [string, string, string, string]): Point {
+  private parseVertexLine(entities: string[]): Point {
     return new Point(
+      Number(entities[1]),
+      Number(entities[2]),
+      Number(entities[3])
+    )
+  }
+
+  private parseNormalsLine(entities: string[]): Vector {
+    return new Vector(
       Number(entities[1]),
       Number(entities[2]),
       Number(entities[3])

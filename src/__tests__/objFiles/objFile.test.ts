@@ -1,6 +1,6 @@
 import { ParseObjFile } from '../../objectFile'
 import * as path from 'path'
-import { Point } from '../../tuples'
+import { Point, Vector } from '../../tuples'
 import { Triangle } from '../../triangles/Triangle'
 
 describe('obj file', () => {
@@ -84,5 +84,12 @@ describe('obj file', () => {
     const g = parser.objToGroup()
     expect(g.children[0]?.name).toBe('FirstGroup')
     expect(g.children[1]?.name).toBe('SecondGroup')
+  })
+
+  it('Vertex normal records', () => {
+    const parser = new ParseObjFile(path.join(__dirname, './vn.obj'))
+    expect(parser.normals[1]).toEqual(new Vector(0, 0, 1))
+    expect(parser.normals[2]).toEqual(new Vector(0.707, 0, -0.707))
+    expect(parser.normals[3]).toEqual(new Vector(1, 2, 3))
   })
 })
