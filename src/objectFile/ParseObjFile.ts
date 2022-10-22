@@ -3,6 +3,7 @@ import { Point, Vector } from '../tuples'
 import { Group } from '../groups'
 import { Triangle } from '../triangles/Triangle'
 import { BaseShape } from '../shapes'
+import { SmoothTriangle } from '../triangles/SmoothTriangle'
 
 export class ParseObjFile {
   ignoredLines = 0
@@ -41,7 +42,7 @@ export class ParseObjFile {
           break
 
         case line[0] == 'f':
-          this.fanTriangulation().forEach((tri) => {
+          this.fanTriangulation(splitted).forEach((tri) => {
             if (currentGroup) return this.groups[currentGroup].addChild(tri)
             this.defaultGroup.addChild(tri)
           })
@@ -73,16 +74,32 @@ export class ParseObjFile {
     return g
   }
 
-  private fanTriangulation(): Triangle[] {
+  private fanTriangulation(splitted: string[]): Triangle[] {
     const triangles = []
+    const isSmooth = splitted[1].indexOf('/') != -1
+
     for (let i = 2; i <= this.vertices.length - 2; i++) {
-      const tri = new Triangle(
-        this.vertices[1],
-        this.vertices[i],
-        this.vertices[i + 1]
-      )
-      triangles.push(tri)
+      const p1 = this.vertices[1]
+      const p2 = this.vertices[i]
+      const p3 = this.vertices[i + 1]
+
+      if (isSmooth) {
+        const n1 = splitted[1].split('/')[2]
+        const n2 = splitted[2].split('/')[2]
+        const n3 = splitted[3].split('/')[2]
+
+        const normal1 = this.normals[Number(n1)]
+        const normal2 = this.normals[Number(n2)]
+        const normal3 = this.normals[Number(n3)]
+
+        triangles.push(
+          new SmoothTriangle(p1, p2, p3, normal1, normal2, normal3)
+        )
+      } else {
+        triangles.push(new Triangle(p1, p2, p3))
+      }
     }
+
     return triangles
   }
 

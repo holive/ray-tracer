@@ -2,6 +2,7 @@ import { ParseObjFile } from '../../objectFile'
 import * as path from 'path'
 import { Point, Vector } from '../../tuples'
 import { Triangle } from '../../triangles/Triangle'
+import { SmoothTriangle } from '../../triangles/SmoothTriangle'
 
 describe('obj file', () => {
   it('should ignore unrecognized lines', () => {
@@ -91,5 +92,21 @@ describe('obj file', () => {
     expect(parser.normals[1]).toEqual(new Vector(0, 0, 1))
     expect(parser.normals[2]).toEqual(new Vector(0.707, 0, -0.707))
     expect(parser.normals[3]).toEqual(new Vector(1, 2, 3))
+  })
+
+  it('checks faces with normals', () => {
+    const parser = new ParseObjFile(
+      path.join(__dirname, './facesWithNormals.obj')
+    )
+    const g = parser.defaultGroup
+    const t1 = g.children[1] as SmoothTriangle
+    const t2 = g.children[2] as SmoothTriangle
+    expect(t1.p1).toEqual(parser.vertices[1])
+    expect(t1.p2).toEqual(parser.vertices[2])
+    expect(t1.p3).toEqual(parser.vertices[3])
+    expect(t1.n1).toEqual(parser.normals[3])
+    expect(t1.n2).toEqual(parser.normals[1])
+    expect(t1.n3).toEqual(parser.normals[2])
+    expect(t2).toEqual(t1)
   })
 })
