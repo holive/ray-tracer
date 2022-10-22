@@ -39,4 +39,13 @@ describe('smooth Triangles', () => {
     const n = tri.normalAt(new Point(0, 0, 0), i)
     expect(n.toFixed(5)).toEqual(new Vector(-0.5547, 0.83205, 0))
   })
+
+  it('should prepare the normal on a smooth triangle', () => {
+    const { tri } = sut()
+    const i = new Intersection(1, tri, 0.45, 0.25)
+    const r = new Ray(new Point(-0.2, 0.3, -2), new Vector(0, 0, 1))
+    const xs = Intersection.intersections(i)
+    const comps = i.prepareComputations(r, xs)
+    expect(comps.normalV.toFixed(5)).toEqual(new Vector(-0.5547, 0.83205, 0))
+  })
 })

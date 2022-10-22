@@ -30,7 +30,7 @@ export class Intersection {
     const object = this.object
     const point = r.position(t)
     const eyeV = this.negateVector(r.direction)
-    let normalV = object.normalAt(point)
+    let normalV = object.normalAt(point, this)
     let inside = false
 
     if (normalV.dot(eyeV) < 0) {
