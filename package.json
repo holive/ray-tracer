@@ -18,6 +18,7 @@
     "test": "npm run lint && npm run test:unit",
     "watch": "nodemon",
     "start": "ts-node ./src/index.ts",
+    "teapot": "ts-node ./src/scenes/teapot.ts",
     "build": "tsc",
     "prepublishOnly": "npm run test && npm run build"
   },

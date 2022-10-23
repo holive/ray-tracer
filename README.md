@@ -81,9 +81,9 @@ ___
 
 ___
 - [x] Triangles
-- [ ] Wavefront OBJ Files
-- [ ] Smooth Triangles
-- [ ] Smooth Triangles in OBJ Files
+- [x] Wavefront OBJ Files
+- [x] Smooth Triangles
+- [x] Smooth Triangles in OBJ Files
 ___
 - [ ] Implementing CSG
 - [ ] Coloring CSG Shapes

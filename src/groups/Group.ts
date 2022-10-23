@@ -21,7 +21,8 @@ export class Group extends BaseShape {
     const intersections: Intersection[] = []
 
     this.children.forEach((child) => {
-      intersections.push(...child.intersect(ray))
+      if (!child || !child.intersect) return
+      intersections.push(...child?.intersect(ray))
     })
 
     return intersections.sort((a, b) => a.t - b.t)
