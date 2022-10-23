@@ -15,6 +15,11 @@ export class BaseShape {
   name?: string
   box = new BoundingBox()
 
+  constructor() {
+    this.box.min = new Point(-1, -1, -1)
+    this.box.max = new Point(1, 1, 1)
+  }
+
   boundsOf(): BoundingBox {
     return this.box
   }

@@ -18,4 +18,24 @@ export class BoundingBox {
     if (y > this.max.y) this.max.y = y
     if (z > this.max.z) this.max.z = z
   }
+
+  addBox(box: BoundingBox): void {
+    this.addPoint(box.min)
+    this.addPoint(box.max)
+  }
+
+  containsPoint({ x, y, z }: Point): boolean {
+    return (
+      x >= this.min.x &&
+      x <= this.max.x &&
+      y >= this.min.y &&
+      y <= this.max.y &&
+      z >= this.min.z &&
+      z <= this.max.z
+    )
+  }
+
+  containsBox(box: BoundingBox): boolean {
+    return this.containsPoint(box.min) && this.containsPoint(box.max)
+  }
 }

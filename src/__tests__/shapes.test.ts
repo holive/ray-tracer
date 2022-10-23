@@ -88,4 +88,11 @@ describe('Shapes', () => {
     const n = s.normalAt(new Point(1.7321, 1.1547, -5.5774))
     expect(n.toFixed(4)).toEqual(new Vector(0.2857, 0.4285, -0.8572))
   })
+
+  it('checks if base shape has (arbitrary) bounds', () => {
+    const shape = new BaseShape()
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-1, -1, -1))
+    expect(box.max).toEqual(new Point(1, 1, 1))
+  })
 })
