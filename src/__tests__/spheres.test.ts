@@ -134,6 +134,13 @@ describe('Spheres', () => {
     expect(s.material.transparency).toBe(1)
     expect(s.material.refractiveIndex).toBe(1.5)
   })
+
+  it('checks if a sphere has a bounding box', () => {
+    const shape = new Sphere()
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-1, -1, -1))
+    expect(box.max).toEqual(new Point(1, 1, 1))
+  })
 })
 
 describe('Sphere - transforming normals', () => {

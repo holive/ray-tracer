@@ -3,6 +3,7 @@ import { Ray } from '../rays'
 import { Intersection, IntersectionValueType } from '../intersections'
 import { EPSILON } from '../utils'
 import { Point, Vector } from '../tuples'
+import { BoundingBox } from '../bounds'
 
 export class Cylinder extends BaseShape {
   minimum: number
@@ -13,6 +14,12 @@ export class Cylinder extends BaseShape {
     super()
     this.minimum = min
     this.maximum = max
+    this.box.min = new Point(-1, min, -1)
+    this.box.max = new Point(1, max, 1)
+  }
+
+  boundsOf(): BoundingBox {
+    return this.box
   }
 
   localIntersect(r: Ray): Intersection[] {

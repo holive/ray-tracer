@@ -45,4 +45,11 @@ describe('Plane', () => {
     expect(xs[0].t).toBe(1)
     expect(xs[0].object).toEqual(p)
   })
+
+  it('checks if a plane has a bounding box', () => {
+    const shape = new Plane()
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-Infinity, 0, -Infinity))
+    expect(box.max).toEqual(new Point(Infinity, 0, Infinity))
+  })
 })

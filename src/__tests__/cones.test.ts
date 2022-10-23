@@ -92,4 +92,18 @@ describe('cones', () => {
       expect(n).toEqual(cs.normal)
     })
   })
+
+  it('checks if an unbounded cone has a bounding box', () => {
+    const shape = new Cone()
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-Infinity, -Infinity, -Infinity))
+    expect(box.max).toEqual(new Point(Infinity, Infinity, Infinity))
+  })
+
+  it('checks if a bounded cone has a bounding box', () => {
+    const shape = new Cone(-5, 3)
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-5, -5, -5))
+    expect(box.max).toEqual(new Point(5, 3, 5))
+  })
 })

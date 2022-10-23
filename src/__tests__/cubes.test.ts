@@ -159,4 +159,11 @@ describe('Cubes', () => {
     world.objects.push(cube1, cube2)
     camera.render(world).toPPM()
   })
+
+  it('checks if a cube has a bounding box', () => {
+    const shape = new Cube()
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-1, -1, -1))
+    expect(box.max).toEqual(new Point(1, 1, 1))
+  })
 })

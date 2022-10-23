@@ -3,6 +3,7 @@ import { Ray } from '../rays'
 import { Intersection, IntersectionValueType } from '../intersections'
 import { EPSILON } from '../utils'
 import { Point, Vector } from '../tuples'
+import { BoundingBox } from '../bounds'
 
 export class Cone extends BaseShape {
   minimum: number
@@ -13,6 +14,19 @@ export class Cone extends BaseShape {
     super()
     this.minimum = min
     this.maximum = max
+    this.box.min = new Point(-Infinity, -Infinity, -Infinity)
+    this.box.max = new Point(Infinity, Infinity, Infinity)
+  }
+
+  boundsOf(): BoundingBox {
+    const a = Math.abs(this.minimum)
+    const b = Math.abs(this.maximum)
+    const limit = Math.max(a, b)
+
+    return new BoundingBox(
+      new Point(-limit, this.minimum, -limit),
+      new Point(limit, this.maximum, limit)
+    )
   }
 
   localIntersect(r: Ray): Intersection[] {

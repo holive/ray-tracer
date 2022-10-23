@@ -172,4 +172,18 @@ describe('Cylinders', () => {
       expect(n).toEqual(cs.normal)
     })
   })
+
+  it('checks if an unbounded cylinder has a bounding box', () => {
+    const shape = new Cylinder()
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-1, -Infinity, -1))
+    expect(box.max).toEqual(new Point(1, Infinity, 1))
+  })
+
+  it('checks if a bounded cylinder has a bounding box', () => {
+    const shape = new Cylinder(-5, 3)
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-1, -5, -1))
+    expect(box.max).toEqual(new Point(1, 3, 1))
+  })
 })

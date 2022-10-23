@@ -86,4 +86,14 @@ describe('Triangles', () => {
     expect(xs.length).toBe(1)
     expect(xs[0].t).toBe(2)
   })
+
+  it('checks if a triangle has a bounding box', () => {
+    const p1 = new Point(-3, 7, 2)
+    const p2 = new Point(6, 2, -4)
+    const p3 = new Point(2, -1, -1)
+    const shape = new Triangle(p1, p2, p3)
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-3, -1, -4))
+    expect(box.max).toEqual(new Point(6, 7, 2))
+  })
 })

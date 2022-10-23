@@ -3,6 +3,7 @@ import { Point, Vector } from '../tuples'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
 import { EPSILON } from '../utils'
+import { BoundingBox } from '../bounds'
 
 export class Triangle extends BaseShape {
   p1: Point
@@ -32,11 +33,19 @@ export class Triangle extends BaseShape {
     ).normalize()
   }
 
+  boundsOf(): BoundingBox {
+    const box = new BoundingBox()
+    box.addPoint(this.p1)
+    box.addPoint(this.p2)
+    box.addPoint(this.p3)
+    return box
+  }
+
   private zero(value: number): number {
     return Object.is(value, -0) ? 0 : value
   }
 
-  localNormalAt(point: Point, hit: Intersection): Vector {
+  localNormalAt(point: Point, hit?: Intersection): Vector {
     return this.normal
   }
 

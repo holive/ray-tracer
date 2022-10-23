@@ -3,8 +3,15 @@ import { Point, Vector } from '../tuples'
 import { BaseShape } from '../shapes'
 import { Intersection } from '../intersections'
 import { Ray } from '../rays'
+import { BoundingBox } from '../bounds'
 
 export class Sphere extends BaseShape {
+  constructor() {
+    super()
+    this.box.min = new Point(-1, -1, -1)
+    this.box.max = new Point(1, 1, 1)
+  }
+
   localNormalAt(p: Point): Vector {
     const { x, y, z } = p.subtract(this.position)
     return new Vector(x, y, z)
@@ -29,6 +36,10 @@ export class Sphere extends BaseShape {
     const t1 = (-b - Math.sqrt(discriminant)) / (2 * a)
     const t2 = (-b + Math.sqrt(discriminant)) / (2 * a)
     return [new Intersection(t1, this), new Intersection(t2, this)]
+  }
+
+  boundsOf(): BoundingBox {
+    return this.box
   }
 
   static glassSphere(): Sphere {

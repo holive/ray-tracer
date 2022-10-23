@@ -4,6 +4,7 @@ import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
 import { Group } from '../groups'
+import { BoundingBox } from '../bounds'
 
 export class BaseShape {
   material = new Material()
@@ -12,6 +13,11 @@ export class BaseShape {
   savedRay: Ray = new Ray(this.position, new Vector(0, 0, 0))
   parent?: Group
   name?: string
+  box = new BoundingBox()
+
+  boundsOf(): BoundingBox {
+    return this.box
+  }
 
   getTransform(): MatrixTypeFour {
     return this.transform

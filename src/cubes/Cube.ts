@@ -3,8 +3,19 @@ import { Ray } from '../rays'
 import { Intersection } from '../intersections'
 import { EPSILON } from '../utils'
 import { Point, Vector } from '../tuples'
+import { BoundingBox } from '../bounds'
 
 export class Cube extends BaseShape {
+  constructor() {
+    super()
+    this.box.min = new Point(-1, -1, -1)
+    this.box.max = new Point(1, 1, 1)
+  }
+
+  boundsOf(): BoundingBox {
+    return this.box
+  }
+
   localIntersect(r: Ray): Intersection[] {
     const [xtMin, xtMax] = this.checkAxis(r.origin.x, r.direction.x)
     const [ytMin, ytMax] = this.checkAxis(r.origin.y, r.direction.y)
