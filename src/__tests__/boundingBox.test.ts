@@ -1,6 +1,7 @@
 import { BoundingBox } from '../bounds'
-import { Point } from '../tuples'
+import { Point, Vector } from '../tuples'
 import { Matrix } from '../matrices'
+import { Ray } from '../rays'
 
 describe('Bounds', () => {
   it('should create an empty bounding box', () => {
@@ -74,5 +75,83 @@ describe('Bounds', () => {
     const box2 = box.transform(matrix)
     expect(box2.min).toEqual(new Point(-1.41422, -1.70712, -1.70712))
     expect(box2.max).toEqual(new Point(1.41422, 1.70712, 1.70712))
+  })
+
+  it('should intersect a ray with a bounding box at the origin', () => {
+    const box = new BoundingBox(new Point(-1, -1, -1), new Point(1, 1, 1))
+
+    const cases = [
+      {
+        origin: new Point(5, 0.5, 0),
+        direction: new Vector(-1, 0, 0),
+        result: true
+      },
+      {
+        origin: new Point(-5, 0.5, 0),
+        direction: new Vector(1, 0, 0),
+        result: true
+      },
+      {
+        origin: new Point(0.5, 5, 0),
+        direction: new Vector(0, -1, 0),
+        result: true
+      },
+      {
+        origin: new Point(0.5, -5, 0),
+        direction: new Vector(0, 1, 0),
+        result: true
+      },
+      {
+        origin: new Point(0.5, 0, 5),
+        direction: new Vector(0, 0, -1),
+        result: true
+      },
+      {
+        origin: new Point(0.5, 0, -5),
+        direction: new Vector(0, 0, 1),
+        result: true
+      },
+      {
+        origin: new Point(0, 0.5, 0),
+        direction: new Vector(0, 0, 1),
+        result: true
+      },
+      {
+        origin: new Point(-2, 0, 0),
+        direction: new Vector(2, 4, 6),
+        result: false
+      },
+      {
+        origin: new Point(0, -2, 0),
+        direction: new Vector(6, 2, 4),
+        result: false
+      },
+      {
+        origin: new Point(0, 0, -2),
+        direction: new Vector(4, 6, 2),
+        result: false
+      },
+      {
+        origin: new Point(2, 0, 2),
+        direction: new Vector(0, 0, -1),
+        result: false
+      },
+      {
+        origin: new Point(0, 2, 2),
+        direction: new Vector(0, -1, 0),
+        result: false
+      },
+      {
+        origin: new Point(2, 2, 0),
+        direction: new Vector(-1, 0, 0),
+        result: false
+      }
+    ]
+
+    cases.forEach(({ origin, direction, result }) => {
+      const newDirection = direction.normalize()
+      const r = new Ray(origin, newDirection)
+      expect(box.intersects(r)).toEqual(result)
+    })
   })
 })
