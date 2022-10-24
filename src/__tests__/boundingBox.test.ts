@@ -1,5 +1,6 @@
 import { BoundingBox } from '../bounds'
 import { Point } from '../tuples'
+import { Matrix } from '../matrices'
 
 describe('Bounds', () => {
   it('should create an empty bounding box', () => {
@@ -63,5 +64,15 @@ describe('Bounds', () => {
       const box2 = new BoundingBox(min, max)
       expect(box.containsBox(box2)).toBe(result)
     })
+  })
+
+  it('should transform a bounding box', () => {
+    const box = new BoundingBox(new Point(-1, -1, -1), new Point(1, 1, 1))
+    const matrix = Matrix.rotationXC(Math.PI / 4).multiply(
+      Matrix.rotationY(Math.PI / 4)
+    )
+    const box2 = box.transform(matrix)
+    expect(box2.min).toEqual(new Point(-1.41422, -1.70712, -1.70712))
+    expect(box2.max).toEqual(new Point(1.41422, 1.70712, 1.70712))
   })
 })
