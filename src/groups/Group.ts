@@ -2,6 +2,7 @@ import { BaseShape } from '../shapes'
 import { Ray } from '../rays'
 import { Intersection } from '../intersections'
 import { Point, Vector } from '../tuples'
+import { BoundingBox } from '../bounds'
 
 export class Group extends BaseShape {
   children: BaseShape[] = []
@@ -30,5 +31,16 @@ export class Group extends BaseShape {
 
   localNormalAt(_: Point): Vector {
     throw new Error("localNormalAt shouldn't be called in a Group")
+  }
+
+  boundsOf(): BoundingBox {
+    const box = new BoundingBox()
+
+    this.children.forEach((child) => {
+      const cbo = child.parentSpaceBoundsOf()
+      box.addBox(cbo)
+    })
+
+    return box
   }
 }

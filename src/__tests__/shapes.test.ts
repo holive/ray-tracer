@@ -95,4 +95,14 @@ describe('Shapes', () => {
     expect(box.min).toEqual(new Point(-1, -1, -1))
     expect(box.max).toEqual(new Point(1, 1, 1))
   })
+
+  it("should query a shape's bounding box in its parent's space", () => {
+    const shape = new Sphere()
+    shape.setTransform(
+      Matrix.translationC(1, -3, 5).multiply(Matrix.scaling(0.5, 2, 4))
+    )
+    const box = shape.parentSpaceBoundsOf()
+    expect(box.min).toEqual(new Point(0.5, -5, 1))
+    expect(box.max).toEqual(new Point(1.5, -1, 9))
+  })
 })

@@ -4,6 +4,7 @@ import { BaseShape } from '../shapes'
 import { Ray } from '../rays'
 import { Point, Vector } from '../tuples'
 import { Sphere } from '../spheres'
+import { Cylinder } from '../cylinders/cylinder'
 
 describe('Groups', () => {
   it('creates a new group', () => {
@@ -63,5 +64,24 @@ describe('Groups', () => {
     const r = new Ray(new Point(10, 0, -10), new Vector(0, 0, 1))
     const xs = g.intersect(r)
     expect(xs.length).toBe(2)
+  })
+
+  it('checks if a group has a bounding box that contains its children', () => {
+    const s = new Sphere()
+    s.setTransform(
+      Matrix.translationC(2, 5, -3).multiply(Matrix.scaling(2, 2, 2))
+    )
+
+    const c = new Cylinder(-2, 2)
+    c.setTransform(
+      Matrix.translationC(-4, -1, 4).multiply(Matrix.scaling(0.5, 1, 0.5))
+    )
+
+    const shape = new Group()
+    shape.addChild(s)
+    shape.addChild(c)
+    const box = shape.boundsOf()
+    expect(box.min).toEqual(new Point(-4.5, -3, -5))
+    expect(box.max).toEqual(new Point(4, 7, 4.5))
   })
 })

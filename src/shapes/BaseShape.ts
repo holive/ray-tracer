@@ -92,4 +92,8 @@ export class BaseShape {
 
     return normalizedNormal
   }
+
+  parentSpaceBoundsOf(): BoundingBox {
+    return this.boundsOf().transform(this.transform)
+  }
 }
