@@ -154,4 +154,82 @@ describe('Bounds', () => {
       expect(box.intersects(r)).toEqual(result)
     })
   })
+
+  it('should intersect a ray with a non-cubic bounding box', () => {
+    const box = new BoundingBox(new Point(5, -2, 0), new Point(11, 4, 7))
+
+    const cases = [
+      {
+        origin: new Point(15, 1, 2),
+        direction: new Vector(-1, 0, 0),
+        result: true
+      },
+      {
+        origin: new Point(-5, -1, 4),
+        direction: new Vector(1, 0, 0),
+        result: true
+      },
+      {
+        origin: new Point(7, 6, 5),
+        direction: new Vector(0, -1, 0),
+        result: true
+      },
+      {
+        origin: new Point(9, -5, 6),
+        direction: new Vector(0, 1, 0),
+        result: true
+      },
+      {
+        origin: new Point(8, 2, 12),
+        direction: new Vector(0, 0, -1),
+        result: true
+      },
+      {
+        origin: new Point(6, 0, -5),
+        direction: new Vector(0, 0, 1),
+        result: true
+      },
+      {
+        origin: new Point(8, 1, 3.5),
+        direction: new Vector(0, 0, 1),
+        result: true
+      },
+      {
+        origin: new Point(9, -1, -8),
+        direction: new Vector(2, 4, 6),
+        result: false
+      },
+      {
+        origin: new Point(8, 3, -4),
+        direction: new Vector(6, 2, 4),
+        result: false
+      },
+      {
+        origin: new Point(9, -1, -2),
+        direction: new Vector(4, 6, 2),
+        result: false
+      },
+      {
+        origin: new Point(4, 0, 9),
+        direction: new Vector(0, 0, -1),
+        result: false
+      },
+      {
+        origin: new Point(8, 6, -1),
+        direction: new Vector(0, -1, 0),
+        result: false
+      },
+      {
+        origin: new Point(12, 5, 4),
+        direction: new Vector(-1, 0, 0),
+        result: false
+      }
+    ]
+
+    cases.forEach(({ origin, direction, result }) => {
+      const newDirection = direction.normalize()
+      const r = new Ray(origin, newDirection)
+      expect(box.intersects(r)).toEqual(result)
+    })
+  })
 })
