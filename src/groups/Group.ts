@@ -19,14 +19,18 @@ export class Group extends BaseShape {
   }
 
   localIntersect(ray: Ray): Intersection[] {
-    const intersections: Intersection[] = []
+    if (this.boundsOf().intersects(ray)) {
+      const intersections: Intersection[] = []
 
-    this.children.forEach((child) => {
-      if (!child || !child.intersect) return
-      intersections.push(...child?.intersect(ray))
-    })
+      this.children.forEach((child) => {
+        if (!child || !child.intersect) return
+        intersections.push(...child?.intersect(ray))
+      })
 
-    return intersections.sort((a, b) => a.t - b.t)
+      return intersections.sort((a, b) => a.t - b.t)
+    }
+
+    return []
   }
 
   localNormalAt(_: Point): Vector {

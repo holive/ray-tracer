@@ -84,4 +84,30 @@ describe('Groups', () => {
     expect(box.min).toEqual(new Point(-4.5, -3, -5))
     expect(box.max).toEqual(new Point(4, 7, 4.5))
   })
+
+  it(
+    "checks if intersection ray+group doesn't test children if box is" +
+      ' missed',
+    () => {
+      const child = new BaseShape()
+      const shape = new Group()
+      shape.addChild(child)
+      const r = new Ray(new Point(0, 0, -5), new Vector(0, 1, 0))
+      const xs = shape.intersect(r)
+      expect(child.savedRay).toEqual(
+        new Ray(new Point(0, 0, 0), new Vector(0, 0, 0))
+      )
+    }
+  )
+
+  it('checks if intersection ray+group tests children if box is hit', () => {
+    const child = new BaseShape()
+    const shape = new Group()
+    shape.addChild(child)
+    const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
+    const xs = shape.intersect(r)
+    expect(child.savedRay).not.toEqual(
+      new Ray(new Point(0, 0, 0), new Vector(0, 0, 0))
+    )
+  })
 })
