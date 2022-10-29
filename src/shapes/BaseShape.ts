@@ -14,6 +14,7 @@ export class BaseShape {
   parent?: Group
   name?: string
   box = new BoundingBox()
+  inverseTransform?: Matrix
 
   constructor() {
     this.box.min = new Point(-1, -1, -1)
@@ -33,9 +34,13 @@ export class BaseShape {
   }
 
   intersect(ray: Ray): Intersection[] {
-    const localRay = ray.transform(
-      new Matrix(Matrix.inverse(this.transform) as MatrixTypeFour)
-    )
+    if (!this.inverseTransform) {
+      this.inverseTransform = new Matrix(
+        Matrix.inverse(this.transform) as MatrixTypeFour
+      )
+    }
+
+    const localRay = ray.transform(this.inverseTransform)
     return this.localIntersect(localRay)
   }
 
@@ -68,16 +73,24 @@ export class BaseShape {
       newPoint = this.parent.worldToObject(newPoint)
     }
 
-    return new Matrix(
-      Matrix.inverse(this.transform) as MatrixTypeFour
-    ).multiplyByTuple(newPoint)
+    if (!this.inverseTransform) {
+      this.inverseTransform = new Matrix(
+        Matrix.inverse(this.transform) as MatrixTypeFour
+      )
+    }
+
+    return this.inverseTransform.multiplyByTuple(newPoint)
   }
 
   normalToWorld(normal: Vector): Vector {
-    const newNormal: Tuple = new Matrix(
-      new Matrix(
+    if (!this.inverseTransform) {
+      this.inverseTransform = new Matrix(
         Matrix.inverse(this.transform) as MatrixTypeFour
-      ).transpose<MatrixTypeFour>()
+      )
+    }
+
+    const newNormal: Tuple = new Matrix(
+      this.inverseTransform.transpose<MatrixTypeFour>()
     ).multiplyByTuple(normal)
 
     let normalizedNormal = new Vector(

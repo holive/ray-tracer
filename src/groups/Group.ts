@@ -7,6 +7,7 @@ import { BoundingBox } from '../bounds'
 export class Group extends BaseShape {
   children: BaseShape[] = []
   name = ''
+  currentBox?: BoundingBox
 
   constructor(firstChild?: BaseShape) {
     super()
@@ -19,18 +20,17 @@ export class Group extends BaseShape {
   }
 
   localIntersect(ray: Ray): Intersection[] {
-    if (this.boundsOf().intersects(ray)) {
-      const intersections: Intersection[] = []
+    const intersections: Intersection[] = []
 
+    if (this.boundsOf().intersects(ray)) {
       this.children.forEach((child) => {
         if (!child || !child.intersect) return
+
         intersections.push(...child?.intersect(ray))
       })
-
-      return intersections.sort((a, b) => a.t - b.t)
     }
 
-    return []
+    return intersections
   }
 
   localNormalAt(_: Point): Vector {
@@ -38,12 +38,17 @@ export class Group extends BaseShape {
   }
 
   boundsOf(): BoundingBox {
+    if (this.currentBox) {
+      return this.currentBox
+    }
     const box = new BoundingBox()
 
     this.children.forEach((child) => {
-      const cbo = child.parentSpaceBoundsOf()
-      box.addBox(cbo)
+      if (!child.parentSpaceBoundsOf) return
+      box.addBox(child.parentSpaceBoundsOf())
     })
+
+    this.currentBox = box
 
     return box
   }

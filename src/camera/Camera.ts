@@ -13,6 +13,7 @@ export class Camera {
   pixelSize: number
   halfWidth: number
   halfHeight: number
+  inverseTransformMatrix?: Matrix
 
   constructor(hSize: number, vSize: number, fieldOfView: number) {
     this.hSize = hSize
@@ -38,11 +39,18 @@ export class Camera {
     const worldX = this.halfWidth - xOffset
     const worldY = this.halfHeight - yOffset
 
-    const transformMatrix = new Matrix(
-      Matrix.inverse(this.transform) as MatrixTypeFour
+    if (!this.inverseTransformMatrix) {
+      this.inverseTransformMatrix = new Matrix(
+        Matrix.inverse(this.transform) as MatrixTypeFour
+      )
+    }
+
+    const pixel = this.inverseTransformMatrix.multiplyByTuple(
+      new Point(worldX, worldY, -1)
     )
-    const pixel = transformMatrix.multiplyByTuple(new Point(worldX, worldY, -1))
-    const origin = transformMatrix.multiplyByTuple(new Point(0, 0, 0))
+    const origin = this.inverseTransformMatrix.multiplyByTuple(
+      new Point(0, 0, 0)
+    )
 
     const { x, y, z } = pixel.subtract(origin)
     const normalizedDirection = new Vector(x, y, z).normalize()
@@ -53,8 +61,12 @@ export class Camera {
   render(world: World): Canvas {
     const image = new Canvas(this.hSize, this.vSize)
 
+    console.log(this.hSize * this.vSize)
+
     for (let y = 0; y <= this.vSize - 1; y++) {
       for (let x = 0; x <= this.hSize - 1; x++) {
+        console.log(y, x)
+
         const ray = this.rayForPixel(x, y)
         const color = world.colorAt(ray)
         image.writePixel(x, y, color)

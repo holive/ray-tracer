@@ -1,7 +1,6 @@
 import { Point } from '../tuples'
 import { Matrix, MatrixTypeFour } from '../matrices'
 import { Ray } from '../rays'
-import { Intersection } from '../intersections'
 import { EPSILON } from '../utils'
 
 export class BoundingBox {

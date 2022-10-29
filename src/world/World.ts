@@ -20,8 +20,8 @@ export class World {
       throw new Error('The world objects are empty!')
     }
 
-    this.objects.forEach(function intersectEachObjectInTheWorld(sphere) {
-      intersections.push(...sphere.intersect(r))
+    this.objects.forEach(function intersectEachObjectInTheWorld(obj) {
+      intersections.push(...obj.intersect(r))
     })
 
     return intersections.sort((a, b) => a.t - b.t)

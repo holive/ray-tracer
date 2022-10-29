@@ -2,7 +2,6 @@ import { MatrixTypeFour, MatrixTypeThree, MatrixTypeTwo } from './types'
 import { Tuple } from '../tuples'
 import {
   dotProductOfEachElement,
-  generateNewMatrix,
   getCosSinFromRadians,
   removeRowAndColumn
 } from './helpers'
@@ -58,7 +57,13 @@ export class Matrix {
   }
 
   transpose<T>(): T {
-    const newMatrix = generateNewMatrix(this.matrix.length)
+    // removing dynamic generation to speed up
+    const newMatrix = [
+      [NaN, NaN, NaN, NaN],
+      [NaN, NaN, NaN, NaN],
+      [NaN, NaN, NaN, NaN],
+      [NaN, NaN, NaN, NaN]
+    ]
 
     this.matrix.forEach(function goOverEachRow(row, rowPosit, source) {
       row.forEach(function transposeColumnsIntoRows(element, columnPosit) {
@@ -107,7 +112,13 @@ export class Matrix {
       return
     }
 
-    const newMatrix = generateNewMatrix(matrix.length)
+    // removing dynamic generation to speed up
+    const newMatrix = [
+      [NaN, NaN, NaN, NaN],
+      [NaN, NaN, NaN, NaN],
+      [NaN, NaN, NaN, NaN],
+      [NaN, NaN, NaN, NaN]
+    ]
 
     for (let row = 0; row < matrix.length; row++) {
       for (let col = 0; col < matrix.length; col++) {
