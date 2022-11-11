@@ -8,15 +8,12 @@ export function removeRowAndColumn(
   let newRowPosition = 0
   let newColumnPosition = 0
   const length = matrix.length
+
   const newMatrix = generateNewMatrix(length - 1)
 
   for (let rowPosition = 0; rowPosition < length; rowPosition++) {
     if (rowPosition == row) continue
-    iterateOverColumnsAndSkipOne(rowPosition)
-    newRowPosition++
-  }
 
-  function iterateOverColumnsAndSkipOne(rowPosition: number) {
     for (let columnPosition = 0; columnPosition < length; columnPosition++) {
       const isLastColumn = columnPosition == length - 1
       const shouldSkipTheCurrentColumn = columnPosition == column
@@ -26,25 +23,14 @@ export function removeRowAndColumn(
         continue
       }
 
-      assignValueToNewPosition(rowPosition, columnPosition)
-      incrementSubmatrixColumnPosition(columnPosition, isLastColumn)
+      newMatrix[newRowPosition][newColumnPosition] =
+        matrix[rowPosition][columnPosition]
+
+      if (isLastColumn) newColumnPosition = 0
+      else newColumnPosition++
     }
-  }
 
-  function assignValueToNewPosition(
-    rowPosition: number,
-    columnPosition: number
-  ) {
-    newMatrix[newRowPosition][newColumnPosition] =
-      matrix[rowPosition][columnPosition]
-  }
-
-  function incrementSubmatrixColumnPosition(
-    columnPosition: number,
-    isLastColumn: boolean
-  ) {
-    if (isLastColumn) newColumnPosition = 0
-    else newColumnPosition++
+    newRowPosition++
   }
 
   return newMatrix
@@ -54,7 +40,13 @@ export function dotProductOfEachElement(
   a: number[][],
   b: number[][]
 ): number[][] {
-  const newMatrix = generateNewMatrix(a.length)
+  // removing dynamic generation to speed up
+  const newMatrix = [
+    [NaN, NaN, NaN, NaN],
+    [NaN, NaN, NaN, NaN],
+    [NaN, NaN, NaN, NaN],
+    [NaN, NaN, NaN, NaN]
+  ]
 
   a.forEach(function goOverEachRow(row, rowPosition) {
     row.forEach(function dotProductOfEveryColumnCombination(

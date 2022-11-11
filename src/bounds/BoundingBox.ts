@@ -56,7 +56,7 @@ export class BoundingBox {
     const points = [p1, p2, p3, p4, p5, p6, p7, p8]
 
     points.forEach((point) => {
-      newBbox.addPoint(new Matrix(matrix).multiplyByTuple(point))
+      newBbox.addPoint(new Matrix(matrix).multiplyByTupleP(point))
     })
 
     return newBbox

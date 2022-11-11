@@ -1,6 +1,6 @@
 import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
 import { Ray } from '../rays'
-import { Point, Vector } from '../tuples'
+import { Point } from '../tuples'
 import { World } from '../world'
 import { Canvas } from '../canvas'
 import { toFixed } from '../utils'
@@ -45,17 +45,14 @@ export class Camera {
       )
     }
 
-    const pixel = this.inverseTransformMatrix.multiplyByTuple(
+    const pixel = this.inverseTransformMatrix.multiplyByTupleV(
       new Point(worldX, worldY, -1)
     )
-    const origin = this.inverseTransformMatrix.multiplyByTuple(
+    const origin = this.inverseTransformMatrix.multiplyByTupleP(
       new Point(0, 0, 0)
     )
 
-    const { x, y, z } = pixel.subtract(origin)
-    const normalizedDirection = new Vector(x, y, z).normalize()
-
-    return new Ray(origin, normalizedDirection)
+    return new Ray(origin, pixel.subtractV(origin).normalize())
   }
 
   render(world: World): Canvas {
@@ -64,9 +61,8 @@ export class Camera {
     console.log(this.hSize * this.vSize)
 
     for (let y = 0; y <= this.vSize - 1; y++) {
+      console.log(y)
       for (let x = 0; x <= this.hSize - 1; x++) {
-        console.log(y, x)
-
         const ray = this.rayForPixel(x, y)
         const color = world.colorAt(ray)
         image.writePixel(x, y, color)

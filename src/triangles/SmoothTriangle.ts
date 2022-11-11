@@ -22,13 +22,14 @@ export class SmoothTriangle extends Triangle {
   }
 
   localNormalAt(point: Point, hit: Intersection): Vector {
-    const { x, y, z } = this.n2
-      .multiply(hit.u || 1)
-      .add(
-        this.n3
-          .multiply(hit.v || 1)
-          .add(this.n1.multiply(1 - (hit.u || 0) - (hit.v || 0)))
-      )
+    const u = hit.u || 1
+    const v = hit.v || 1
+
+    const a = this.n2.multiply(u)
+    const b = this.n3.multiply(v)
+    const c = this.n1.multiply(1 - u - v)
+
+    const { x, y, z } = a.add(b).add(c)
 
     return new Vector(x, y, z)
   }

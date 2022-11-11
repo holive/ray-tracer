@@ -1,5 +1,5 @@
 import { MatrixTypeFour, MatrixTypeThree, MatrixTypeTwo } from './types'
-import { Tuple } from '../tuples'
+import { Point, Tuple, Vector } from '../tuples'
 import {
   dotProductOfEachElement,
   getCosSinFromRadians,
@@ -54,6 +54,38 @@ export class Matrix {
         toFixed(multiplied[3][0])
       )
     })()
+  }
+
+  multiplyByTupleP(tuple: Tuple): Point {
+    const multiplied = Matrix.multiplyMatrices(this.matrix, [
+      [tuple.x, 0, 0, 0],
+      [tuple.y, 0, 0, 0],
+      [tuple.z, 0, 0, 0],
+      [tuple.w, 0, 0, 0]
+    ])
+
+    return new Point(
+      multiplied[0][0],
+      multiplied[1][0],
+      multiplied[2][0],
+      multiplied[3][0]
+    )
+  }
+
+  multiplyByTupleV(tuple: Tuple): Vector {
+    const multiplied = Matrix.multiplyMatrices(this.matrix, [
+      [tuple.x, 0, 0, 0],
+      [tuple.y, 0, 0, 0],
+      [tuple.z, 0, 0, 0],
+      [tuple.w, 0, 0, 0]
+    ])
+
+    return new Vector(
+      multiplied[0][0],
+      multiplied[1][0],
+      multiplied[2][0],
+      multiplied[3][0]
+    )
   }
 
   transpose<T>(): T {

@@ -2,6 +2,7 @@ import { PointOrVector } from './types'
 import { compareFloat } from '../utils'
 import { InvalidTupleAddition } from '../errors'
 import { Vector } from './Vector'
+import { Point } from './Point'
 
 export class Tuple {
   x: number
@@ -37,6 +38,10 @@ export class Tuple {
     return new Tuple(this.x - t.x, this.y - t.y, this.z - t.z, this.w - t.w)
   }
 
+  subtractV(t: Tuple): Vector {
+    throw new Error('subtractV must be implemented in the subclass')
+  }
+
   multiply(scalar: number): Tuple {
     return new Tuple(
       this.x * scalar,
@@ -44,6 +49,10 @@ export class Tuple {
       this.z * scalar,
       this.w * scalar
     )
+  }
+
+  multiplyP(scalar: number): Point {
+    throw new Error('subtractV must be implemented in the subclass')
   }
 
   negate(): Tuple {

@@ -15,8 +15,9 @@ export class Ray {
   }
 
   transform(matrix: Matrix): Ray {
-    const origin = matrix.multiplyByTuple(this.origin)
-    const direction = matrix.multiplyByTuple(this.direction)
-    return new Ray(origin, new Vector(direction.x, direction.y, direction.z))
+    return new Ray(
+      matrix.multiplyByTupleP(this.origin),
+      matrix.multiplyByTupleV(this.direction)
+    )
   }
 }

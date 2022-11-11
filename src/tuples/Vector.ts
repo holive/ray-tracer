@@ -1,6 +1,7 @@
 import { Tuple } from './Tuple'
 import { PointOrVector } from './types'
-import { pow2, toFixed } from '../utils'
+import { toFixed } from '../utils'
+import { Point } from './Point'
 
 export class Vector extends Tuple {
   constructor(x: number, y: number, z: number, w = PointOrVector.VECTOR) {
@@ -8,7 +9,7 @@ export class Vector extends Tuple {
   }
 
   magnitude(): number {
-    return Math.sqrt(pow2(this.x) + pow2(this.y) + pow2(this.z) + pow2(this.w))
+    return Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2)
   }
 
   normalize(): Vector {
@@ -29,8 +30,7 @@ export class Vector extends Tuple {
   }
 
   reflect(normal: Vector): Vector {
-    const res = this.subtract(normal.multiply(this.dot(normal) * 2))
-    return new Vector(res.x, res.y, res.z)
+    return this.subtractV(normal.multiply(this.dot(normal) * 2))
   }
 
   toFixed(decimals?: number): Vector {
@@ -39,5 +39,13 @@ export class Vector extends Tuple {
       toFixed(this.y, decimals),
       toFixed(this.z, decimals)
     )
+  }
+
+  multiplyP(scalar: number): Point {
+    return new Point(this.x * scalar, this.y * scalar, this.z * scalar)
+  }
+
+  subtractV(t: Tuple): Vector {
+    return new Vector(this.x - t.x, this.y - t.y, this.z - t.z)
   }
 }

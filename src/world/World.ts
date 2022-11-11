@@ -83,8 +83,7 @@ export class World {
       return true
     }
 
-    const { x, y, z } = this.lights[0].position.subtract(point)
-    const v = new Vector(x, y, z)
+    const v = this.lights[0].position.subtractV(point)
     const distance = v.magnitude()
     const direction = v.normalize()
 
@@ -119,13 +118,10 @@ export class World {
 
     const cosT = Math.sqrt(1 - sin2T)
     const direction = comps.normalV
-      .multiply(nRatio * cosI - cosT)
-      .subtract(comps.eyeV.multiply(nRatio))
+      .multiplyP(nRatio * cosI - cosT)
+      .subtractV(comps.eyeV.multiply(nRatio))
 
-    const refractedRay = new Ray(
-      comps.underPoint,
-      new Vector(direction.x, direction.y, direction.z)
-    )
+    const refractedRay = new Ray(comps.underPoint, direction)
 
     return this.colorAt(refractedRay, remaining - 1).multiplyByScalar(
       comps.object.material.transparency
