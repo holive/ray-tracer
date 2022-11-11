@@ -149,7 +149,7 @@ describe('Tuples', () => {
     it('should reflect a vector off a slanted surface', () => {
       const v = new Vector(0, -1, 0)
       const n = new Vector(Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0)
-      expect(v.reflect(n)).toEqual(new Vector(1, 0, 0))
+      expect(v.reflect(n).toFixed()).toEqual(new Vector(1, 0, 0))
     })
   })
 })

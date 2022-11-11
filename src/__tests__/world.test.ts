@@ -51,9 +51,7 @@ describe('World', () => {
     const i = new Intersection(4, shape)
     const comps = i.prepareComputations(r)
     const c = w.shadeHit(comps)
-    expect(c).toEqual(
-      new Color(0.38066119308103435, 0.47582649135129296, 0.28549589481077575)
-    )
+    expect(c.toFixed()).toEqual(new Color(0.38066, 0.47582, 0.28549))
   })
 
   it('should shade an intersection from the inside', () => {
@@ -63,9 +61,7 @@ describe('World', () => {
     const shape = w.objects[1]
     const comps = new Intersection(0.5, shape).prepareComputations(r)
     const c = w.shadeHit(comps)
-    expect(c).toEqual(
-      new Color(0.9049844720832575, 0.9049844720832575, 0.9049844720832575)
-    )
+    expect(c.toFixed()).toEqual(new Color(0.90495, 0.90495, 0.90495))
   })
 
   it('should return black if a ray misses', () => {
@@ -79,9 +75,7 @@ describe('World', () => {
     const w = new DefaultWord()
     const r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1))
     const c = w.colorAt(r, 5)
-    expect(c).toEqual(
-      new Color(0.38066119308103435, 0.47582649135129296, 0.28549589481077575)
-    )
+    expect(c.toFixed()).toEqual(new Color(0.38066, 0.47582, 0.28549))
   })
 
   it('should return the color with an intersection behind the ray', () => {
@@ -159,7 +153,7 @@ describe('World', () => {
     const i = new Intersection(Math.sqrt(2), shape)
     const comps = i.prepareComputations(r)
     const color = w.reflectedColor(comps, 5)
-    expect(color.toFixed()).toEqual(new Color(0.19034, 0.23792, 0.14275))
+    expect(color.toFixed()).toEqual(new Color(0.19035, 0.23793, 0.14276))
   })
 
   it('checks shadeHit() with a reflective material', () => {
@@ -177,7 +171,7 @@ describe('World', () => {
     const comps = i.prepareComputations(r)
     const color = w.shadeHit(comps)
 
-    expect(color.toFixed()).toEqual(new Color(0.87676, 0.92435, 0.82918))
+    expect(color.toFixed()).toEqual(new Color(0.87677, 0.92436, 0.82918))
   })
 
   it('checks the reflected color at the maximum recursive depth', () => {
@@ -231,7 +225,7 @@ describe('World', () => {
     )
     const comps = xs[2].prepareComputations(r, xs)
     const c = w.refractedColor(comps, 5)
-    expect(c).toEqual(new Color(0, 0.99888, 0.04734))
+    expect(c).toEqual(new Color(0, 0.99878, 0.04724))
   })
 
   it('runs shadeHit() with a transparent material', () => {
@@ -255,7 +249,7 @@ describe('World', () => {
     const xs = Intersection.intersections(new Intersection(Math.sqrt(2), floor))
     const comps = xs[0].prepareComputations(r, xs)
     const color = w.shadeHit(comps, 5)
-    expect(color.toFixed()).toEqual(new Color(0.93643, 0.68643, 0.68643))
+    expect(color.toFixed()).toEqual(new Color(0.93642, 0.68642, 0.68642))
   })
 
   it('checks shadeHit() with a reflective, transparent material', () => {
@@ -280,6 +274,6 @@ describe('World', () => {
     const xs = Intersection.intersections(new Intersection(Math.sqrt(2), floor))
     const comps = xs[0].prepareComputations(r, xs)
     const color = w.shadeHit(comps, 5)
-    expect(color.toFixed()).toEqual(new Color(0.93392, 0.69644, 0.69243))
+    expect(color.toFixed()).toEqual(new Color(0.93391, 0.69643, 0.69243))
   })
 })
