@@ -75,7 +75,7 @@ ___
 ___
 - [x] Implementing Groups
 - [x] Finding the Normal on a Child Object
-- [ ] Using Bounding Boxes to Optimize Large Scenes
+- [x] Using Bounding Boxes to Optimize Large Scenes
 
 ![render](https://user-images.githubusercontent.com/6090596/196035480-f65715bf-2fa3-4eb6-b113-621e0db1a863.jpg)
 
@@ -84,6 +84,9 @@ ___
 - [x] Wavefront OBJ Files
 - [x] Smooth Triangles
 - [x] Smooth Triangles in OBJ Files
+
+![suzanne](https://user-images.githubusercontent.com/6090596/201324979-dc5ca9dc-a460-41a1-bf58-0da4054a46a6.jpg)
+
 ___
 - [ ] Implementing CSG
 - [ ] Coloring CSG Shapes
