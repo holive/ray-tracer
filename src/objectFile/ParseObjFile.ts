@@ -78,10 +78,10 @@ export class ParseObjFile {
     const triangles = []
     const isSmooth = splitted[1].indexOf('/') != -1
 
-    for (let i = 2; i <= this.vertices.length - 2; i++) {
-      const p1 = this.vertices[1]
-      const p2 = this.vertices[i]
-      const p3 = this.vertices[i + 1]
+    for (let i = 2; i < splitted.length - 1; i++) {
+      const p1 = this.vertices[Number(splitted[1].split('/')[0])]
+      const p2 = this.vertices[Number(splitted[i].split('/')[0])]
+      const p3 = this.vertices[Number(splitted[i + 1].split('/')[0])]
 
       if (isSmooth) {
         const n1 = splitted[1].split('/')[2]
