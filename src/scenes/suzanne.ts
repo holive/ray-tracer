@@ -12,12 +12,17 @@ import { CheckersPattern } from '../patterns/CheckersPattern'
 import { degreesToRadians } from '../utils'
 import { Sphere } from '../spheres'
 
-export function teapotScene() {
-  const camera = new Camera(300, 480, 1.152)
+export function teapotScene(length: number, index: number) {
+  const step = 0.5 / length
+  const fromFactor = 1 - step * index
+  const toFactor = 1 - step * index
+  const upFactor = 0 - (0.1 / length) * index
+
+  const camera = new Camera(300, 240, 1.152)
   camera.transform = viewTransform(
-    new Point(-2.6, 1.5, -3.9),
-    new Point(3, -1.5, 4),
-    new Vector(0, 1, 0)
+    new Point(-2.6 * fromFactor, 1.5, -3.9),
+    new Point(3 * toFactor, -1.5, 4),
+    new Vector(0 + upFactor, 1, 0)
   )
 
   const world = new World()
@@ -53,17 +58,22 @@ export function teapotScene() {
   ).objToGroup()
   suzanne.setTransform(Matrix.scaling(1.8, 1.8, 1.8))
 
-  // const sphere = new Sphere()
-  // sphere.material
-  // sphere.material.color = new Color(0.1, 0.5, 0.9)
-  // sphere.material.reflective = 0.1
-  // sphere.material.shininess = 50
-  // sphere.material.specular = 0.2
-  // sphere.material.diffuse = 0.95
-  // sphere.setTransform(Matrix.scaling(1.8, 1.8, 1.8))
+  const sphere = new Sphere()
+  sphere.material
+  sphere.material.color = new Color(0.1, 0.5, 0.9)
+  sphere.material.reflective = 0.1
+  sphere.material.shininess = 50
+  sphere.material.specular = 0.2
+  sphere.material.diffuse = 0.95
+  sphere.setTransform(Matrix.scaling(1.8, 1.8, 1.8))
 
-  world.objects.push(suzanne, checkeredFloor, wall, wall2)
-  camera.render(world).toPPM()
+  world.objects.push(sphere, checkeredFloor, wall, wall2)
+  camera.render(world).toPPM(index)
 }
 
-teapotScene()
+const length = 24 * 5
+for (let index = 0; index < length; index++) {
+  console.log('>>>>>> position ', index)
+
+  teapotScene(length, index)
+}

@@ -46,9 +46,9 @@ export const colorArrayToString = (
   return body + '\n'
 }
 
-export const writeFile = (content: string): string => {
+export const writeFile = (content: string, index?: number): string => {
   try {
-    void fs.writeFile('./render.ppm', content)
+    void fs.writeFile(`./render${index || ''}.ppm`, content)
     return content
   } catch (err) {
     return `Couldn't write the file: ${((err as Error) || undefined)?.message}`

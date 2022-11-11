@@ -1,4 +1,4 @@
-import { teapotScene } from './teapot'
+import { teapotScene } from './suzanne'
 
 it('teapot', () => {
   teapotScene()

@@ -1,1 +1,1 @@
-export * from './teapot'
+export * from './suzanne'

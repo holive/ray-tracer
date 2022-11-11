@@ -26,13 +26,13 @@ export class Canvas {
     return this.canvas[y][x]
   }
 
-  toPPM(): string {
+  toPPM(index?: number): string {
     const header = `P3\n${this.width} ${this.height}\n255\n`
 
     const data: Color[] = []
     this.canvas.forEach((items) => items.forEach((color) => data.push(color)))
 
-    return writeFile(header + colorArrayToString(data))
+    return writeFile(header + colorArrayToString(data), index)
   }
 
   getCanvas(): ColorMatrix {
