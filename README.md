@@ -7,6 +7,64 @@ My JavaScript version of The Ray Tracer Challenge, by Jamis Buck.
 
 ___
 
+### Implemented:
+
+- Tuples
+- Operations
+- Representing Colors
+- Implementing Color Operations
+- Creating a Canvas
+- Saving a Canvas
+- Creating a Matrix
+- Multiplying Matrices
+- The Identity Matrix
+- Transposing Matrices
+- Inverting Matrices
+- Translation
+- Scaling
+- Rotation
+- Shearing
+- Chaining Transformations
+- Creating Rays
+- Intersecting Rays with Spheres
+- Tracking Intersections
+- Identifying Hits
+- Transforming Rays and Spheres
+- Surface Normals
+- Reflecting Vectors
+- The Phong Reflection Model
+- Building a World
+- Defining a View Transformation
+- Implementing a Camera
+- Lighting in Shadows
+- Testing for Shadows
+- Rendering Shadows
+- Refactoring Shapes
+- Implementing a Plane
+- Making a Striped Pattern
+- Transforming Patterns
+- Generalizing Patterns
+- Making a Gradient Pattern
+- Making a Ring Pattern
+- Making a 3D Checker Pattern
+- Reflection
+- Transparency and Refraction
+- Fresnel Effect
+- Intersecting a Ray with a Cube
+- Finding the Normal on a Cube
+- Intersecting a Ray with a Cylinder
+- Finding the Normal on a Cylinder
+- Truncating Cylinders
+- Capped Cylinders
+- Cones
+- Implementing Groups
+- Finding the Normal on a Child Object
+- Using Bounding Boxes to Optimize Large Scenes
+- Triangles
+- Wavefront OBJ Files
+- Smooth Triangles
+- Smooth Triangles in OBJ Files
+
 ### Todo:
 
   - Implementing CSG
