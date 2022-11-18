@@ -1,6 +1,6 @@
 import { IDENTITY_MATRIX, Matrix, MatrixTypeFour } from '../matrices'
 import { Ray } from '../rays'
-import { Point } from '../tuples'
+import { Color, Point } from '../tuples'
 import { World } from '../world'
 import { Canvas } from '../canvas'
 import { toFixed } from '../utils'
@@ -58,8 +58,6 @@ export class Camera {
   render(world: World): Canvas {
     const image = new Canvas(this.hSize, this.vSize)
 
-    console.log(this.hSize * this.vSize)
-
     for (let y = 0; y <= this.vSize - 1; y++) {
       console.log(y)
       for (let x = 0; x <= this.hSize - 1; x++) {
@@ -70,5 +68,22 @@ export class Camera {
     }
 
     return image
+  }
+
+  renderPartial(
+    world: World,
+    start: number,
+    end: number,
+    canvasSize: number
+  ): { x: number; y: number; color: Color }[] {
+    const result = []
+
+    for (let y = 0; y < canvasSize; y++) {
+      for (let x = start; x < end; x++) {
+        result.push({ x, y, color: world.colorAt(this.rayForPixel(x, y)) })
+      }
+    }
+
+    return result
   }
 }

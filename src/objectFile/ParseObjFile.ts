@@ -1,4 +1,4 @@
-import fs = require('fs')
+import * as fs from 'fs'
 import { Point, Vector } from '../tuples'
 import { Group } from '../groups'
 import { Triangle } from '../triangles/Triangle'

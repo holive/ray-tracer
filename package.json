@@ -19,7 +19,8 @@
     "watch": "nodemon",
     "start": "ts-node ./src/index.ts",
     "suzanne": "ts-node src/scenes/suzanne.ts",
-    "build": "tsc",
+    "build": "webpack",
+    "dev": "webpack serve",
     "prepublishOnly": "npm run test && npm run build"
   },
   "devDependencies": {
@@ -39,14 +40,16 @@
     "nodemon": "^2.0.16",
     "prettier": "^2.6.2",
     "ts-jest": "^27.0.3",
+    "ts-loader": "^9.4.1",
     "ts-node": "^10.0.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1",
+    "ts-mixer": "^6.0.1"
   },
   "engines": {
     "npm": ">=8",
     "node": ">=16"
-  },
-  "dependencies": {
-    "ts-mixer": "^6.0.1"
   }
 }
