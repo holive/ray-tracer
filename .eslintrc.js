@@ -37,6 +37,7 @@ module.exports = {
 			  'trailingComma': 'none'
 		  }
 	  ],
-	  "no-unused-labels": "off"
+	  "no-unused-labels": "off",
+    "@typescript-eslint/ban-ts-comment": "off"
   },
 };

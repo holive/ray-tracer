@@ -1,59 +1,65 @@
-import { BLACK, Color } from '../../tuples'
 import { scaleColorValue } from '../../canvas/helpers'
+import { BLACK, Color } from '../../tuples'
 
 const numberOfCPUCores = navigator.hardwareConcurrency || 1
 const workerList: Worker[] = []
 const canvasSize = 240
 const stepSize = Math.floor(canvasSize / numberOfCPUCores)
+const hSize = canvasSize
+const vSize = canvasSize
 
-function render() {
-  const hSize = canvasSize
-  const vSize = canvasSize
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+type Result = { x: number; y: number; color: Color }
+type MessageResult = {
+  data: {
+    result: Result[]
+  }
+}
+;(function render() {
   const { canvas, context: canvasCtx } = createCanvas(hSize, vSize)
   document.body.appendChild(canvas)
 
+  // ❇️ INSTANTIATE WORKERS
   for (let i = 0; i < numberOfCPUCores; i++) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     workerList.push(new Worker(new URL('./worker.ts', import.meta.url)))
   }
 
   const startTime = performance.now()
   let completedWorkerCount = 0
-  const results: { x: number; y: number; color: Color }[] = []
 
   workerList.forEach((worker, index) => {
     const start = index * stepSize
     const end = start + stepSize
+
+    // ❇️ IGNITES THE PROCESSING ON EACH WORKER
     worker.postMessage({ canvasSize, start, end })
 
-    worker.onmessage = ({ data: { result } }) => {
+    // ❇️ GET THE RESULT WHEN FINISHED
+    worker.onmessage = ({ data: { result } }: MessageResult) => {
       completedWorkerCount++
-      results.push(...result)
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-      result.forEach(
-        ({ color, x, y }: { x: number; y: number; color: Color }) => {
-          draw(
-            {
-              color: scaleColorValue(color),
-              position: { x, y }
-            },
-            canvasCtx
-          )
-        }
-      )
-
-      if (completedWorkerCount == numberOfCPUCores) {
-        const time = performance.now() - startTime
-        console.log(time, 'ms to render the ball')
-      }
+      renderResultOnScreen(result, canvasCtx)
+      logStats(completedWorkerCount, startTime)
     }
   })
+})()
+
+function logStats(completedWorkerCount: number, startTime: number) {
+  if (completedWorkerCount == numberOfCPUCores) {
+    const time = performance.now() - startTime
+    console.log('>', (time * 0.001).toFixed(1), 'seconds to render')
+  }
 }
-render()
+
+function renderResultOnScreen(
+  result: Result[],
+  canvasCtx: CanvasRenderingContext2D | null
+) {
+  result.forEach(({ color: c, x, y }: Result) => {
+    const color = scaleColorValue(c)
+    draw({ color, x, y }, canvasCtx)
+  })
+}
 
 function createCanvas(width: number, height: number) {
   const canvas = document.createElement('canvas')
@@ -76,7 +82,7 @@ function createCanvas(width: number, height: number) {
 }
 
 function draw(
-  pixel: { color: Color; position: { x: number; y: number } },
+  pixel: { color: Color; x: number; y: number },
   canvas: CanvasRenderingContext2D | null
 ) {
   canvas?.putImageData(
@@ -90,7 +96,7 @@ function draw(
       1,
       1
     ),
-    pixel.position.x,
-    pixel.position.y
+    pixel.x,
+    pixel.y
   )
 }
