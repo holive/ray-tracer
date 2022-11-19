@@ -65,3 +65,11 @@ typings/
 
 .idea
 webpack-dist
+.firebaserc
+.firebase
+firebase.json
+public/404.html
+public/main.js
+public/src_scenes_sphere_worker_ts.js
+public/vendors-node_modules_ts-mixer_dist_esm_index_js.js
+public/worker.js

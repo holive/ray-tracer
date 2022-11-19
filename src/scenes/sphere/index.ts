@@ -11,7 +11,7 @@ type MessageResult = {
   }
 }
 ;(function render(scene: string) {
-  let canvasSize = 240
+  let canvasSize = 120
   if (scene == '2') canvasSize = 600
   const stepSize = Math.floor(canvasSize / numberOfCPUCores)
   const hSize = canvasSize
