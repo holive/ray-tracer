@@ -3,10 +3,6 @@ import { BLACK, Color } from '../../tuples'
 
 const numberOfCPUCores = navigator.hardwareConcurrency || 1
 const workerList: Worker[] = []
-const canvasSize = 240
-const stepSize = Math.floor(canvasSize / numberOfCPUCores)
-const hSize = canvasSize
-const vSize = canvasSize
 
 type Result = { x: number; y: number; color: Color }
 type MessageResult = {
@@ -14,7 +10,13 @@ type MessageResult = {
     result: Result[]
   }
 }
-;(function render() {
+;(function render(scene: string) {
+  let canvasSize = 240
+  if (scene == '2') canvasSize = 600
+  const stepSize = Math.floor(canvasSize / numberOfCPUCores)
+  const hSize = canvasSize
+  const vSize = canvasSize
+
   const { canvas, context: canvasCtx } = createCanvas(hSize, vSize)
   document.body.appendChild(canvas)
 
@@ -32,22 +34,25 @@ type MessageResult = {
     const end = start + stepSize
 
     // ❇️ IGNITES THE PROCESSING ON EACH WORKER
-    worker.postMessage({ canvasSize, start, end })
+    worker.postMessage({ canvasSize, start, end, scene })
 
     // ❇️ GET THE RESULT WHEN FINISHED
     worker.onmessage = ({ data: { result } }: MessageResult) => {
       completedWorkerCount++
-
       renderResultOnScreen(result, canvasCtx)
       logStats(completedWorkerCount, startTime)
     }
   })
-})()
+})(location.search.split('scene=')[1])
 
 function logStats(completedWorkerCount: number, startTime: number) {
   if (completedWorkerCount == numberOfCPUCores) {
-    const time = performance.now() - startTime
-    console.log('>', (time * 0.001).toFixed(1), 'seconds to render')
+    const p = document.createElement('p')
+    p.innerText = `Rendered ${((performance.now() - startTime) * 0.001).toFixed(
+      1
+    )} in seconds using ${numberOfCPUCores} workers.`
+
+    document.body.appendChild(p)
   }
 }
 

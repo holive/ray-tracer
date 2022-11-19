@@ -8,11 +8,13 @@ import { Material, PointLight } from '../../lights'
 import { StripePattern } from '../../patterns/StripePattern'
 import { Plane } from '../../plane'
 import { CheckersPattern } from '../../patterns/CheckersPattern'
+import { degreesToRadians } from '../../utils'
 
 onmessage = ({ data }) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { start, end, canvasSize } = data
-  const { camera, world } = createScene(canvasSize)
+  const { start, end, canvasSize, scene } = data
+  const create = scene == '2' ? createScene2 : createScene
+  const { camera, world } = create(canvasSize)
 
   postMessage({ result: camera.renderPartial(world, start, end, canvasSize) })
 }
@@ -181,5 +183,62 @@ function createScene(canvasSize: number) {
 
   world.objects.push(redSphere, greenGlassSphere, blueGlassSphere)
 
+  return { camera, world }
+}
+
+function createScene2(canvasSize: number) {
+  const index = 0
+  const length = 24 * 5
+
+  const step = 0.5 / length
+  const fromFactor = 1 - step * index
+  const toFactor = 1 - step * index
+  const upFactor = 0 - (0.1 / length) * index
+
+  const camera = new Camera(canvasSize, canvasSize, 1.152)
+  camera.transform = viewTransform(
+    new Point(-2.6 * fromFactor, 1.5, -3.9),
+    new Point(3 * toFactor, -1.5, 4),
+    new Vector(0 + upFactor, 1, 0)
+  )
+
+  const world = new World()
+  world.lights = [new PointLight(new Point(-7, 4.9, -5), new Color(1, 1, 1))]
+
+  const pattern = new CheckersPattern(
+    new Color(0.35, 0.35, 0.35),
+    new Color(0.65, 0.65, 0.65)
+  )
+  pattern.setPatternTransform(Matrix.scaling(1.5, 1.5, 1.5))
+  const checkeredFloor = new Plane()
+  checkeredFloor.setTransform(Matrix.translation(0, -3, 0))
+  checkeredFloor.material.pattern = pattern
+
+  const wall = new Plane()
+  wall.setTransform(
+    Matrix.rotationXC(-degreesToRadians(90)).multiply(
+      Matrix.translation(0, -13, 0)
+    )
+  )
+  wall.material.pattern = pattern
+
+  const wall2 = new Plane()
+  wall2.setTransform(
+    Matrix.rotationXC(-degreesToRadians(270)).multiply(
+      Matrix.translation(0, -13, 0)
+    )
+  )
+  wall2.material.pattern = pattern
+
+  const sphere = new Sphere()
+  sphere.material
+  sphere.material.color = new Color(0.1, 0.5, 0.9)
+  sphere.material.reflective = 0.1
+  sphere.material.shininess = 50
+  sphere.material.specular = 0.2
+  sphere.material.diffuse = 0.95
+  sphere.setTransform(Matrix.scaling(1.8, 1.8, 1.8))
+
+  world.objects.push(sphere, checkeredFloor, wall, wall2)
   return { camera, world }
 }
