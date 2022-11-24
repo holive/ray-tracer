@@ -20,7 +20,6 @@ type MessageResult = {
   const { canvas, context: canvasCtx } = createCanvas(hSize, vSize)
   document.body.appendChild(canvas)
 
-  // ❇️ INSTANTIATE WORKERS
   for (let i = 0; i < numberOfCPUCores; i++) {
     // @ts-ignore
     workerList.push(new Worker(new URL('./worker.ts', import.meta.url)))
@@ -33,10 +32,8 @@ type MessageResult = {
     const start = index * stepSize
     const end = start + stepSize
 
-    // ❇️ IGNITES THE PROCESSING ON EACH WORKER
     worker.postMessage({ canvasSize, start, end, scene })
 
-    // ❇️ GET THE RESULT WHEN FINISHED
     worker.onmessage = ({ data: { result } }: MessageResult) => {
       completedWorkerCount++
       renderResultOnScreen(result, canvasCtx)
